@@ -21,7 +21,7 @@ public class AccountController {
     //todo
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public void login(HttpSessionString username, String password) {
+    public void login(String username, String password) {
 
     }
 
