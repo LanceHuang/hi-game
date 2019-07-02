@@ -1,16 +1,4 @@
-A game that grow vegetables.
-MOBA need to support event bus, it must be used Netty or socket for coding, because the HTTP are only support one round.
+自己构思的一些游戏所需项目组件，写着玩玩。
 
-Config:
-* Server: Tomcat 8
-* Database: MySQL
+因为跟常规Web项目不同，不能自顶向下设计，不能自底向上设计，所以考虑从接口API开始入手。
 
-Condition:
-* Data are directly saved to Session
-* Player can't change other player's data
-
-
-
-Procedure:
-1. Create database
-2. Generate code

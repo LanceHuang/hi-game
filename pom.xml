@@ -35,7 +35,7 @@
             <version>${slf4j-log4j12.version}</version>
         </dependency>
 
-        <!-- support -->
+        <!-- provided -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
