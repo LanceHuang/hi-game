@@ -21,8 +21,11 @@ public class AttributeExpression extends MVELExpression {
         return attributeExpression;
     }
 
+    /**
+     * LV*8+BASE_HP => getLevel()*8+getBaseHp()
+     */
     public static String parseExpression(String expression) {
-        // todo 策划格式转换成程序使用的格式， LV => getLevel()
+        // todo
         return expression;
     }
 

@@ -16,4 +16,14 @@ public class AttributeBuff extends AbstractBuff {
         // todo
 
     }
+
+    @Override
+    public void activate() {
+
+    }
+
+    @Override
+    public void deactivate() {
+
+    }
 }
