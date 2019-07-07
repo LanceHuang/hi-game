@@ -9,6 +9,9 @@ package com.lance.game.module.attribute.model;
 public class AttributeContainer {
 
     // todo 支持按模块划分
-    //
+    // 模块id -> 模块属性
+    // 总的属性
+    // 转换后的数值？
+
 
 }

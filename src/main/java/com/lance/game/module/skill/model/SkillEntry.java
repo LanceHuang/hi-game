@@ -14,6 +14,7 @@ public class SkillEntry {
 
     private int skillId;
     private int level;
+    //todo 熟练度？
 
     public static SkillEntry valueOf(SkillConfig skillConfig) {
         SkillEntry skillEntry = new SkillEntry();

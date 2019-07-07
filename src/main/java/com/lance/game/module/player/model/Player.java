@@ -32,6 +32,8 @@ public class Player {
     private BuffContainer      buffContainer;
 
     // todo 背包 Ctrl+I 打开背包，哈哈哈（冒险岛、彩虹岛）
+    // 1. 客户端设计快捷键？并且支持保存配置
+    // 2. 支持整理？背包格子有index（数据库，index -> 道具）
     // todo 装备栏
 
 }
