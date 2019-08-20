@@ -14,4 +14,6 @@ public class ItemConfig {
     private String   name;
     private ItemType type;
 
+    // todo 属性
+
 }

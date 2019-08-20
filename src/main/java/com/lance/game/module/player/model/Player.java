@@ -3,6 +3,7 @@ package com.lance.game.module.player.model;
 import com.lance.game.module.attribute.model.AttributeContainer;
 import com.lance.game.module.buff.model.BuffContainer;
 import com.lance.game.module.skill.model.SkillContainer;
+import com.lance.game.module.storage.model.ItemStorage;
 import lombok.Data;
 
 /**
@@ -35,5 +36,7 @@ public class Player {
     // 1. 客户端设计快捷键？并且支持保存配置
     // 2. 支持整理？背包格子有index（数据库，index -> 道具）
     // todo 装备栏
+
+    private ItemStorage itemStorage;
 
 }
