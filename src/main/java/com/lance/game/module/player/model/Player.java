@@ -37,6 +37,7 @@ public class Player {
     // 2. 支持整理？背包格子有index（数据库，index -> 道具）
     // todo 装备栏
 
+    // todo 暂时不考虑多种背包的情况，还有仓库的情况
     private ItemStorage itemStorage;
 
 }
