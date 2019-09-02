@@ -3,6 +3,7 @@ package com.lance.game.module.storage.service;
 import com.lance.game.module.item.model.AbstractItem;
 import com.lance.game.module.item.model.ItemType;
 import com.lance.game.module.player.model.Player;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,7 +12,18 @@ import java.util.List;
  * @author Lance
  * @since 2019/8/20 15:49
  */
+@Service
 public class StorageService implements IStorageService {
+
+    @Override
+    public AbstractItem createItem(int itemId) {
+        // todo 临时硬编码，因为还没有创建数据库
+        AbstractItem item = ItemType.MEDICINE.create();
+        item.setId(System.currentTimeMillis());
+        item.setItemId(itemId);
+        item.setType(ItemType.MEDICINE);
+        return item;
+    }
 
     @Override
     public boolean addItem(Player player, AbstractItem item) {

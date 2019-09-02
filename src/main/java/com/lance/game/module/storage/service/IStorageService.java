@@ -15,6 +15,13 @@ import java.util.List;
 public interface IStorageService {
 
     /**
+     * 创建道具
+     *
+     * @param itemId 道具id
+     */
+    AbstractItem createItem(int itemId);
+
+    /**
      * 添加道具
      *
      * @return {@code true} 添加成功

@@ -16,9 +16,19 @@ import java.util.List;
 @Data
 public class ItemStorage {
 
+    private static final int CAPACITY_MAX = 100;
+
     private AbstractItem[] items;
     private int            capacity;
     private int            size;
+
+    public static ItemStorage valueOf() {
+        ItemStorage itemStorage = new ItemStorage();
+        itemStorage.items = new AbstractItem[CAPACITY_MAX];
+        itemStorage.capacity = CAPACITY_MAX;
+        itemStorage.size = 0;
+        return itemStorage;
+    }
 
     /**
      * 添加道具

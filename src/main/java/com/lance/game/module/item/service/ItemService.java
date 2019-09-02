@@ -6,6 +6,7 @@ import com.lance.game.module.item.model.AbstractItem;
 import com.lance.game.module.item.model.AbstractUsableItem;
 import com.lance.game.module.player.model.Player;
 import com.lance.game.module.storage.service.IStorageService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
  * @author Lance
  * @since 2019/8/30 16:07
  */
+@Service
 public class ItemService implements IItemService {
 
     @Resource

@@ -13,15 +13,15 @@ public enum ItemType {
     /** 装备 */
     EQUIPMENT() {
         @Override
-        public AbstractItem create() {
-            return new Equipment();
+        public <T extends AbstractItem> T create() {
+            return (T) new Equipment();
         }
     },
     /** 药物 */
     MEDICINE() {
         @Override
-        public AbstractItem create() {
-            return new Medicine();
+        public <T extends AbstractItem> T create() {
+            return (T) new Medicine();
         }
     },
     ;
@@ -32,6 +32,6 @@ public enum ItemType {
     /**
      * 创建道具
      */
-    public abstract AbstractItem create();
+    public abstract <T extends AbstractItem> T create();
 
 }

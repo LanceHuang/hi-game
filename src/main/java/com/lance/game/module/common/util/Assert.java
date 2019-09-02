@@ -20,7 +20,7 @@ public final class Assert {
     }
 
     public static void assertTrue(boolean flag, int i18nId) {
-        if (flag) {
+        if (!flag) {
             throw new GameException(i18nId);
         }
     }
