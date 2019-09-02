@@ -15,6 +15,10 @@ public class SkillContainer {
 
     private Map<Integer, SkillEntry> skills;
 
+    public static SkillContainer valueOf() {
+        return new SkillContainer();
+    }
+
     public SkillEntry addSkill(SkillEntry skillEntry) {
         return skills.put(skillEntry.getSkillId(), skillEntry);
     }

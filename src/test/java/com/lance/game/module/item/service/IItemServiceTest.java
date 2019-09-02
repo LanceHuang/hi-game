@@ -4,6 +4,7 @@ import com.lance.game.module.item.model.AbstractItem;
 import com.lance.game.module.item.model.ItemType;
 import com.lance.game.module.item.model.Medicine;
 import com.lance.game.module.player.model.Player;
+import com.lance.game.module.player.service.IPlayerService;
 import com.lance.game.module.storage.model.ItemStorage;
 import com.lance.game.module.storage.service.IStorageService;
 import org.junit.Test;
@@ -19,15 +20,16 @@ import java.util.List;
 public class IItemServiceTest {
 
     @Resource
-    private IStorageService storageService;
-
+    private IPlayerService  playerService;
     @Resource
-    private IItemService itemService;
+    private IStorageService storageService;
+    @Resource
+    private IItemService    itemService;
 
     @Test
     public void useItem() {
-        Player player = new Player();
-        player.setItemStorage(ItemStorage.valueOf());
+        long playerId = System.currentTimeMillis();
+        Player player = playerService.getPlayer(playerId);
 
         int medicineId = 1990;
         AbstractItem medicine = storageService.createItem(medicineId);

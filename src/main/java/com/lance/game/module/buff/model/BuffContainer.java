@@ -12,4 +12,7 @@ public class BuffContainer {
     // 3. 互斥？按组别划分
     // 4. 叠加？什么场景？
 
+    public static BuffContainer valueOf() {
+        return new BuffContainer();
+    }
 }
