@@ -9,6 +9,9 @@ import com.lance.game.module.storage.model.ItemStorage;
 import com.lance.game.module.storage.service.IStorageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -17,7 +20,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:spring-service.xml")
-public class IItemServiceTest {
+public class IItemServiceTest implements ApplicationContextAware {
 
     @Resource
     private IPlayerService  playerService;
@@ -39,5 +42,13 @@ public class IItemServiceTest {
         for (AbstractItem item : items) {
             itemService.useItem(player, item.getId());
         }
+        System.out.println(applicationContext.getBean("playerService"));
+    }
+
+    private ApplicationContext applicationContext;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

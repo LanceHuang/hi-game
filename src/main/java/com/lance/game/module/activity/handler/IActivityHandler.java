@@ -9,9 +9,16 @@ package com.lance.game.module.activity.handler;
 public interface IActivityHandler {
 
     /**
-     * 初始化
+     * 初始化活动
      */
     void init();
+
+//    /**
+//     * 判断活动能否开启
+//     *
+//     * @return {@code true} 可开启
+//     */
+//    boolean isCanOpen();
 
     /**
      * 开启活动
@@ -22,5 +29,11 @@ public interface IActivityHandler {
      * 结束活动
      */
     void stop();
+
+
+    // todo 判断活动状态
+
+    // todo 玩家能否参加活动
+    // todo 玩家领取奖励？
 
 }
