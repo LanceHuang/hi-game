@@ -1,6 +1,6 @@
-package com.lance.game.module.common.util;
+package com.lance.game.util;
 
-import com.lance.game.module.common.exception.GameException;
+import com.lance.game.exception.GameException;
 
 /**
  * 断言工具

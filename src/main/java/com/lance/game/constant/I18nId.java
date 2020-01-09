@@ -1,4 +1,4 @@
-package com.lance.game.module.common.constant;
+package com.lance.game.constant;
 
 /**
  * 国际化id，这类不采用user.button.info这种格式。

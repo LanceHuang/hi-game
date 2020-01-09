@@ -1,7 +1,7 @@
 package com.lance.game.module.item.service;
 
-import com.lance.game.module.common.constant.I18nId;
-import com.lance.game.module.common.util.Assert;
+import com.lance.game.constant.I18nId;
+import com.lance.game.util.Assert;
 import com.lance.game.module.item.model.AbstractItem;
 import com.lance.game.module.item.model.AbstractUsableItem;
 import com.lance.game.module.player.model.Player;

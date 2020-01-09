@@ -14,4 +14,7 @@ public class GameContext {
         return null;
     }
     // todo 登录相关的信息, map
+
+    // 感觉没太大必要
+
 }

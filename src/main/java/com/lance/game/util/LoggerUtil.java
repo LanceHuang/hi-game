@@ -1,4 +1,4 @@
-package com.lance.common.log.util;
+package com.lance.game.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

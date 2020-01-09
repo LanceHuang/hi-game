@@ -1,4 +1,4 @@
-package com.lance.game.module.common.exception;
+package com.lance.game.exception;
 
 /**
  * 游戏异常
