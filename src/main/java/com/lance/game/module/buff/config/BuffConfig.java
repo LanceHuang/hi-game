@@ -5,6 +5,8 @@ import com.lance.game.module.expression.model.AttributeExpression;
 import lombok.Data;
 
 /**
+ * buff配置
+ *
  * @author Lance
  * @since 2019/7/2 20:24
  */

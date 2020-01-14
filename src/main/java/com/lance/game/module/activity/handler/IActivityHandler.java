@@ -1,5 +1,7 @@
 package com.lance.game.module.activity.handler;
 
+import com.lance.game.module.activity.constant.ActivityType;
+
 /**
  * 活动处理器
  *
@@ -8,17 +10,17 @@ package com.lance.game.module.activity.handler;
  */
 public interface IActivityHandler {
 
-    /**
-     * 初始化活动
-     */
-    void init();
-
 //    /**
 //     * 判断活动能否开启
 //     *
 //     * @return {@code true} 可开启
 //     */
 //    boolean isCanOpen();
+
+    /**
+     * 活动类型
+     */
+    ActivityType getActivityType();
 
     /**
      * 开启活动

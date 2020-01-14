@@ -15,7 +15,6 @@ public interface IActivityService {
 
     // todo 创建定时器
 
-
-
+    // todo 推送活动信息
 
 }

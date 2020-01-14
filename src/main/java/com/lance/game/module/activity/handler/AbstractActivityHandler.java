@@ -1,6 +1,10 @@
 package com.lance.game.module.activity.handler;
 
+import com.lance.game.module.activity.constant.ActivityType;
+
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Lance
@@ -8,19 +12,29 @@ import javax.annotation.PostConstruct;
  */
 public abstract class AbstractActivityHandler implements IActivityHandler {
 
-//    @PostConstruct
+    private static final Map<ActivityType, AbstractActivityHandler> HANDLERS = new HashMap<>();
 
-    @Override
-    public void start() {
-//        startInternal();
+    @PostConstruct
+    public void init() {
+        HANDLERS.put(getActivityType(), this);
     }
 
-    public abstract void startInternal();
-
-    @Override
-    public void stop() {
-//        stopInternal();
+    public static AbstractActivityHandler getActivityHandler(ActivityType type) {
+        return HANDLERS.get(type);
     }
 
-    public abstract void stopInternal();
+//    @Override
+//    public void start() {
+////        startInternal();
+//    }
+//
+//    public abstract void startInternal();
+
+//    @Override
+//    public void stop() {
+////        stopInternal();
+//    }
+
+//    public abstract void stopInternal();
+
 }
