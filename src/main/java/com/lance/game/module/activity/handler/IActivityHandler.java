@@ -1,6 +1,7 @@
 package com.lance.game.module.activity.handler;
 
 import com.lance.game.module.activity.constant.ActivityType;
+import com.lance.game.module.activity.model.ActivityInfo;
 
 /**
  * 活动处理器
@@ -25,12 +26,12 @@ public interface IActivityHandler {
     /**
      * 开启活动
      */
-    void start();
+    void start(ActivityInfo activityInfo);
 
     /**
      * 结束活动
      */
-    void stop();
+    void stop(ActivityInfo activityInfo);
 
 
     // todo 判断活动状态

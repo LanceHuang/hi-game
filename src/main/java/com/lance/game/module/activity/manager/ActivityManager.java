@@ -1,7 +1,6 @@
 package com.lance.game.module.activity.manager;
 
 import com.lance.game.module.activity.config.ActivityConfig;
-import com.lance.game.module.activity.model.ActivityInfo;
 import com.lance.game.module.config.IConfigReloadable;
 import org.springframework.stereotype.Repository;
 
@@ -16,18 +15,6 @@ public class ActivityManager implements IConfigReloadable {
 
     /** 活动配置 */
     private List<ActivityConfig> activityConfigs;
-
-    private Map<Integer, ActivityInfo> idToInfo;
-
-    private Map<Integer, ActivityInfo> typeToInfo;
-
-    public void init() {
-        for (ActivityConfig activityConfig : getAllActivityConfig()) {
-            ActivityInfo activityInfo = ActivityInfo.valueOf(activityConfig);
-            idToInfo.put(activityConfig.getId(), activityInfo);
-            typeToInfo.put(activityConfig.getType(), activityInfo);
-        }
-    }
 
     public Collection<ActivityConfig> getAllActivityConfig() {
         return Collections.unmodifiableCollection(this.activityConfigs);
@@ -47,16 +34,10 @@ public class ActivityManager implements IConfigReloadable {
         return result;
     }
 
-    public ActivityInfo getActivityInfoById(int id) {
-        return this.idToInfo.get(id);
-    }
-
-    public ActivityInfo getActivityInfoByType(int type) {
-        return this.typeToInfo.get(type);
-    }
-
     @Override
     public void reload() {
-        // todo
+        // todo 活动怎么热更？
+        // todo 需要判断活动类型，以及活动状态，判断活动当时是否支持热更
     }
+
 }

@@ -1,7 +1,5 @@
 package com.lance.game.module.activity.handler;
 
-import com.lance.game.module.activity.constant.ActivityType;
-
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,14 +10,14 @@ import java.util.Map;
  */
 public abstract class AbstractActivityHandler implements IActivityHandler {
 
-    private static final Map<ActivityType, AbstractActivityHandler> HANDLERS = new HashMap<>();
+    private static final Map<Integer, AbstractActivityHandler> HANDLERS = new HashMap<>();
 
     @PostConstruct
-    public void init() {
-        HANDLERS.put(getActivityType(), this);
+    protected void init() {
+        HANDLERS.put(getActivityType().getId(), this);
     }
 
-    public static AbstractActivityHandler getActivityHandler(ActivityType type) {
+    public static AbstractActivityHandler getActivityHandler(int type) {
         return HANDLERS.get(type);
     }
 
