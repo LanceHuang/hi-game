@@ -18,11 +18,11 @@ public class TestActivityHandler extends AbstractActivityHandler {
 
     @Override
     public void start(ActivityInfo activityInfo) {
-
+        System.out.println("开启活动");
     }
 
     @Override
     public void stop(ActivityInfo activityInfo) {
-
+        System.out.println("关闭活动");
     }
 }

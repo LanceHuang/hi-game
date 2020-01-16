@@ -9,6 +9,7 @@ import com.lance.game.module.activity.constant.ActivityType;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -25,12 +26,15 @@ public class ActivityInfo {
     private ActivityConfig activityConfig;
 
     /** 开启时间 */
-    private Date          startDate;
+    private Date startDate;
     /** 结束时间 */
-    private Date          stopDate;
+    private Date stopDate;
+
     /** 活动状态 */
     private AtomicBoolean status;
 
+    private Future<?> startFuture;
+    private Future<?> stopFuture;
     // todo 活动进度
     // todo 领奖状态
     // todo 信息

@@ -22,14 +22,19 @@ public interface IActivityService {
      */
     void initActivity(ActivityInfo activityInfo);
 
-//    /**
-//     * 判断活动是否可以开启
-//     */
-//    boolean initActivity(ActivityInfo activityInfo);
+    /**
+     * 开启活动
+     *
+     * @param activityInfo 活动信息
+     */
+    void startActivity(ActivityInfo activityInfo);
 
-
-    // todo 创建定时器
-
+    /**
+     * 关闭活动
+     *
+     * @param activityInfo 活动信息
+     */
+    void stopActivity(ActivityInfo activityInfo);
 
     // todo 推送活动信息
 
