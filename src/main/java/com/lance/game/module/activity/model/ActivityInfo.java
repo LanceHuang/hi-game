@@ -3,15 +3,11 @@ package com.lance.game.module.activity.model;
 import com.lance.common.tool.util.DateUtils;
 import com.lance.common.tool.util.TimeUtils;
 import com.lance.game.module.activity.config.ActivityConfig;
-import com.lance.game.module.activity.constant.ActivityConstant;
-import com.lance.game.module.activity.constant.ActivityStatus;
-import com.lance.game.module.activity.constant.ActivityType;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 活动信息
@@ -25,7 +21,7 @@ public class ActivityInfo {
     /** 活动配置 */
     private ActivityConfig activityConfig;
 
-    /** 开启时间 */
+    /** 开始时间 */
     private Date startDate;
     /** 结束时间 */
     private Date stopDate;
@@ -49,38 +45,44 @@ public class ActivityInfo {
     public static ActivityInfo valueOf(ActivityConfig activityConfig) {
         ActivityInfo activityInfo = new ActivityInfo();
         activityInfo.activityConfig = activityConfig;
-        activityInfo.status = new AtomicBoolean(ActivityConstant.STATUS_ACTIVITY_CLOSE);
+        activityInfo.status = new AtomicBoolean(false);
+        activityInfo.startDate = DateUtils.parse(activityConfig.getStartTime());
+        activityInfo.stopDate = DateUtils.parse(activityConfig.getStopTime());
+        activityInfo.checkStartAndStopDate();
         return activityInfo;
     }
 
     /**
-     * 初始化活动时间
+     * 活动时间校验
      */
-    public void initActivityDate() {
-        this.startDate = DateUtils.parse(activityConfig.getStartTime());
-        this.stopDate = DateUtils.parse(activityConfig.getStopTime());
+    private void checkStartAndStopDate() {
+        if (this.startDate.getTime() >= this.stopDate.getTime()) {
+            throw new IllegalArgumentException(
+                    String.format("活动id=[%d]配置错误：开始时间[%s]大于或等于结束时间[%s]",
+                            this.activityConfig.getId(), this.activityConfig.getStartTime(), this.activityConfig.getStopTime()));
+        }
     }
 
     /**
-     * 判断是否在开启时间内
+     * 判断活动是否在开启时间内
      */
     public boolean isInOpenTime() {
         long now = TimeUtils.now();
-        return startDate.getTime() <= now && now < stopDate.getTime();
+        return this.startDate.getTime() <= now && now < this.stopDate.getTime();
     }
 
     /**
      * 开启活动
      */
     public void setActivityOpen() {
-        this.status.set(ActivityConstant.STATUS_ACTIVITY_OPEN);
+        this.status.set(true);
     }
 
     /**
      * 关闭活动
      */
     public void setActivityClose() {
-        this.status.set(ActivityConstant.STATUS_ACTIVITY_CLOSE);
+        this.status.set(false);
     }
 
     //========================================================
@@ -91,6 +93,10 @@ public class ActivityInfo {
 
     public int getType() {
         return this.activityConfig.getType();
+    }
+
+    public String getName() {
+        return this.activityConfig.getName();
     }
 
 }

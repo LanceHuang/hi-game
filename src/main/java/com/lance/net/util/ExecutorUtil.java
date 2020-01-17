@@ -6,5 +6,5 @@ package com.lance.net.util;
  */
 public class ExecutorUtil {
 
-    public static
+//    public static
 }

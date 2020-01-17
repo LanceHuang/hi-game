@@ -16,13 +16,6 @@ public interface IActivityService {
     void init();
 
     /**
-     * 初始化活动
-     *
-     * @param activityInfo 活动信息
-     */
-    void initActivity(ActivityInfo activityInfo);
-
-    /**
      * 开启活动
      *
      * @param activityInfo 活动信息

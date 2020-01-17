@@ -29,7 +29,7 @@ public class DefaultGameExecutor implements IGameExecutor {
     public DefaultGameExecutor() {
         ThreadFactory threadFactory = new NamedThreadFactory("core");
         for (int i = 0; i < DEFAULT_PROCESSOR_SIZE; i++) {
-            services[i] = new ThreadPoolExecutor(1, 1,);
+//            services[i] = new ThreadPoolExecutor(1, 1,);
             // todo 自定义？
         }
 

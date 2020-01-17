@@ -6,16 +6,14 @@ import com.lance.game.module.activity.handler.AbstractActivityHandler;
 import com.lance.game.module.activity.handler.IActivityHandler;
 import com.lance.game.module.activity.manager.ActivityManager;
 import com.lance.game.module.activity.model.ActivityInfo;
-import com.lance.net.util.NamedThreadFactory;
+import com.lance.game.module.activity.task.ActivityScheduler;
+import com.lance.game.util.LoggerUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Lance
@@ -27,53 +25,59 @@ public class ActivityService implements IActivityService {
     @Resource
     private ActivityManager activityManager;
 
-    private static final int CORE_SIZE = Runtime.getRuntime().availableProcessors();
+    @Resource
+    private ActivityScheduler activityScheduler;
 
-    private ScheduledExecutorService scheduledExecutorService;
-
-    private Map<Integer, ActivityInfo> activityInfos;
+    private Map<Integer, ActivityInfo> activityInfos = new HashMap<>();
 
     @Override
     public void init() {
-        scheduledExecutorService = Executors.newScheduledThreadPool(CORE_SIZE, new NamedThreadFactory("activity"));
-
+        LoggerUtil.debug("初始化活动");
         for (ActivityConfig activityConfig : activityManager.getAllActivityConfig()) {
             ActivityInfo activityInfo = ActivityInfo.valueOf(activityConfig);
-            initActivity(activityInfo);
             activityInfos.put(activityConfig.getId(), activityInfo);
+        }
+
+        LoggerUtil.debug("调度活动");
+        for (Map.Entry<Integer, ActivityInfo> entry : activityInfos.entrySet()) {
+            scheduleActivity(entry.getValue());
         }
     }
 
-    @Override
-    public void initActivity(ActivityInfo activityInfo) {
-        /*
-        若还未开启，则创建定时器
-        若正在开启，设置状态位
-        若已结束，跳过
-        还要考虑复用问题
-         */
+    /**
+     * 调度活动
+     *
+     * @param activityInfo 活动信息
+     */
+    private void scheduleActivity(ActivityInfo activityInfo) {
+        checkActivityHandler(activityInfo.getType());
 
-        activityInfo.initActivityDate();
+        LoggerUtil.debug("活动调度 name【{}】, id【{}】", activityInfo.getName(), activityInfo.getId());
         if (activityInfo.isInOpenTime()) {
+            LoggerUtil.debug("设置活动开启 name【{}】, id【{}】", activityInfo.getName(), activityInfo.getId());
             activityInfo.setActivityOpen();
         }
 
         long now = TimeUtils.now();
         if (now < activityInfo.getStartDate().getTime()) { // 活动开启定时器
-            Future<?> startFuture = schedule(new Runnable() {
+            LoggerUtil.debug("创建活动开启定时器 name【{}】, id【{}】", activityInfo.getName(), activityInfo.getId());
+            Future<?> startFuture = activityScheduler.schedule("活动开启定时器", new Runnable() {
                 @Override
                 public void run() {
                     startActivity(activityInfo);
+                    activityInfo.setActivityOpen();
                 }
             }, activityInfo.getStartDate());
 
             activityInfo.setStartFuture(startFuture);
         }
         if (now < activityInfo.getStopDate().getTime()) { // 活动关闭定时器
-            Future<?> stopFuture = schedule(new Runnable() {
+            LoggerUtil.debug("创建活动关闭定时器 name【{}】, id【{}】", activityInfo.getName(), activityInfo.getId());
+            Future<?> stopFuture = activityScheduler.schedule("活动结束定时器", new Runnable() {
                 @Override
                 public void run() {
                     stopActivity(activityInfo);
+                    activityInfo.setActivityClose();
                 }
             }, activityInfo.getStopDate());
 
@@ -81,8 +85,16 @@ public class ActivityService implements IActivityService {
         }
     }
 
-    private Future<?> schedule(Runnable task, Date date) {
-        return scheduledExecutorService.schedule(task, date.getTime() - TimeUtils.now(), TimeUnit.MILLISECONDS);
+    /**
+     * 校验活动处理器
+     *
+     * @param type 活动类型
+     */
+    private void checkActivityHandler(int type) {
+        IActivityHandler activityHandler = AbstractActivityHandler.getActivityHandler(type);
+        if (activityHandler == null) {
+            throw new IllegalArgumentException("活动定时器不存在 type=" + type);
+        }
     }
 
     @Override

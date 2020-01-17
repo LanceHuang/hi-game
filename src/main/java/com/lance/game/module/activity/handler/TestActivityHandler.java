@@ -2,6 +2,7 @@ package com.lance.game.module.activity.handler;
 
 import com.lance.game.module.activity.constant.ActivityType;
 import com.lance.game.module.activity.model.ActivityInfo;
+import org.springframework.stereotype.Component;
 
 /**
  * 测试活动
@@ -9,6 +10,7 @@ import com.lance.game.module.activity.model.ActivityInfo;
  * @author Lance
  * @since 2020/1/14 12:40
  */
+@Component
 public class TestActivityHandler extends AbstractActivityHandler {
 
     @Override

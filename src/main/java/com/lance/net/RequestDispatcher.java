@@ -15,10 +15,10 @@ public class RequestDispatcher {
     // todo 需要有个地方记录register所有的 请求-处理器
 //    协议号 -> 处理器？
 //    类 -> 处理器？
-    private Map<Integer, Handler> handlerMap;
+//    private Map<Integer, Handler> handlerMap;
 
     public void dispatch(Session session, int reqNo, Object req) {
-        handlerMap.get(reqNo)
+//        handlerMap.get(reqNo)
         // todo
     }
 
