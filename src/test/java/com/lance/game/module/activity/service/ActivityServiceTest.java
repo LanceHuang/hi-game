@@ -46,7 +46,7 @@ public class ActivityServiceTest {
         activityService.init();
 
         System.out.println("Init activities completely");
-        TimeUnit.SECONDS.sleep(200L);
+        TimeUnit.SECONDS.sleep(200L); // 主线程退出后，子线程也会退出，这里sleep用于保证活动能正常开启关闭
         System.out.println("Finished...");
     }
 

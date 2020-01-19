@@ -21,6 +21,13 @@ public class ActivityManager implements IConfigReloadable {
     /** 活动配置 */
     private Map<Integer, ActivityConfig> activityConfigs = new HashMap<>();
 
+    /**
+     * 预加载活动配置
+     */
+    public void preload() {
+
+    }
+
     @Override
     public void reload() {
         // todo 活动怎么热更？
