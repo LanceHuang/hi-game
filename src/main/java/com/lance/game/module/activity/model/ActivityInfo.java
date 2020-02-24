@@ -46,8 +46,8 @@ public class ActivityInfo {
         ActivityInfo activityInfo = new ActivityInfo();
         activityInfo.activityConfig = activityConfig;
         activityInfo.status = new AtomicBoolean(false);
-        activityInfo.startDate = DateUtils.parse(activityConfig.getStartTime());
-        activityInfo.stopDate = DateUtils.parse(activityConfig.getStopTime());
+//        activityInfo.startDate = DateUtils.parse(activityConfig.getStartTime());
+//        activityInfo.stopDate = DateUtils.parse(activityConfig.getStopTime());
         activityInfo.checkStartAndStopDate();
         return activityInfo;
     }
@@ -57,9 +57,9 @@ public class ActivityInfo {
      */
     private void checkStartAndStopDate() {
         if (this.startDate.getTime() >= this.stopDate.getTime()) {
-            throw new IllegalArgumentException(
-                    String.format("活动id=[%d]配置错误：开始时间[%s]大于或等于结束时间[%s]",
-                            this.activityConfig.getId(), this.activityConfig.getStartTime(), this.activityConfig.getStopTime()));
+//            throw new IllegalArgumentException(
+//                    String.format("活动id=[%d]配置错误：开始时间[%s]大于或等于结束时间[%s]",
+//                            this.activityConfig.getId(), this.activityConfig.getStartTime(), this.activityConfig.getStopTime()));
         }
     }
 
