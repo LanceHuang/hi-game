@@ -30,6 +30,9 @@ public class ActivityService implements IActivityService {
 
     private Map<Integer, ActivityInfo> activityInfos = new HashMap<>();
 
+    /**
+     * 活动初始化，这里不用{@link javax.annotation.PostConstruct}，是为了集中控制模块初始化顺序
+     */
     @Override
     public void init() {
         LoggerUtil.debug("初始化活动");
@@ -91,7 +94,7 @@ public class ActivityService implements IActivityService {
      * @param type 活动类型
      */
     private void checkActivityHandler(int type) {
-        IActivityHandler activityHandler = AbstractActivityHandler.getActivityHandler(type);
+        IActivityHandler activityHandler = AbstractActivityHandler.getHandler(type);
         if (activityHandler == null) {
             throw new IllegalArgumentException("活动定时器不存在 type=" + type);
         }
@@ -99,13 +102,13 @@ public class ActivityService implements IActivityService {
 
     @Override
     public void startActivity(ActivityInfo activityInfo) {
-        IActivityHandler activityHandler = AbstractActivityHandler.getActivityHandler(activityInfo.getType());
+        IActivityHandler activityHandler = AbstractActivityHandler.getHandler(activityInfo.getType());
         activityHandler.start(activityInfo);
     }
 
     @Override
     public void stopActivity(ActivityInfo activityInfo) {
-        IActivityHandler activityHandler = AbstractActivityHandler.getActivityHandler(activityInfo.getType());
+        IActivityHandler activityHandler = AbstractActivityHandler.getHandler(activityInfo.getType());
         activityHandler.stop(activityInfo);
     }
 

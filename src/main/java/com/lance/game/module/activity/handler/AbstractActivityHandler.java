@@ -1,5 +1,7 @@
 package com.lance.game.module.activity.handler;
 
+import com.lance.game.module.activity.constant.ActivityType;
+
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,29 +12,35 @@ import java.util.Map;
  */
 public abstract class AbstractActivityHandler implements IActivityHandler {
 
+    /** 活动处理器，运行时只读，线程安全 */
     private static final Map<Integer, AbstractActivityHandler> HANDLERS = new HashMap<>();
 
+    /**
+     * 初始化，注册活动处理器
+     */
     @PostConstruct
     protected void init() {
         HANDLERS.put(getActivityType().getId(), this);
     }
 
-    public static AbstractActivityHandler getActivityHandler(int type) {
+    /**
+     * 活动类型
+     */
+    public abstract ActivityType getActivityType();
+
+    /**
+     * 获得活动处理器
+     *
+     * @param type 活动类型
+     */
+    public static AbstractActivityHandler getHandler(int type) {
         return HANDLERS.get(type);
     }
 
-//    @Override
-//    public void start() {
-////        startInternal();
-//    }
-//
-//    public abstract void startInternal();
+    // todo 判断活动状态
 
-//    @Override
-//    public void stop() {
-////        stopInternal();
-//    }
+    // todo 玩家能否参加活动
+    // todo 玩家领取奖励？
 
-//    public abstract void stopInternal();
 
 }

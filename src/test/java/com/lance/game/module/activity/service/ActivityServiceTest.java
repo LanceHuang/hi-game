@@ -32,13 +32,13 @@ public class ActivityServiceTest {
     }
 
     private void addActivityConfig(int id, int type, String name, String startTime, String stopTime) {
-        ActivityConfig testActivityConfig = new ActivityConfig();
-        testActivityConfig.setId(id);
-        testActivityConfig.setType(type);
-        testActivityConfig.setName(name);
-        testActivityConfig.setStartTime(startTime);
-        testActivityConfig.setStopTime(stopTime);
-        activityManager.getActivityConfigs().put(testActivityConfig.getId(), testActivityConfig);
+//        ActivityConfig testActivityConfig = new ActivityConfig();
+//        testActivityConfig.setId(id);
+//        testActivityConfig.setType(type);
+//        testActivityConfig.setName(name);
+//        testActivityConfig.setStartTime(startTime);
+//        testActivityConfig.setStopTime(stopTime);
+//        activityManager.getActivityConfigs().put(testActivityConfig.getId(), testActivityConfig);
     }
 
     @Test

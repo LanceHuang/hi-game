@@ -1,5 +1,6 @@
 package com.lance.game.module.activity.config;
 
+import com.lance.config.annotation.GameConfig;
 import lombok.Data;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Data;
  * @since 2020/1/14 14:31
  */
 @Data
+@GameConfig
 public class ActivityConfig {
 
     /** 活动id */
@@ -17,9 +19,9 @@ public class ActivityConfig {
     private int    type;
     /** 活动名称 */
     private String name;
-    /** 开始时间 */
-    private String startTime;
-    /** 结束时间 */
-    private String stopTime;
+    /** 活动时间 */
+    private String timeConfig;
+    /** 活动奖励 */
+    private int    rewardId;
 
 }
