@@ -7,5 +7,5 @@ package com.lance.config.annotation;
  */
 public @interface StaticInject {
 
-    value
+//    value
 }

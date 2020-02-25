@@ -11,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  * @author Lance
  */
+@Deprecated
 public class GameStarter {
 
     private static final String DEFAULT_CONFIG_LOCATION = "application-context.xml";
