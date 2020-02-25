@@ -9,6 +9,6 @@ package com.lance.config.annotation;
  *
  * @author Lance
  */
-public @interface GameConfig {
+public @interface Config {
     // todo 自动读取config/ActivityConfig.csv的配置 改成可配置
 }

@@ -1,0 +1,13 @@
+id,配置值,配置类型,具体类型,配置说明
+int,string,string,string,
+id,value,type,ctype,
+id,value,type,ctype,
+1,测试服,PLAIN,string,服务器名称
+2,alpha1.0.0,PLAIN,string,版本号
+3,999,PLAIN,int,int测试
+4,"{""name"":""Lance"",""nickname"":""Leo""}",JSON,map,map测试
+5,"{""ip"":""127.0.0.1"",""port"":8080}",JSON,com.lance.config.model.TestConfig,自定义对象测试
+6,"{""config1"":{""ip"":""127.0.0.1"",""port"":8080}}",JSON,"map,java.lang.String,com.lance.config.model.TestConfig",自定义map对象测试
+7,"[89,23,945]",ARRAY,int,数组测试
+8,"[89,23,945]",ARRAY,string,字符串数组测试
+9,"[{""ip"":""127.0.0.1"",""port"":8080},{""ip"":""127.0.0.2"",""port"":8090}]",ARRAY,com.lance.config.model.TestConfig,自定义对象数组测试

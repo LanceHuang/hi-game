@@ -1,4 +1,4 @@
-package com.lance.config;
+package com.lance.config.reader;
 
 /**
  * 配置解析器

@@ -15,7 +15,7 @@ public class GameService implements IGameService {
         LoggerUtil.info("初始化游戏");
 
         LoggerUtil.info("初始化活动");
-        GameContext.getBean(IActivityService.class).init();
+//        GameContext.getBean(IActivityService.class).init();
 
         LoggerUtil.info("初始化游戏完成");
     }

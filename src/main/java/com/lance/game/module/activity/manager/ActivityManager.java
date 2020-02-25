@@ -1,5 +1,7 @@
 package com.lance.game.module.activity.manager;
 
+import com.lance.config.annotation.Inject;
+import com.lance.config.annotation.StaticInject;
 import com.lance.game.module.activity.config.ActivityConfig;
 import com.lance.game.module.config.IConfigReloadable;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,12 @@ import java.util.Map;
  */
 @Repository
 public class ActivityManager implements IConfigReloadable {
+
+
+//    @Inject
+//    private
+
+//    @StaticInject
 
     /** 活动配置 */
     private Map<Integer, ActivityConfig> activityConfigs = new HashMap<>();

@@ -3,6 +3,7 @@ package com.lance.game;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+// todo BootStrap
 // TODO: 2020/2/24 可以换成SpringBoot方式
 
 /**
