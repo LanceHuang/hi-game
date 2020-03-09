@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringRunner.class)
-//@ContextConfiguration(classes = ActivityServiceTest.class) // todo 不知道需不需要
+@ContextConfiguration(classes = ActivityServiceTest.class)
 @ComponentScan({"com.lance.game.module.activity"})
 public class ActivityServiceTest {
 

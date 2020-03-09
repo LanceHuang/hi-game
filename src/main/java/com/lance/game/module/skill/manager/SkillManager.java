@@ -5,12 +5,16 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author Lance
- * @since 2019/7/2 17:31
  */
 @Repository
 public class SkillManager {
 
-    public SkillConfig getSkillConfig(int skillId, int skillLevel) {
+    /**
+     * 获取技能配置
+     *
+     * @param id 技能id
+     */
+    public SkillConfig getSkillConfig(int id) {
         return null;
     }
 }

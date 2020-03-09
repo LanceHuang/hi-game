@@ -8,30 +8,29 @@ import java.util.Map;
  * 技能容器
  *
  * @author Lance
- * @since 2019/7/2 17:28
  */
 @Data
 public class SkillContainer {
 
-    private Map<Integer, SkillEntry> skills;
+    private Map<Integer, AbstractSkill> skillMap;
 
     public static SkillContainer valueOf() {
         return new SkillContainer();
     }
 
-    public SkillEntry addSkill(SkillEntry skillEntry) {
-        return skills.put(skillEntry.getSkillId(), skillEntry);
+    public AbstractSkill addSkill(AbstractSkill skill) {
+        return this.skillMap.put(skill.getId(), skill);
     }
 
-    public SkillEntry removeSkill(int skillId) {
-        return skills.remove(skillId);
+    public AbstractSkill removeSkill(int skillId) {
+        return this.skillMap.remove(skillId);
     }
 
-    public SkillEntry getSkill(int skillId) {
-        return skills.get(skillId);
+    public AbstractSkill getSkill(int skillId) {
+        return this.skillMap.get(skillId);
     }
 
-    public boolean hasSkill(int skillId) {
-        return skills.containsKey(skillId);
+    public boolean containsSkill(int skillId) {
+        return this.skillMap.containsKey(skillId);
     }
 }

@@ -1,19 +1,45 @@
 package com.lance.game.module.skill.service;
 
 import com.lance.game.module.player.model.Player;
-import com.lance.game.module.skill.model.SkillEntry;
+import com.lance.game.module.skill.model.AbstractSkill;
 
 /**
+ * 技能模块
+ *
  * @author Lance
- * @since 2019/7/2 17:27
  */
 public interface ISkillService {
 
-    void learnSkill(Player player, int skillId, int skillLevel);
+    /**
+     * 添加技能
+     *
+     * @param player 玩家对象
+     * @param id     技能id
+     * @param level  技能等级
+     */
+    void addSkill(Player player, int id, int level);
 
-    void forgetSkill(Player player, int skillId);
+    /**
+     * 删除技能
+     *
+     * @param player 玩家对象
+     * @param id     技能id
+     */
+    void removeSkill(Player player, int id);
 
-    SkillEntry querySkill(Player player, int skillId);
+    /**
+     * 查询玩家身上的技能
+     *
+     * @param player 玩家对象
+     * @param id     技能id
+     */
+    AbstractSkill getSkill(Player player, int id);
 
-    boolean hasSkill(Player player, int skillId);
+    /**
+     * 判断玩家身上是否有这个技能
+     *
+     * @param player 玩家对象
+     * @param id     技能id
+     */
+    boolean containsSkill(Player player, int id);
 }
