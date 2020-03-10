@@ -32,6 +32,8 @@ public class BuffService implements IBuffService {
             return null;
         }
 
-        return buffType.create();
+        AbstractBuff buff = buffType.create();
+        buff.init(buffConfig);
+        return buff;
     }
 }
