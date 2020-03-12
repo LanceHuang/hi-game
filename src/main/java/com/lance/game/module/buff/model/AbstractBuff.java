@@ -4,6 +4,8 @@ import com.lance.game.module.buff.config.BuffConfig;
 import com.lance.game.module.player.model.Player;
 import lombok.Data;
 
+import java.util.concurrent.Future;
+
 /**
  * 德鲁伊给蛋哥施放了“生命复苏”buff。这里德鲁伊是施法者，蛋哥是持有者。
  * <ol>
@@ -30,6 +32,8 @@ public abstract class AbstractBuff {
     protected Player caster; // todo 没必要直接用player实体
     /** 持有者 */
     protected Player owner;
+
+    protected Future<?> deactivateFuture;
 
     public void init(BuffConfig buffConfig) {
         this.id = buffConfig.getId();
