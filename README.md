@@ -85,6 +85,9 @@ damage.addition.cri 暴击伤害提高10%
 * 这是开源的库，没必要所有人都安装lombok插件
 * 不希望自动生成某些成员变量的getter/setter
 
+（8）为什么不再使用com.lance.game.util.Assert？
+我在两个项目中用过，有助于减少代码量，但是不便于阅读
+
 ### 术语
 * 条目：entry，玩家运行时使用的可变数据
 * 配置：config，静态配置的数据

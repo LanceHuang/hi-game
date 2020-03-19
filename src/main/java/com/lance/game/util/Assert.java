@@ -10,7 +10,9 @@ import java.util.Collection;
  *
  * @author Lance
  * @since 2019/8/30 18:01
+ * @deprecated 比较适合用在测试，协同开发时，不便于阅读
  */
+@Deprecated
 public class Assert {
 
     public static void assertNull(Object obj, int i18nId) {
