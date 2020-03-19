@@ -88,6 +88,12 @@ damage.addition.cri 暴击伤害提高10%
 （8）为什么不再使用com.lance.game.util.Assert？
 我在两个项目中用过，有助于减少代码量，但是不便于阅读
 
+（9）为什么不再使用valueOf来创建BuffContainer等实体？
+以String.valueOf为例，表示用valueOf的参数去构建实体。创建BuffContainer时是直接new一个新的，没有涉及到一些特殊的处理。
+valueOf使用场景：
+* 用一些特殊参数去构建实体
+* 涉及到复杂的初始化操作
+
 ### 术语
 * 条目：entry，玩家运行时使用的可变数据
 * 配置：config，静态配置的数据

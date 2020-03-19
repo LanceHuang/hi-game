@@ -20,12 +20,10 @@ public class ItemStorage {
     private int            capacity;
     private int            size;
 
-    public static ItemStorage valueOf() {
-        ItemStorage itemStorage = new ItemStorage();
-        itemStorage.items = new AbstractItem[CAPACITY_MAX];
-        itemStorage.capacity = CAPACITY_MAX;
-        itemStorage.size = 0;
-        return itemStorage;
+    public ItemStorage() {
+        this.items = new AbstractItem[CAPACITY_MAX];
+        this.capacity = CAPACITY_MAX;
+        this.size = 0;
     }
 
     /**

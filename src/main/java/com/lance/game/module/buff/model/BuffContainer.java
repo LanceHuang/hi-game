@@ -1,5 +1,9 @@
 package com.lance.game.module.buff.model;
 
+import com.lance.game.module.player.model.Player;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +14,8 @@ import java.util.Map;
  */
 public class BuffContainer {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     // todo
     // 1. Map
     // 2. 定时器控制buff的失效
@@ -18,38 +24,53 @@ public class BuffContainer {
 
     private Map<Integer, AbstractBuff> buffMap = new HashMap<>();
 
-    public static BuffContainer valueOf() {
-        return new BuffContainer();
-    }
+    private Player owner;
 
     public void add(AbstractBuff buff) {
-        if (buff == null) {
-            return;
-        }
+        long startTime = System.currentTimeMillis();
+        long endTime = startTime + buff.getDuration();
+        buff.setStartTime(startTime);
+        buff.setEndTime(endTime);
 
-        long now = System.currentTimeMillis();
-        if (buff.getEndTime() <= now) {
-//            LoggerUtil.error("buff已过期");
-            return;
-        }
+        // todo 创建定时器
 
-//        创建定时器
         this.buffMap.put(buff.getId(), buff);
 
-        // todo 日志，还需要记录玩家信息和buff信息
+        logger.info("Add buff account:{},id:{},startTime:{},duration:{},endTime:{}",
+                this.owner.getAccount(), buff.getId(), buff.getStartTime(), buff.getDuration(), buff.getEndTime());
     }
 
-    public void remove(int id) {
+    public void remove(int id, String desc) {
         AbstractBuff buff = this.buffMap.remove(id);
         if (buff == null) {
             return;
         }
 
-        buff.getDeactivateFuture().cancel(true); // todo 关闭定时器
-        // todo 日志，还需要记录玩家信息和buff信息
+//        buff.getDeactivateFuture().cancel(true); // todo 关闭定时器
+
+        logger.info("Remove buff account:{},id:{},startTime:{},duration:{},endTime:{},desc:{}",
+                this.owner.getAccount(), buff.getId(), buff.getStartTime(), buff.getDuration(), buff.getEndTime(), desc);
     }
 
     public boolean contains(int id) {
         return this.buffMap.containsKey(id);
+    }
+
+    //============================= Getter/Setter ============================
+
+    public Map<Integer, AbstractBuff> getBuffMap() {
+        return buffMap;
+    }
+
+    public void setBuffMap(Map<Integer, AbstractBuff> buffMap) {
+        this.buffMap = buffMap;
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author Lance
  */
-@Repository
+//@Repository
 public class BuffManager implements IBuffManager {
 
     @Inject

@@ -19,10 +19,10 @@ public class PlayerService implements IPlayerService {
         // todo
         Player player = new Player();
         player.setId(id);
-        player.setItemStorage(ItemStorage.valueOf());
-        player.setAttributeContainer(AttributeContainer.valueOf());
+        player.setItemStorage(new ItemStorage());
+        player.setAttributeContainer(new AttributeContainer());
         player.setSkillContainer(SkillContainer.valueOf());
-        player.setBuffContainer(BuffContainer.valueOf());
+        player.setBuffContainer(new BuffContainer());
         return player;
     }
 }
