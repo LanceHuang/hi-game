@@ -1,9 +1,7 @@
 package com.lance.game.module.activity.model;
 
-import com.lance.common.tool.util.DateUtils;
 import com.lance.common.tool.util.TimeUtils;
 import com.lance.game.module.activity.config.ActivityConfig;
-import lombok.Data;
 
 import java.util.Date;
 import java.util.concurrent.Future;
@@ -15,7 +13,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Lance
  * @since 2019/9/6 10:28
  */
-@Data
 public class ActivityInfo {
 
     /** 活动配置 */
@@ -99,4 +96,51 @@ public class ActivityInfo {
         return this.activityConfig.getName();
     }
 
+    public ActivityConfig getActivityConfig() {
+        return activityConfig;
+    }
+
+    public void setActivityConfig(ActivityConfig activityConfig) {
+        this.activityConfig = activityConfig;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getStopDate() {
+        return stopDate;
+    }
+
+    public void setStopDate(Date stopDate) {
+        this.stopDate = stopDate;
+    }
+
+    public AtomicBoolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(AtomicBoolean status) {
+        this.status = status;
+    }
+
+    public Future<?> getStartFuture() {
+        return startFuture;
+    }
+
+    public void setStartFuture(Future<?> startFuture) {
+        this.startFuture = startFuture;
+    }
+
+    public Future<?> getStopFuture() {
+        return stopFuture;
+    }
+
+    public void setStopFuture(Future<?> stopFuture) {
+        this.stopFuture = stopFuture;
+    }
 }

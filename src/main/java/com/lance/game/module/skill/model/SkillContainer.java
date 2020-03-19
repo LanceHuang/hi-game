@@ -1,7 +1,5 @@
 package com.lance.game.module.skill.model;
 
-import lombok.Data;
-
 import java.util.Map;
 
 /**
@@ -9,7 +7,6 @@ import java.util.Map;
  *
  * @author Lance
  */
-@Data
 public class SkillContainer {
 
     private Map<Integer, AbstractSkill> skillMap;

@@ -1,14 +1,12 @@
 package com.lance.net.protocol;
 
 import com.lance.net.annotation.Protocol;
-import lombok.Data;
 
 /**
  * @author Lance
  * @since 2019/10/23 22:08
  */
 @Protocol(1001)
-@Data
 public class TestResponse {
 
     /** 登录状态 */
@@ -28,5 +26,29 @@ public class TestResponse {
         resp.code = code;
         resp.msg = msg;
         return new TestResponse();
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

@@ -1,6 +1,5 @@
 package com.lance.game.module.expression.model;
 
-import lombok.Data;
 import org.mvel2.MVEL;
 
 /**
@@ -9,7 +8,6 @@ import org.mvel2.MVEL;
  * @author Lance
  * @since 2019/7/2 21:57
  */
-@Data
 public class MVELExpression {
 
     // todo 感觉还是要改一下
@@ -36,5 +34,13 @@ public class MVELExpression {
 
     public Boolean calculateBoolean(Object ctx) {
         return MVEL.eval(expression, ctx, Boolean.class);
+    }
+
+    public String getExpression() {
+        return expression;
+    }
+
+    public void setExpression(String expression) {
+        this.expression = expression;
     }
 }

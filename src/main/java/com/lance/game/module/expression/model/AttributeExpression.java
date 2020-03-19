@@ -1,14 +1,11 @@
 package com.lance.game.module.expression.model;
 
-import lombok.Data;
-
 /**
  * 属性公式
  *
  * @author Lance
  * @since 2019/7/3 18:04
  */
-@Data
 public class AttributeExpression extends MVELExpression {
 
     /** 原始公式 */
@@ -29,4 +26,11 @@ public class AttributeExpression extends MVELExpression {
         return expression;
     }
 
+    public String getPureExpression() {
+        return pureExpression;
+    }
+
+    public void setPureExpression(String pureExpression) {
+        this.pureExpression = pureExpression;
+    }
 }

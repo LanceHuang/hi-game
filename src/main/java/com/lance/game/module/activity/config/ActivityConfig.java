@@ -1,7 +1,6 @@
 package com.lance.game.module.activity.config;
 
 import com.lance.config.annotation.Config;
-import lombok.Data;
 
 /**
  * 活动配置
@@ -9,7 +8,6 @@ import lombok.Data;
  * @author Lance
  * @since 2020/1/14 14:31
  */
-@Data
 @Config
 public class ActivityConfig {
 
@@ -24,5 +22,43 @@ public class ActivityConfig {
     /** 活动奖励 */
     private int    rewardId; // todo 兼容多种条件及奖励（譬如，AFK的N档玫瑰花兑换）
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTimeConfig() {
+        return timeConfig;
+    }
+
+    public void setTimeConfig(String timeConfig) {
+        this.timeConfig = timeConfig;
+    }
+
+    public int getRewardId() {
+        return rewardId;
+    }
+
+    public void setRewardId(int rewardId) {
+        this.rewardId = rewardId;
+    }
 }

@@ -1,9 +1,5 @@
 package com.lance.game.module.buff.model;
 
-import com.lance.common.tool.util.TimeUtils;
-import com.lance.game.util.LoggerUtil;
-import lombok.Data;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +8,6 @@ import java.util.Map;
  *
  * @author Lance
  */
-@Data
 public class BuffContainer {
 
     // todo

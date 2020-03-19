@@ -2,7 +2,6 @@ package com.lance.game.module.storage.model;
 
 import com.lance.game.module.item.model.AbstractItem;
 import com.lance.game.module.item.model.ItemType;
-import lombok.Data;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.List;
  * @author Lance
  * @since 2019/8/20 15:44
  */
-@Data
 public class ItemStorage {
 
     private static final int CAPACITY_MAX = 100;

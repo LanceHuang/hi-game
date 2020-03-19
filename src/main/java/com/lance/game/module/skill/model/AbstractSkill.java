@@ -2,14 +2,12 @@ package com.lance.game.module.skill.model;
 
 import com.lance.game.module.player.model.Player;
 import com.lance.game.module.skill.config.SkillConfig;
-import lombok.Data;
 
 /**
  * 技能实体
  *
  * @author Lance
  */
-@Data
 public abstract class AbstractSkill {
 
     private int id;
@@ -26,5 +24,29 @@ public abstract class AbstractSkill {
      */
     public void use(Player player) {
         // todo
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

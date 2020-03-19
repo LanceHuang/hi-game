@@ -1,14 +1,11 @@
 package com.lance.game.module.item.model;
 
-import lombok.Data;
-
 /**
  * 道具
  *
  * @author Lance
  * @since 2019/7/4 20:32
  */
-@Data
 public abstract class AbstractItem {
 
     private long     id;
@@ -25,4 +22,27 @@ public abstract class AbstractItem {
         return false;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+    public ItemType getType() {
+        return type;
+    }
+
+    public void setType(ItemType type) {
+        this.type = type;
+    }
 }

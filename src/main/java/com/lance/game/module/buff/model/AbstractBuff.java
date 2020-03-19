@@ -2,7 +2,6 @@ package com.lance.game.module.buff.model;
 
 import com.lance.game.module.buff.config.BuffConfig;
 import com.lance.game.module.player.model.Player;
-import lombok.Data;
 
 import java.util.concurrent.Future;
 
@@ -15,7 +14,6 @@ import java.util.concurrent.Future;
  *
  * @author Lance
  */
-@Data
 public abstract class AbstractBuff {
 
     protected int  id;
@@ -60,4 +58,52 @@ public abstract class AbstractBuff {
      * 失效
      */
     public abstract void deactivate();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+
+    public Future<?> getDeactivateFuture() {
+        return deactivateFuture;
+    }
+
+    public void setDeactivateFuture(Future<?> deactivateFuture) {
+        this.deactivateFuture = deactivateFuture;
+    }
 }

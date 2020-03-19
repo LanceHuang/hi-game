@@ -1,12 +1,9 @@
 package com.lance.game.skill.model;
 
-import lombok.Data;
-
 /**
  * @author Lance
  * @since 2019/2/26 15:24
  */
-@Data
 public class Skill {
 
     private int    id;
@@ -32,5 +29,37 @@ public class Skill {
         skill.setLevel(level);
         skill.setAhead(ahead);
         return skill;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int[] getAhead() {
+        return ahead;
+    }
+
+    public void setAhead(int[] ahead) {
+        this.ahead = ahead;
     }
 }
