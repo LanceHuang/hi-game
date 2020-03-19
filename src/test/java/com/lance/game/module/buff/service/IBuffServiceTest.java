@@ -2,6 +2,7 @@ package com.lance.game.module.buff.service;
 
 import com.lance.game.module.buff.model.BuffContainer;
 import com.lance.game.module.player.model.Player;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,10 +31,30 @@ public class IBuffServiceTest {
         buffService.createAndAddBuff(player, 1);
     }
 
+    @Test
+    public void removeBuff() {
+        Player player = createTestPlayer();
+        Assert.assertFalse(buffService.containsBuff(player, 1));
+        buffService.createAndAddBuff(player, 1);
+        Assert.assertTrue(buffService.containsBuff(player, 1));
+        buffService.removeBuff(player, 1, "测试删buff");
+        Assert.assertFalse(buffService.containsBuff(player, 1));
+    }
+
+    @Test
+    public void containsBuff() {
+        Player player = createTestPlayer();
+        Assert.assertFalse(buffService.containsBuff(player, 1));
+        buffService.createAndAddBuff(player, 1);
+        Assert.assertTrue(buffService.containsBuff(player, 1));
+    }
+
     private Player createTestPlayer() {
         Player player = new Player();
         player.setAccount("lance");
-        player.setBuffContainer(new BuffContainer());
+        BuffContainer buffContainer = new BuffContainer();
+        buffContainer.setOwner(player);
+        player.setBuffContainer(buffContainer);
         return player;
     }
 }
