@@ -1,5 +1,6 @@
 package com.lance.game.module.buff.model;
 
+import com.lance.game.module.buff.config.BuffConfig;
 import com.lance.game.util.LoggerUtil;
 
 /**
@@ -8,6 +9,10 @@ import com.lance.game.util.LoggerUtil;
  * @author Lance
  */
 public class AttributeBuff extends AbstractBuff {
+
+    public AttributeBuff(BuffConfig buffConfig) {
+        super(buffConfig);
+    }
 
     @Override
     public void activate() {

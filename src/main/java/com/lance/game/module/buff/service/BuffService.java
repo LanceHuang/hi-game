@@ -1,7 +1,7 @@
 package com.lance.game.module.buff.service;
 
 import com.lance.game.module.buff.config.BuffConfig;
-import com.lance.game.module.buff.manager.BuffManager;
+import com.lance.game.module.buff.manager.IBuffManager;
 import com.lance.game.module.buff.model.AbstractBuff;
 import com.lance.game.module.buff.model.BuffContainer;
 import com.lance.game.module.buff.model.BuffType;
@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 public class BuffService implements IBuffService {
 
     @Resource
-    private BuffManager buffManager;
+    private IBuffManager buffManager;
 
     @Override
     public AbstractBuff createBuff(int id) {
@@ -34,9 +34,7 @@ public class BuffService implements IBuffService {
             return null;
         }
 
-        AbstractBuff buff = buffType.create();
-        buff.init(buffConfig);
-        return buff;
+        return buffType.create(buffConfig);
     }
 
     @Override

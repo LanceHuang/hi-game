@@ -13,16 +13,18 @@ import java.util.Collection;
  * @author Lance
  */
 @Repository
-public class BuffManager {
+public class BuffManager implements IBuffManager {
 
     @Inject
     private ConfigStorage<BuffConfig> buffStorage;
 
+    @Override
     public BuffConfig getBuffConfig(int buffId) {
         return buffStorage.get(buffId);
     }
 
-    public Collection<BuffConfig> getBuffConfig() {
+    @Override
+    public Collection<BuffConfig> getAllBuffConfig() {
         return buffStorage.getAll();
     }
 }

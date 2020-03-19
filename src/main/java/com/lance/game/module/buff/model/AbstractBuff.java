@@ -35,12 +35,12 @@ public abstract class AbstractBuff {
 
     protected Future<?> deactivateFuture;
 
-    public void init(BuffConfig buffConfig) {
+    protected AbstractBuff(BuffConfig buffConfig) {
         this.id = buffConfig.getId();
         this.type = buffConfig.getType();
-        this.startTime = System.currentTimeMillis();
+//        this.startTime = System.currentTimeMillis();
         this.duration = buffConfig.getDuration();
-        this.endTime = this.startTime + this.duration;
+//        this.endTime = this.startTime + this.duration;
         this.buffConfig = buffConfig;
     }
 

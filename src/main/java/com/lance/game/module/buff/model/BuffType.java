@@ -1,5 +1,9 @@
 package com.lance.game.module.buff.model;
 
+import com.lance.game.module.buff.config.BuffConfig;
+import com.lance.game.module.buff.factory.AttributeBuffFactory;
+import com.lance.game.module.buff.factory.IBuffFactory;
+
 /**
  * buff类型
  *
@@ -8,17 +12,15 @@ package com.lance.game.module.buff.model;
 public enum BuffType {
 
     /** 属性加成 */
-    ATTRIBUTE(1) {
-        @Override
-        public AbstractBuff create() {
-            return new AttributeBuff();
-        }
-    };
+    ATTRIBUTE(1, new AttributeBuffFactory());
 
     private int type;
 
-    BuffType(int type) {
+    private IBuffFactory factory;
+
+    BuffType(int type, IBuffFactory factory) {
         this.type = type;
+        this.factory = factory;
     }
 
     public static BuffType typeOf(int type) {
@@ -30,9 +32,12 @@ public enum BuffType {
         return null;
     }
 
-    public abstract AbstractBuff create();
+    public AbstractBuff create(BuffConfig buffConfig) {
+        return this.factory.create(buffConfig);
+    }
 
     public int getType() {
         return type;
     }
+
 }
