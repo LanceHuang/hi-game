@@ -5,8 +5,6 @@ import com.lance.config.model.ConfigStorage;
 import com.lance.game.module.buff.config.BuffConfig;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-
 /**
  * buff持久层
  *
@@ -21,10 +19,5 @@ public class BuffManager implements IBuffManager {
     @Override
     public BuffConfig getBuffConfig(int buffId) {
         return buffStorage.get(buffId);
-    }
-
-    @Override
-    public Collection<BuffConfig> getAllBuffConfig() {
-        return buffStorage.getAll();
     }
 }

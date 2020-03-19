@@ -5,9 +5,6 @@ import com.lance.game.module.buff.config.BuffConfig;
 import com.lance.game.module.buff.model.BuffType;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.Collections;
-
 /**
  * @author Lance
  */
@@ -21,10 +18,5 @@ public class TestBuffManager implements IBuffManager {
         buffConfig.setType(BuffType.ATTRIBUTE.getType());
         buffConfig.setDuration(10 * TimeUtils.ONE_SECOND);
         return buffConfig;
-    }
-
-    @Override
-    public Collection<BuffConfig> getAllBuffConfig() {
-        return Collections.emptyList();
     }
 }
