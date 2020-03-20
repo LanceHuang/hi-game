@@ -7,10 +7,9 @@ import com.lance.game.module.activity.handler.IActivityHandler;
 import com.lance.game.module.activity.manager.ActivityManager;
 import com.lance.game.module.activity.model.ActivityInfo;
 import com.lance.game.module.activity.task.ActivityScheduler;
-import com.lance.game.util.LoggerUtil;
+import com.lance.log.LoggerUtil;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;

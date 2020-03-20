@@ -1,7 +1,7 @@
 package com.lance.game.module.activity.task;
 
 import com.lance.common.tool.util.TimeUtils;
-import com.lance.game.util.LoggerUtil;
+import com.lance.log.LoggerUtil;
 import com.lance.net.util.NamedThreadFactory;
 import org.springframework.stereotype.Component;
 

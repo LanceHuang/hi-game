@@ -6,7 +6,7 @@ import com.lance.game.module.buff.model.AbstractBuff;
 import com.lance.game.module.buff.model.BuffContainer;
 import com.lance.game.module.buff.model.BuffType;
 import com.lance.game.module.player.model.Player;
-import com.lance.game.util.LoggerUtil;
+import com.lance.log.LoggerUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

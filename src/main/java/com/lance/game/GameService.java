@@ -1,7 +1,6 @@
 package com.lance.game;
 
-import com.lance.game.module.activity.service.IActivityService;
-import com.lance.game.util.LoggerUtil;
+import com.lance.log.LoggerUtil;
 import org.springframework.stereotype.Service;
 
 /**

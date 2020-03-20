@@ -1,7 +1,7 @@
 package com.lance.game.module.buff.model;
 
 import com.lance.game.module.buff.config.BuffConfig;
-import com.lance.game.util.LoggerUtil;
+import com.lance.log.LoggerUtil;
 
 /**
  * 属性buff
