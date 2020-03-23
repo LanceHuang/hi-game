@@ -18,9 +18,9 @@ public class LoggerUtilTest {
 
     @Test
     public void testLog() {
-        LoggerUtil.log(LogModule.BUFF, "创建buff【{}】", 5642);
-        LoggerUtil.log(LogModule.BUFF, "移除buff【{}】", 5642);
-        LoggerUtil.log(LogModule.TEST, "测试数据1");
-        LoggerUtil.log(LogModule.TEST, "测试数据2");
+        LoggerUtil.log(LogModule.BUFF, LogCode.BUFF_ADD, "创建buff【{}】", 5642);
+        LoggerUtil.log(LogModule.BUFF, LogCode.BUFF_REMOVE, "移除buff【{}】", 5642);
+        LoggerUtil.log(LogModule.TEST, LogCode.TEST, "测试数据1");
+        LoggerUtil.log(LogModule.TEST, LogCode.TEST, "测试数据2");
     }
 }

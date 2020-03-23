@@ -1,8 +1,9 @@
 package com.lance.game.module.buff.model;
 
 import com.lance.game.module.player.model.Player;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.lance.log.LogCode;
+import com.lance.log.LogModule;
+import com.lance.log.LoggerUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +14,6 @@ import java.util.Map;
  * @author Lance
  */
 public class BuffContainer {
-
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     // todo
     // 1. Map
@@ -36,11 +35,11 @@ public class BuffContainer {
 
         this.buffMap.put(buff.getId(), buff);
 
-        logger.info("Add buff account:{},id:{},startTime:{},duration:{},endTime:{}",
+        LoggerUtil.log(LogModule.BUFF, LogCode.BUFF_ADD, "account:{},id:{},startTime:{},duration:{},endTime:{} 添加buff",
                 this.owner.getAccount(), buff.getId(), buff.getStartTime(), buff.getDuration(), buff.getEndTime());
     }
 
-    public void remove(int id, String desc) {
+    public void remove(int id) {
         AbstractBuff buff = this.buffMap.remove(id);
         if (buff == null) {
             return;
@@ -48,8 +47,8 @@ public class BuffContainer {
 
 //        buff.getDeactivateFuture().cancel(true); // todo 关闭定时器
 
-        logger.info("Remove buff account:{},id:{},startTime:{},duration:{},endTime:{},desc:{}",
-                this.owner.getAccount(), buff.getId(), buff.getStartTime(), buff.getDuration(), buff.getEndTime(), desc);
+        LoggerUtil.log(LogModule.BUFF, LogCode.BUFF_REMOVE, "account:{},id:{},startTime:{},duration:{},endTime:{} 移除buff",
+                this.owner.getAccount(), buff.getId(), buff.getStartTime(), buff.getDuration(), buff.getEndTime());
     }
 
     public boolean contains(int id) {

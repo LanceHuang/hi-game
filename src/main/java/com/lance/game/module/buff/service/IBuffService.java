@@ -25,10 +25,9 @@ public interface IBuffService {
     /**
      * 移除buff
      *
-     * @param id   buff id
-     * @param desc 移除的原因
+     * @param id buff id
      */
-    void removeBuff(Player player, int id, String desc);
+    void removeBuff(Player player, int id);
 
     /**
      * 判断玩家身上是否有指定buff

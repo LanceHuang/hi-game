@@ -37,7 +37,7 @@ public class IBuffServiceTest {
         Assert.assertFalse(buffService.containsBuff(player, 1));
         buffService.createAndAddBuff(player, 1);
         Assert.assertTrue(buffService.containsBuff(player, 1));
-        buffService.removeBuff(player, 1, "测试删buff");
+        buffService.removeBuff(player, 1);
         Assert.assertFalse(buffService.containsBuff(player, 1));
     }
 

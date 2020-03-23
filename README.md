@@ -101,6 +101,15 @@ valueOf使用场景：
 * 不同于web等项目，游戏业务模块经常增加（迭代快的项目，平均一周增加一个模块），不推荐添加所有的模块的包名到log4j.properties
 * GameLoggerFactory.getLogger(LogModule.BUFF)这种格式比较难读，可以利用java的enum特性LoggerUtil.log(LogModule.BFF)提高可读性
 
+（12）为什么要用LogCode？  
+譬如，查询所有添加了buff的玩家。仅通过日志中“添加buff”的关键字判断，并不方便。  
+一般都是用awk按逗号切割日志
+```
+time:1584986783941,code:1001,account:lance,id:1,startTime:1584986783938,duration:10000,endTime:1584986793938 添加buff
+
+cat buff.log|grep code=10001|awk -F ',' 'print $3'|sort|uniq
+```
+
 ### 术语
 * 条目：entry，玩家运行时使用的可变数据
 * 配置：config，静态配置的数据

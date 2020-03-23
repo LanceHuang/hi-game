@@ -24,13 +24,13 @@ public class BuffService implements IBuffService {
     public AbstractBuff createBuff(int id) {
         BuffConfig buffConfig = buffManager.getBuffConfig(id);
         if (buffConfig == null) {
-            LoggerUtil.error("没有相应的buff配置 id:{}", id);
+            LoggerUtil.error("没有相应的buff配置，id:{}", id);
             return null;
         }
 
         BuffType buffType = BuffType.typeOf(buffConfig.getType());
         if (buffType == null) {
-            LoggerUtil.error("没有相应的buff类型 id:{},type:{}", id, buffConfig.getType());
+            LoggerUtil.error("没有相应的buff类型，id:{},type:{}", id, buffConfig.getType());
             return null;
         }
 
@@ -46,24 +46,24 @@ public class BuffService implements IBuffService {
 
         BuffContainer buffContainer = player.getBuffContainer();
         if (buffContainer == null) {
-            LoggerUtil.error("buffContainer为空，添加buff失败 account:{},buffId:{}", player.getAccount(), id);
+            LoggerUtil.error("buffContainer为空，添加buff失败，account:{},buffId:{}", player.getAccount(), id);
             return;
         }
 
         AbstractBuff buff = createBuff(id);
         if (buff == null) {
-            LoggerUtil.error("创建buff失败，buff为null account:{},buffId:{}", player.getAccount(), id);
+            LoggerUtil.error("创建buff失败，buff为null，account:{},buffId:{}", player.getAccount(), id);
             return;
         }
         if (buff.getDuration() <= 0L) {
-            LoggerUtil.error("创建buff失败，buff持续时间小于等于0 account:{},buffId:{},duration:{}", player.getAccount(), id, buff.getDuration());
+            LoggerUtil.error("创建buff失败，buff持续时间小于等于0，account:{},buffId:{},duration:{}", player.getAccount(), id, buff.getDuration());
             return;
         }
         buffContainer.add(buff);
     }
 
     @Override
-    public void removeBuff(Player player, int id, String desc) {
+    public void removeBuff(Player player, int id) {
         if (player == null) {
             LoggerUtil.error("player对象不能为空");
             return;
@@ -71,11 +71,11 @@ public class BuffService implements IBuffService {
 
         BuffContainer buffContainer = player.getBuffContainer();
         if (buffContainer == null) {
-            LoggerUtil.error("buffContainer为空，移除buff失败 account:{},buffId:{}", player.getAccount(), id);
+            LoggerUtil.error("buffContainer为空，移除buff失败，account:{},buffId:{}", player.getAccount(), id);
             return;
         }
 
-        buffContainer.remove(id, desc);
+        buffContainer.remove(id);
     }
 
     @Override
