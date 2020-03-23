@@ -98,7 +98,8 @@ valueOf使用场景：
 两者结合可以快速定位问题
 
 （11）为什么LoggerUtil打印业务日志时，需要用到LogModule？
-不同于web等项目，游戏业务模块经常增加（迭代快的项目，平均一周增加一个模块），所以没办法添加所有的模块的包名到log4j.properties。
+* 不同于web等项目，游戏业务模块经常增加（迭代快的项目，平均一周增加一个模块），不推荐添加所有的模块的包名到log4j.properties
+* GameLoggerFactory.getLogger(LogModule.BUFF)这种格式比较难读，可以利用java的enum特性LoggerUtil.log(LogModule.BFF)提高可读性
 
 ### 术语
 * 条目：entry，玩家运行时使用的可变数据

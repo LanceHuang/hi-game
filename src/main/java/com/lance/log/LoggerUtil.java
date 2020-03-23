@@ -2,6 +2,8 @@ package com.lance.log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.FormattingTuple;
+import org.slf4j.helpers.MessageFormatter;
 
 /**
  * 日志工具类
@@ -34,7 +36,8 @@ public final class LoggerUtil {
             return;
         }
 
-        logModule.getLogger().info(msg, args);
+        FormattingTuple ft = MessageFormatter.arrayFormat(msg, args);
+        logModule.getLogger().info(ft.getMessage());
     }
 
 }
