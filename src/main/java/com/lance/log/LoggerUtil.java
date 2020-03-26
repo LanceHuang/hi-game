@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 日志工具类
  *
@@ -13,6 +16,8 @@ import org.slf4j.helpers.MessageFormatter;
 public final class LoggerUtil {
 
     private static final Logger LOG = LoggerFactory.getLogger(LoggerUtil.class); // todo 调整一下日志层级，不然%l会输出LoggerUtil
+
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-HH-dd HH:mm:ss");
 
     private LoggerUtil() {
     }
@@ -36,7 +41,8 @@ public final class LoggerUtil {
 
         if (logModule.getLogger().isInfoEnabled()) {
             FormattingTuple ft = MessageFormatter.arrayFormat(msg, args);
-            logModule.getLogger().info("time:" + System.currentTimeMillis() + ",code:" + logCode.getCode() + "," + ft.getMessage());
+            Date now = new Date();
+            logModule.getLogger().info("time:" + now.getTime() + ",date:" + sdf.format(now) + ",code:" + logCode.getCode() + "," + ft.getMessage());
         }
     }
 
