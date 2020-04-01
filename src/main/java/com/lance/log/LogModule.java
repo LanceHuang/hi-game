@@ -1,6 +1,5 @@
 package com.lance.log;
 
-import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -32,17 +31,19 @@ public enum LogModule {
         PatternLayout patternLayout = new PatternLayout();
         patternLayout.setConversionPattern("%m%n");
 
-        FileAppender appender = new FileAppender();
+        DailyRollingDirectoryAppender appender = new DailyRollingDirectoryAppender();
         appender.setName(getAppenderName());
         appender.setThreshold(Level.INFO);
-        appender.setFile(getFileName());
+        appender.setBasePath("./module-logs/");
+        appender.setDatePattern("yyyy-MM-dd");
+        appender.setFile(getLoggerName() + ".log");
         appender.setLayout(patternLayout);
         appender.activateOptions(); // 使其生效
 
         Logger newLogger = LogManager.getLogger(getLoggerName());
         newLogger.setLevel(Level.INFO);
         newLogger.addAppender(appender);
-        newLogger.setAdditivity(false);
+        newLogger.setAdditivity(false); // 不会输出到父logger
         return newLogger;
     }
 
@@ -54,11 +55,12 @@ public enum LogModule {
         return getLoggerName() + "Appender";
     }
 
-    private String getFileName() {
-        String logDir = System.getProperty("logdir");
-        if (logDir == null) {
-            logDir = ".";
-        }
-        return logDir + "/module-logs/" + getLoggerName() + ".log";
-    }
+//    @Deprecated
+//    private String getBasePath() {
+//        String logDir = System.getProperty("logdir");
+//        if (logDir == null) {
+//            return "./module-logs/";
+//        }
+//        return logDir + "/module-logs/";
+//    }
 }

@@ -38,7 +38,18 @@ Server1                      Server1
 * buff与技能
 * 日志
 
-### 已实现的功能
+### 日志
+```
+logs
+    game.log
+    error.log
+module-logs
+    2020-04-01
+        test.log
+    2020-04-02
+        buff.log
+        test.log
+```
 
 ### 问题
 
