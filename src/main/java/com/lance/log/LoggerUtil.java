@@ -39,7 +39,7 @@ public final class LoggerUtil {
             return;
         }
 
-        // 不同分析分式，用不同格式（暂时没想到性能好的方案）
+        // 不同分析方式，用不同格式（暂时没想到性能好的方案）
         if (logModule.getLogger().isInfoEnabled()) {
             FormattingTuple ft = MessageFormatter.arrayFormat(msg, args);
             Date now = new Date();

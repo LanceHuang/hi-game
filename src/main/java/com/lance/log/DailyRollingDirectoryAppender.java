@@ -16,7 +16,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
- * /logs/20200401/item.log
+ * 按目录输出日志 /logs/2020-04-01/item.log
  *
  * @author Lance
  * @see org.apache.log4j.DailyRollingFileAppender
