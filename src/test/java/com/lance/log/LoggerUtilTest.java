@@ -1,15 +1,12 @@
 package com.lance.log;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class LoggerUtilTest {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Test
     public void test() {
+        LoggerUtil.debug(null);
+        LoggerUtil.debug(null, null);
         LoggerUtil.debug("测试debug");
         LoggerUtil.info("测试info");
         LoggerUtil.error("测试error");
