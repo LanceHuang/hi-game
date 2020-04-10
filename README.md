@@ -123,6 +123,8 @@ time:1584986783941,code:1001,account:lance,id:1,startTime:1584986783938,duration
 cat buff.log|grep code=10001|awk -F ',' 'print $3'|sort|uniq
 ```
 
+如果搭建了ELK，还可以用ES做聚合分析
+
 ### 术语
 * 条目：entry，玩家运行时使用的可变数据
 * 配置：config，静态配置的数据
