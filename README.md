@@ -29,16 +29,8 @@ Server1                      Server1
 
 ```
 
-### 正在实现的功能
-* 网络层
-* 角色实体
-* 属性容器
-* 活动框架
-* 背包道具
-* buff与技能
-* 日志
 
-### 日志
+### 日志目录结构
 ```
 logs
     game.log
@@ -50,6 +42,11 @@ module-logs
         buff.log
         test.log
 ```
+
+### 术语
+* 条目：entry，玩家运行时使用的可变数据
+* 配置：config，静态配置的数据
+* 容器：container，拥有自我管理能力的实例对象，富血模型
 
 ### 问题
 
@@ -124,8 +121,3 @@ cat buff.log|grep code=10001|awk -F ',' 'print $3'|sort|uniq
 ```
 
 如果搭建了ELK，还可以用ES做聚合分析
-
-### 术语
-* 条目：entry，玩家运行时使用的可变数据
-* 配置：config，静态配置的数据
-* 容器：container，拥有自我管理能力的实例对象，富血模型
