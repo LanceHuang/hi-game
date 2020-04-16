@@ -20,6 +20,9 @@ public abstract class AbstractItem {
     private int num;
 
     public void init(ItemConfig config) {
+        this.id = config.getId();
+        this.type = config.getType();
+        this.num = 1;
     }
 
     /**

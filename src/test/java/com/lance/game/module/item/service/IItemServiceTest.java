@@ -19,8 +19,12 @@ public class IItemServiceTest {
 
     @Test
     public void test() {
-        AbstractItem item = itemService.createItem(1);
+        AbstractItem item = itemService.createItem(2004);
         System.out.println(item);
+        System.out.println(item.getObjectId());
+        System.out.println(item.getId());
+        System.out.println(item.getType());
+        System.out.println(item.getNum());
     }
 
 
