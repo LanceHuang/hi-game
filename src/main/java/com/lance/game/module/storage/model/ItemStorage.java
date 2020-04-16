@@ -76,9 +76,9 @@ public class ItemStorage {
             if (null == item) {
                 continue;
             }
-            if (item.getType().equals(type)) {
-                list.add(item);
-            }
+//            if (item.getType().equals(type)) {
+//                list.add(item);
+//            }
         }
         return list;
     }

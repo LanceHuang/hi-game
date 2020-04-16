@@ -1,48 +1,67 @@
 package com.lance.game.module.item.model;
 
+import com.lance.game.module.item.config.ItemConfig;
+
 /**
  * 道具
  *
  * @author Lance
- * @since 2019/7/4 20:32
  */
 public abstract class AbstractItem {
 
-    private long     id;
-    private int      itemId;
-    private ItemType type;
+    /** 唯一标识 */
+    private long objectId;
+
+    /** 道具id */
+    private int id;
+    /** 道具类型 */
+    private int type;
+    /** 道具数量 */
+    private int num;
+
+    public void init(ItemConfig config) {
+    }
 
     /**
-     * 判断道具是否可以直接使用
-     *
-     * @return {@code true} 可直接使用
+     * 判断道具能否使用
      */
-    // todo @JsonIgnore
+    // todo
     public boolean isUsable() {
         return false;
     }
 
-    public long getId() {
+    //==================================== Getter/Setter ============================
+
+    public long getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(long objectId) {
+        this.objectId = objectId;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
-
-    public ItemType getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(ItemType type) {
+    public void setType(int type) {
         this.type = type;
     }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
 }

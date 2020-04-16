@@ -1,19 +1,29 @@
 package com.lance.game.module.item.service;
 
-import com.lance.game.module.player.model.Player;
+import com.lance.game.module.item.model.AbstractItem;
+
+import java.util.List;
 
 /**
  * 道具
  *
  * @author Lance
- * @since 2019/8/30 16:05
  */
 public interface IItemService {
 
     /**
-     * 使用道具
+     * 创建道具
+     *
+     * @param id 道具id
      */
-    void useItem(Player player, long id);
+    AbstractItem createItem(int id);
 
-    // todo 批量使用道具？
+    /**
+     * 创建道具
+     *
+     * @param id  道具id
+     * @param num 道具数量
+     */
+    List<AbstractItem> createItem(int id, int num);
+
 }

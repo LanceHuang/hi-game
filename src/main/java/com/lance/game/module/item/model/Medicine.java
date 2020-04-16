@@ -4,10 +4,9 @@ import com.lance.game.exception.GameException;
 import com.lance.game.module.player.model.Player;
 
 /**
- * 药物
+ * 药水
  *
  * @author Lance
- * @since 2019/7/4 20:58
  */
 public class Medicine extends AbstractUsableItem {
 

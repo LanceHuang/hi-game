@@ -7,7 +7,6 @@ import com.lance.game.module.player.model.Player;
  * 可使用的道具
  *
  * @author Lance
- * @since 2019/8/30 16:08
  */
 public abstract class AbstractUsableItem extends AbstractItem {
 

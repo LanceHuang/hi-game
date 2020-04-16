@@ -3,14 +3,15 @@ package com.lance.game.module.item.config;
 import com.lance.game.module.item.model.ItemType;
 
 /**
+ * 道具配置
+ *
  * @author Lance
- * @since 2019/7/4 20:35
  */
 public class ItemConfig {
 
-    private int      id;
-    private String   name;
-    private ItemType type;
+    private int    id;
+    private String name;
+    private int    type;
 
     // todo 属性
 
@@ -30,11 +31,11 @@ public class ItemConfig {
         this.name = name;
     }
 
-    public ItemType getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(ItemType type) {
+    public void setType(int type) {
         this.type = type;
     }
 }

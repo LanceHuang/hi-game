@@ -18,11 +18,12 @@ public class StorageService implements IStorageService {
     @Override
     public AbstractItem createItem(int itemId) {
         // todo 临时硬编码，因为还没有创建数据库
-        AbstractItem item = ItemType.MEDICINE.create();
-        item.setId(System.currentTimeMillis());
-        item.setItemId(itemId);
-        item.setType(ItemType.MEDICINE);
-        return item;
+//        AbstractItem item = ItemType.MEDICINE.create();
+//        item.setId(System.currentTimeMillis());
+//        item.setItemId(itemId);
+//        item.setType(ItemType.MEDICINE);
+//        return item;
+        return null;
     }
 
     @Override

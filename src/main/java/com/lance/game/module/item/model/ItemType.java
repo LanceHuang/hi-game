@@ -1,37 +1,49 @@
 package com.lance.game.module.item.model;
 
+import com.lance.game.module.item.config.ItemConfig;
+import com.lance.game.module.item.factory.MedicineFactory;
+import com.lance.game.module.item.factory.SimpleItemFactory;
+import com.lance.game.module.item.factory.EquipmentFactory;
+import com.lance.game.module.item.factory.IItemFactory;
+
 /**
+ * 道具类型
+ *
  * @author Lance
- * @since 2019/7/4 20:36
  */
 public enum ItemType {
 
-    // todo 暂时没想到 武器和装备 的区别
-//    /** 武器 */
-//    WEAPON,
-
+    /** 普通道具 */
+    SIMPLE_ITEM(1, new SimpleItemFactory()),
+    /** 药水 */
+    MEDICINE(2, new MedicineFactory()),
     /** 装备 */
-    EQUIPMENT() {
-        @Override
-        public <T extends AbstractItem> T create() {
-            return (T) new Equipment();
-        }
-    },
-    /** 药物 */
-    MEDICINE() {
-        @Override
-        public <T extends AbstractItem> T create() {
-            return (T) new Medicine();
-        }
-    },
+    EQUIPMENT(3, new EquipmentFactory()),
     ;
 
-    // todo 因为考虑到可能需要自定义道具的信息，所以这里留出create方法
-    // 1. 加数字标识？用于存数据库
+    private int type;
 
-    /**
-     * 创建道具
-     */
-    public abstract <T extends AbstractItem> T create();
+    private IItemFactory factory;
 
+    ItemType(int type, IItemFactory factory) {
+        this.type = type;
+        this.factory = factory;
+    }
+
+    public AbstractItem create(ItemConfig config) {
+        return this.factory.create(config);
+    }
+
+    public static ItemType typeOf(int type) {
+        for (ItemType itemType : values()) {
+            if (itemType.type == type) {
+                return itemType;
+            }
+        }
+        return null;
+    }
+
+    public int getType() {
+        return type;
+    }
 }

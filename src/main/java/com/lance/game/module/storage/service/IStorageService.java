@@ -49,4 +49,13 @@ public interface IStorageService {
      * @return {@code true} 删除成功
      */
     boolean removeItemById(Player player, long id);
+
+//    /**
+//     * 使用道具
+//     *
+//     * @param objectId 道具唯一标识
+//     */
+//    void useItem(Player player, long objectId);
+
+    // todo 批量使用道具？
 }

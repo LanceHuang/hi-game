@@ -1,37 +1,41 @@
 package com.lance.game.module.item.service;
 
-import com.lance.game.constant.I18nId;
-import com.lance.game.util.Assert;
+import com.lance.game.module.item.config.ItemConfig;
+import com.lance.game.module.item.manager.IItemManager;
 import com.lance.game.module.item.model.AbstractItem;
-import com.lance.game.module.item.model.AbstractUsableItem;
-import com.lance.game.module.player.model.Player;
-import com.lance.game.module.storage.service.IStorageService;
+import com.lance.game.module.item.model.ItemType;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Lance
- * @since 2019/8/30 16:07
  */
 @Service
 public class ItemService implements IItemService {
 
     @Resource
-    private IStorageService storageService;
+    private IItemManager itemManager;
 
     @Override
-    public void useItem(Player player, long id) {
-        AbstractItem item = storageService.getItemById(player, id);
-        Assert.assertNotNull(item, I18nId.ITEM_NOT_EXIST);
-        Assert.assertTrue(item.isUsable(), I18nId.ITEM_CAN_NOT_USE);
+    public AbstractItem createItem(int id) {
+        ItemConfig itemConfig = itemManager.getItemConfig(id);
+        if (itemConfig == null) {
+            return null;
+        }
 
-        // 使用道具
-        AbstractUsableItem usableItem = (AbstractUsableItem) item;
-        usableItem.verifyAndUse(player);
+        ItemType itemType = ItemType.typeOf(itemConfig.getType());
+        if (itemType == null) {
+            return null;
+        }
 
-        // 移除道具
-        storageService.removeItemById(player, id);
+        return itemType.create(itemConfig);
+    }
+
+    @Override
+    public List<AbstractItem> createItem(int id, int num) {
+        return null;
     }
 
 }

@@ -1,9 +1,9 @@
 package com.lance.game.module.item.model;
 
 /**
- * 装备
+ * 普通道具
  *
  * @author Lance
  */
-public class Equipment extends AbstractItem {
+public class SimpleItem extends AbstractItem {
 }

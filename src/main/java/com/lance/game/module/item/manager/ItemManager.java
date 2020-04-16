@@ -5,11 +5,11 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author Lance
- * @since 2019/7/4 20:39
  */
 @Repository
-public class ItemManager {
+public class ItemManager implements IItemManager {
 
+    @Override
     public ItemConfig getItemConfig(int id) {
         return null;
     }
