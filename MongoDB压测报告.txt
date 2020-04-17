@@ -1,0 +1,64 @@
+========================================= N次单线程写 =======================================
+
+测试代码：MongoWriteBenchTest
+测试对象：SmallTestObject
+MongoDB: insertOne
+MySQL: execute, engine=InnoDB
+
+次数 MongoDB MySQL
+1000 3750 3054
+10000 13571 25596
+100000 101898 GG
+
+========================================= N次单线程batch写 =======================================
+每1000条提交一次
+测试代码：MongoWriteBenchTest
+测试对象：SmallTestObject
+MongoDB: insertMany
+MySQL: batch, engine=InnoDB
+
+
+次数 MongoDB MySQL
+1000 1946 1295
+10000 2450 6884
+100000 4401 67250
+
+
+========================================= N次单线程batch写 =======================================
+每1000条提交一次
+测试代码：MongoWriteBenchTest
+测试对象：SmallTestObject
+MongoDB: insertMany
+MySQL: batch, engine=MyISAM
+
+次数 MongoDB MySQL
+1000 1757 944
+10000 2384 3292
+100000 3507 36736
+
+
+======================================================================
+create database common
+character set utf8
+collate 'utf8_general_ci';
+
+drop table test;
+create table test (
+	a1 int,
+	a2 int,
+	b1 bigint,
+	b2 bigint,
+	c1 varchar(10),
+	c2 varchar(10)
+) engine=InnoDB default charset=utf8;
+
+
+drop table test;
+create table test (
+	a1 int,
+	a2 int,
+	b1 bigint,
+	b2 bigint,
+	c1 varchar(10),
+	c2 varchar(10)
+) engine=MyISAM default charset=utf8;

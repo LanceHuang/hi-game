@@ -30,6 +30,7 @@ public class PlayerDocumentHandler implements DocumentHandler<Player> {
         player.setGender(doc.getInteger("gender"));
         player.setLevel(doc.getInteger("level"));
         player.setExp(doc.getLong("exp"));
+        // todo doc.getLong("sdsd"); 判空
         return player;
     }
 }
