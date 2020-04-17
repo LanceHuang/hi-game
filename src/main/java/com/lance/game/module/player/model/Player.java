@@ -6,12 +6,13 @@ import com.lance.game.module.skill.model.SkillContainer;
 import com.lance.game.module.storage.model.ItemStorage;
 
 /**
+ * 玩家对象
+ *
  * @author Lance
- * @since 2019/7/2 17:25
  */
 public class Player {
 
-    // todo 密码呢？
+    /** 唯一标识 */
     private long   id;
     /** 账号 */
     private String account;
@@ -23,8 +24,6 @@ public class Player {
     private int    level;
     /** 经验条 */
     private long   exp;
-//    /** 职业 */
-//    private int    career;
 
     private AttributeContainer attributeContainer;
     private SkillContainer     skillContainer;
@@ -116,5 +115,17 @@ public class Player {
 
     public void setItemStorage(ItemStorage itemStorage) {
         this.itemStorage = itemStorage;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", gender=" + gender +
+                ", level=" + level +
+                ", exp=" + exp +
+                '}';
     }
 }

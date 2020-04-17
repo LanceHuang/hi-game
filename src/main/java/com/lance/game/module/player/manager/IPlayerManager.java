@@ -1,11 +1,11 @@
-package com.lance.game.module.player.service;
+package com.lance.game.module.player.manager;
 
 import com.lance.game.module.player.model.Player;
 
 /**
  * @author Lance
  */
-public interface IPlayerService {
+public interface IPlayerManager {
 
     /**
      * 添加或更新玩家数据
@@ -18,5 +18,4 @@ public interface IPlayerService {
      * @param id 唯一标识
      */
     Player getPlayer(long id);
-
 }

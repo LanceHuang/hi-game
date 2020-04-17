@@ -34,27 +34,28 @@ public class MongoUtils {
     /**
      * 插入数据
      */
-    public static void insert(String databaseName, String collectionName, String data) {
+    public static <T> void insert(String databaseName, String collectionName, T data, DocumentHandler<T> documentHandler) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
-        collection.insertOne(Document.parse(data));
+        collection.insertOne(documentHandler.parse(data));
         close(client);
     }
 
     /**
      * 查询单个文档
      */
-    public static <T> T findOne(String databaseName, String collectionName, String query, DocumentHandler<T> documentHandler) {
+    public static <T> T findOne(String databaseName, String collectionName, String filter, DocumentHandler<T> documentHandler) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
 
         T result = null;
-        for (Document doc : collection.find(Document.parse(query))) {
+        for (Document doc : collection.find(Document.parse(filter))) {
             result = documentHandler.handle(doc);
             break;
         }
+        collection.insertOne(new Document());
 
         close(client);
         return result;
@@ -90,5 +91,16 @@ public class MongoUtils {
         close(client);
     }
 
-    // todo update
+    /**
+     * 查询并替换文档
+     */
+    public static <T> void findOneAndReplace(String databaseName, String collectionName, String filter, T data, DocumentHandler<T> documentHandler) {
+        MongoClient client = getClient();
+        MongoDatabase database = client.getDatabase(databaseName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        collection.findOneAndReplace(Document.parse(filter), documentHandler.parse(data));
+        close(client);
+    }
+
 }

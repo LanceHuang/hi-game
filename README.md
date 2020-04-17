@@ -39,6 +39,14 @@ Server1                      Server1
 
 ```
 
+数据库设计
+```
+game
+    player 玩家信息
+    register 注册信息
+    item 道具配置
+```
+
 
 ### 日志目录结构
 ```

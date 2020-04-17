@@ -1,7 +1,8 @@
 package com.lance.common.util;
 
+import com.lance.common.tool.util.JsonUtils;
 import com.lance.game.module.item.config.ItemConfig;
-import org.bson.Document;
+import com.lance.game.module.item.handler.ItemDocumentHandler;
 import org.junit.Test;
 
 import java.util.List;
@@ -12,8 +13,8 @@ public class MongoUtilsTest {
     private String collectionName = "item";
 
     @Test
-    public void insert() {
-        String[] docs = {
+    public void insert() throws Exception {
+        String[] data = {
                 "{id: 1, name: \"石头\", type: 1}",
                 "{id: 2, name: \"树叶\", type: 1}",
                 "{id: 2001, name: \"小型生命药水\", type: 2, value: {HP: 100}}",
@@ -24,26 +25,16 @@ public class MongoUtilsTest {
                 "{id: 3003, name: \"新手鞋\", type: 3, pos:2, attribute: {DEFENCE: 50, HP: 100}}"
         };
 
-        for (String doc : docs) {
-            MongoUtils.insert(databaseName, collectionName, doc);
+        for (String item : data) {
+            MongoUtils.insert(databaseName, collectionName, JsonUtils.json2object(item, ItemConfig.class), new ItemDocumentHandler());
         }
     }
 
     @Test
     public void findOne() {
-        String query = "{id:2004}";
+        String filter = "{id:2004}";
 
-        ItemConfig itemConfig = MongoUtils.findOne(databaseName, collectionName, query, new DocumentHandler<ItemConfig>() {
-            @Override
-            public ItemConfig handle(Document doc) {
-                ItemConfig itemConfig = new ItemConfig();
-                itemConfig.setId(doc.getInteger("id"));
-                itemConfig.setName(doc.getString("name"));
-                itemConfig.setType(doc.getInteger("type"));
-                return itemConfig;
-            }
-        });
-
+        ItemConfig itemConfig = MongoUtils.findOne(databaseName, collectionName, filter, new ItemDocumentHandler());
         System.out.println(itemConfig);
         System.out.println(itemConfig.getId());
         System.out.println(itemConfig.getName());
@@ -52,23 +43,26 @@ public class MongoUtilsTest {
 
     @Test
     public void find() {
-        List<ItemConfig> itemConfigs = MongoUtils.find(databaseName, collectionName, new DocumentHandler<ItemConfig>() {
-            @Override
-            public ItemConfig handle(Document doc) {
-                ItemConfig itemConfig = new ItemConfig();
-                itemConfig.setId(doc.getInteger("id"));
-                itemConfig.setName(doc.getString("name"));
-                itemConfig.setType(doc.getInteger("type"));
-                return itemConfig;
-            }
-        });
-
+        List<ItemConfig> itemConfigs = MongoUtils.find(databaseName, collectionName, new ItemDocumentHandler());
         itemConfigs.forEach(System.out::println);
     }
 
     @Test
     public void deleteMany() {
         MongoUtils.deleteMany(databaseName, collectionName, "{type:2,name:'大型生命药水'}");
+        System.out.println("=================================");
+        find();
+    }
+
+    @Test
+    public void findOneAndReplace() throws Exception {
+        find();
+        System.out.println("=================================");
+        MongoUtils.findOneAndReplace(
+                databaseName, collectionName, "{type:2}",
+                JsonUtils.json2object("{id: 2001, name: \"小型生命药水\", type: 2, value: {HP: 100}}", ItemConfig.class),
+                new ItemDocumentHandler()
+        );
         System.out.println("=================================");
         find();
     }
