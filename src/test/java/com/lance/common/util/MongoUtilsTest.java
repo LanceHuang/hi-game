@@ -4,12 +4,15 @@ import com.lance.game.module.item.config.ItemConfig;
 import org.bson.Document;
 import org.junit.Test;
 
+import java.util.List;
+
 public class MongoUtilsTest {
+
+    private String databaseName   = "game";
+    private String collectionName = "item";
 
     @Test
     public void insert() {
-        String databaseName = "game";
-        String collectionName = "item";
         String[] docs = {
                 "{id: 1, name: \"石头\", type: 1}",
                 "{id: 2, name: \"树叶\", type: 1}",
@@ -28,8 +31,6 @@ public class MongoUtilsTest {
 
     @Test
     public void findOne() {
-        String databaseName = "game";
-        String collectionName = "item";
         String query = "{id:2004}";
 
         ItemConfig itemConfig = MongoUtils.findOne(databaseName, collectionName, query, new ResultHandler<ItemConfig>() {
@@ -47,5 +48,28 @@ public class MongoUtilsTest {
         System.out.println(itemConfig.getId());
         System.out.println(itemConfig.getName());
         System.out.println(itemConfig.getType());
+    }
+
+    @Test
+    public void find() {
+        List<ItemConfig> itemConfigs = MongoUtils.find(databaseName, collectionName, new ResultHandler<ItemConfig>() {
+            @Override
+            public ItemConfig handle(Document doc) {
+                ItemConfig itemConfig = new ItemConfig();
+                itemConfig.setId(doc.getInteger("id"));
+                itemConfig.setName(doc.getString("name"));
+                itemConfig.setType(doc.getInteger("type"));
+                return itemConfig;
+            }
+        });
+
+        itemConfigs.forEach(System.out::println);
+    }
+
+    @Test
+    public void deleteMany() {
+        MongoUtils.deleteMany(databaseName, collectionName, "{type:2,name:'大型生命药水'}");
+        System.out.println("=================================");
+        find();
     }
 }

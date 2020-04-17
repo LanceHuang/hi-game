@@ -6,6 +6,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author Lance
  */
@@ -39,6 +42,9 @@ public class MongoUtils {
         close(client);
     }
 
+    /**
+     * 查询单个文档
+     */
     public static <T> T findOne(String databaseName, String collectionName, String query, ResultHandler<T> resultHandler) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
@@ -54,4 +60,34 @@ public class MongoUtils {
         return result;
     }
 
+    /**
+     * 查询所有文档
+     */
+    public static <T> List<T> find(String databaseName, String collectionName, ResultHandler<T> resultHandler) {
+        MongoClient client = getClient();
+        MongoDatabase database = client.getDatabase(databaseName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        List<T> result = new LinkedList<>();
+        for (Document doc : collection.find()) {
+            result.add(resultHandler.handle(doc));
+        }
+
+        close(client);
+        return result;
+    }
+
+    /**
+     * 根据条件删除文档
+     */
+    public static void deleteMany(String databaseName, String collectionName, String filter) {
+        MongoClient client = getClient();
+        MongoDatabase database = client.getDatabase(databaseName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        collection.deleteMany(Document.parse(filter));
+        close(client);
+    }
+
+    // todo update
 }

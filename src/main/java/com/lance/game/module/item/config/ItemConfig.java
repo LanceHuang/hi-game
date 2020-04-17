@@ -1,7 +1,5 @@
 package com.lance.game.module.item.config;
 
-import com.lance.game.module.item.model.ItemType;
-
 /**
  * 道具配置
  *
@@ -37,5 +35,14 @@ public class ItemConfig {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemConfig{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                '}';
     }
 }
