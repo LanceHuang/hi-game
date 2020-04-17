@@ -45,14 +45,14 @@ public class MongoUtils {
     /**
      * 查询单个文档
      */
-    public static <T> T findOne(String databaseName, String collectionName, String query, ResultHandler<T> resultHandler) {
+    public static <T> T findOne(String databaseName, String collectionName, String query, DocumentHandler<T> documentHandler) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
 
         T result = null;
         for (Document doc : collection.find(Document.parse(query))) {
-            result = resultHandler.handle(doc);
+            result = documentHandler.handle(doc);
             break;
         }
 
@@ -63,15 +63,16 @@ public class MongoUtils {
     /**
      * 查询所有文档
      */
-    public static <T> List<T> find(String databaseName, String collectionName, ResultHandler<T> resultHandler) {
+    public static <T> List<T> find(String databaseName, String collectionName, DocumentHandler<T> documentHandler) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
 
         List<T> result = new LinkedList<>();
         for (Document doc : collection.find()) {
-            result.add(resultHandler.handle(doc));
+            result.add(documentHandler.handle(doc));
         }
+
 
         close(client);
         return result;

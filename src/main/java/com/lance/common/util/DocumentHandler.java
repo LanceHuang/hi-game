@@ -7,7 +7,7 @@ import org.bson.Document;
  *
  * @author Lance
  */
-public interface ResultHandler<T> {
+public interface DocumentHandler<T> {
 
     T handle(Document doc);
 }

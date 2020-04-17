@@ -33,7 +33,7 @@ public class MongoUtilsTest {
     public void findOne() {
         String query = "{id:2004}";
 
-        ItemConfig itemConfig = MongoUtils.findOne(databaseName, collectionName, query, new ResultHandler<ItemConfig>() {
+        ItemConfig itemConfig = MongoUtils.findOne(databaseName, collectionName, query, new DocumentHandler<ItemConfig>() {
             @Override
             public ItemConfig handle(Document doc) {
                 ItemConfig itemConfig = new ItemConfig();
@@ -52,7 +52,7 @@ public class MongoUtilsTest {
 
     @Test
     public void find() {
-        List<ItemConfig> itemConfigs = MongoUtils.find(databaseName, collectionName, new ResultHandler<ItemConfig>() {
+        List<ItemConfig> itemConfigs = MongoUtils.find(databaseName, collectionName, new DocumentHandler<ItemConfig>() {
             @Override
             public ItemConfig handle(Document doc) {
                 ItemConfig itemConfig = new ItemConfig();
