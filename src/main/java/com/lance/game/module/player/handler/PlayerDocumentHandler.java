@@ -24,13 +24,12 @@ public class PlayerDocumentHandler implements DocumentHandler<Player> {
     @Override
     public Player handle(Document doc) {
         Player player = new Player();
-        player.setId(doc.getLong("id"));
+        player.setId(doc.get("id", 0L));
         player.setAccount(doc.getString("account"));
         player.setNickname(doc.getString("nickname"));
-        player.setGender(doc.getInteger("gender"));
-        player.setLevel(doc.getInteger("level"));
-        player.setExp(doc.getLong("exp"));
-        // todo doc.getLong("sdsd"); 判空
+        player.setGender(doc.get("gender", 0));
+        player.setLevel(doc.get("level", 0));
+        player.setExp(doc.get("exp", 0L));
         return player;
     }
 }

@@ -21,9 +21,9 @@ public class ItemDocumentHandler implements DocumentHandler<ItemConfig> {
     @Override
     public ItemConfig handle(Document doc) {
         ItemConfig itemConfig = new ItemConfig();
-        itemConfig.setId(doc.getInteger("id"));
+        itemConfig.setId(doc.get("id", 0));
         itemConfig.setName(doc.getString("name"));
-        itemConfig.setType(doc.getInteger("type"));
+        itemConfig.setType(doc.get("type", 0));
         return itemConfig;
     }
 }
