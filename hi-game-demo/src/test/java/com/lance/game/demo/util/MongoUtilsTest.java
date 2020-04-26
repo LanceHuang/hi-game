@@ -15,14 +15,14 @@ public class MongoUtilsTest {
     @Test
     public void insert() throws Exception {
         String[] data = {
-                "{id: 1, name: \"石头\", type: 1}",
-                "{id: 2, name: \"树叶\", type: 1}",
-                "{id: 2001, name: \"小型生命药水\", type: 2, value: {HP: 100}}",
-                "{id: 2002, name: \"中型生命药水\", type: 2, value: {HP: 500}}",
-                "{id: 2003, name: \"大型生命药水\", type: 2, value: {HP: 1000}}",
-                "{id: 2004, name: \"小型法力药水\", type: 2, value: {MP: 50}}",
-                "{id: 3001, name: \"新手刀\", type: 3, pos:1, attribute: {ATK: 100}}",
-                "{id: 3003, name: \"新手鞋\", type: 3, pos:2, attribute: {DEFENCE: 50, HP: 100}}"
+                "{\"id\": 1, \"name\": \"石头\", \"type\": 1}",
+                "{\"id\": 2, \"name\": \"树叶\", \"type\": 1}",
+                "{\"id\": 2001, \"name\": \"小型生命药水\", \"type\": 2, \"value\": {\"HP\": 100}}",
+                "{\"id\": 2002, \"name\": \"中型生命药水\", \"type\": 2, \"value\": {\"HP\": 500}}",
+                "{\"id\": 2003, \"name\": \"大型生命药水\", \"type\": 2, \"value\": {\"HP\": 1000}}",
+                "{\"id\": 2004, \"name\": \"小型法力药水\", \"type\": 2, \"value\": {\"MP\": 50}}",
+                "{\"id\": 3001, \"name\": \"新手刀\", \"type\": 3, \"pos\":1, \"attribute\": {\"ATK\": 100}}",
+                "{\"id\": 3003, \"name\": \"新手鞋\", \"type\": 3, \"pos\":2, \"attribute\": {\"DEFENCE\": 50, \"HP\": 100}}"
         };
 
         for (String item : data) {
@@ -49,6 +49,8 @@ public class MongoUtilsTest {
 
     @Test
     public void deleteMany() {
+        find();
+        System.out.println("=================================");
         MongoUtils.deleteMany(databaseName, collectionName, "{type:2,name:'大型生命药水'}");
         System.out.println("=================================");
         find();
@@ -60,7 +62,7 @@ public class MongoUtilsTest {
         System.out.println("=================================");
         MongoUtils.findOneAndReplace(
                 databaseName, collectionName, "{type:2}",
-                JsonUtils.json2object("{id: 2001, name: \"小型生命药水\", type: 2, value: {HP: 100}}", ItemConfig.class),
+                JsonUtils.json2object("{\"id\": 2001, \"name\": \"小型生命药水\", \"type\": 2, \"value\": {\"HP\": 100}}", ItemConfig.class),
                 new ItemDocumentHandler()
         );
         System.out.println("=================================");

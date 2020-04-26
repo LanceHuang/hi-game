@@ -55,7 +55,6 @@ public class MongoUtils {
             result = documentHandler.handle(doc);
             break;
         }
-        collection.insertOne(new Document());
 
         close(client);
         return result;
