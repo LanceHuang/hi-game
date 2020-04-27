@@ -15,10 +15,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <junit.version>4.12</junit.version>
-        <slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
-
-        <spring.version>5.1.2.RELEASE</spring.version>
         <netty.version>4.1.42.Final</netty.version>
         <mysql.version>5.0.7</mysql.version>
         <mongo.version>3.12.3</mongo.version>
@@ -30,13 +26,11 @@
             <artifactId>common-tool</artifactId>
             <version>1.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>com.lance.game</groupId>
             <artifactId>hi-game-net</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>com.lance.game</groupId>
             <artifactId>hi-game-tool</artifactId>
@@ -50,8 +44,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
 
