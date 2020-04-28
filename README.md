@@ -13,7 +13,6 @@
 hi-game
     hi-game-demo 演示项目
     hi-game-net 网络层
-    hi-game-tool 通用工具
 ```
 
 ### 架构

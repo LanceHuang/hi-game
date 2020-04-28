@@ -11,7 +11,6 @@
 
     <modules>
         <module>hi-game-net</module>
-        <module>hi-game-tool</module>
         <module>hi-game-demo</module>
     </modules>
 
