@@ -8,15 +8,25 @@ import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
 
 /**
+ * 游戏服务器
+ *
  * @author Lance
- * @since 2019/10/24 11:25
  */
 public class GameServer {
 
-    public void start() {
+    // TODO 在线人数限制
 
-        EventLoopGroup boss = new NioEventLoopGroup();
-        EventLoopGroup worker = new NioEventLoopGroup();
+    private EventLoopGroup boss   = new NioEventLoopGroup();
+    private EventLoopGroup worker = new NioEventLoopGroup();
+
+    /** 端口号 */
+    private int port;
+
+    /**
+     * 启动
+     */
+    public void start() {
+        validate();
 
         ServerBootstrap b = new ServerBootstrap();
         b.group(boss, worker)
@@ -30,8 +40,21 @@ public class GameServer {
                 .bind();
     }
 
-    public void stop() {
+    /**
+     * 配置校验
+     */
+    private void validate() {
+        if (port <= 0) {
+            throw new IllegalArgumentException("port not set");
+        }
+    }
 
+    /**
+     * 关闭
+     */
+    public void stop() {
+        boss.shutdownGracefully();
+        worker.shutdownGracefully();
     }
 
 }
