@@ -24,7 +24,7 @@
         <dependency>
             <groupId>com.lance.common</groupId>
             <artifactId>common-tool</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.lance.game</groupId>
