@@ -15,6 +15,13 @@ public interface IChessService {
     void match(Player player);
 
     /**
+     * 处理匹配命令
+     *
+     * @param account 账号
+     */
+    void handleMatchCommand(String account);
+
+    /**
      * 购买棋子
      *
      * @param id 棋子id

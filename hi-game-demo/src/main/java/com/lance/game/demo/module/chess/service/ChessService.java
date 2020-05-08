@@ -1,9 +1,14 @@
 package com.lance.game.demo.module.chess.service;
 
+import com.lance.game.demo.GameContext;
 import com.lance.game.demo.constant.I18nId;
 import com.lance.game.demo.exception.GameException;
+import com.lance.game.demo.module.chess.command.MatchGameCommand;
+import com.lance.game.demo.module.chess.manager.IChessManager;
 import com.lance.game.demo.module.player.model.Player;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author Lance
@@ -11,15 +16,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class ChessService implements IChessService {
 
+    @Resource
+    private IChessManager chessManager;
+
     @Override
     public void match(Player player) {
         if (player == null) {
             throw new GameException(I18nId.ERROR);
         }
 
-        // todo 并发问题
+        GameContext.getCommandExecutor().submit(player.getAccount(), MatchGameCommand.valueOf(player.getAccount()));
+    }
 
-        // todo 同步的话，这里应该要上锁；任务的话，抛个任务到队列
+    @Override
+    public void handleMatchCommand(String account) {
+        // TODO: 2020/5/8
     }
 
     @Override
