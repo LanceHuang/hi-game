@@ -18,7 +18,7 @@ public class TestConfigDao implements ITestConfigDao {
 
     @Override
     public void saveTestConfig(TestConfig testConfig) {
-        MongoUtils.insert(databaseName, collectionName, testConfig, new TestConfigDocumentHandler());
+        MongoUtils.insertOne(databaseName, collectionName, testConfig, new TestConfigDocumentHandler());
     }
 
     @Override

@@ -16,6 +16,9 @@ public class MongoUtils {
 
     private static final String URL = "mongodb://localhost:27017";
 
+    /** 最大批量插入文档数 */
+    private static final int INSERT_BATCH_COUNT = 1000;
+
     private MongoUtils() {
     }
 
@@ -34,11 +37,36 @@ public class MongoUtils {
     /**
      * 插入数据
      */
-    public static <T> void insert(String databaseName, String collectionName, T data, DocumentHandler<T> documentHandler) {
+    public static <T> void insertOne(String databaseName, String collectionName, T data, DocumentHandler<T> documentHandler) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
         collection.insertOne(documentHandler.parse(data));
+        close(client);
+    }
+
+    /**
+     * 批量插入数据
+     */
+    public static <T> void insertMany(String databaseName, String collectionName, List<T> list, DocumentHandler<T> documentHandler) {
+        MongoClient client = getClient();
+        MongoDatabase database = client.getDatabase(databaseName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        List<Document> manyDocs = new LinkedList<>();
+        int i = 0;
+        for (T item : list) {
+            manyDocs.add(documentHandler.parse(item));
+            if (i % INSERT_BATCH_COUNT == 0) {
+                collection.insertMany(manyDocs);
+                manyDocs = new LinkedList<>();
+            }
+            i++;
+        }
+        if (!manyDocs.isEmpty()) {
+            collection.insertMany(manyDocs);
+        }
+
         close(client);
     }
 
@@ -72,7 +100,6 @@ public class MongoUtils {
         for (Document doc : collection.find()) {
             result.add(documentHandler.handle(doc));
         }
-
 
         close(client);
         return result;
