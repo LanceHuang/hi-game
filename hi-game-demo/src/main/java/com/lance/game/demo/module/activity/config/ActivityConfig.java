@@ -1,14 +1,11 @@
 package com.lance.game.demo.module.activity.config;
 
-import com.lance.config.annotation.Config;
-
 /**
  * 活动配置
  *
  * @author Lance
  * @since 2020/1/14 14:31
  */
-@Config
 public class ActivityConfig {
 
     /** 活动id */
