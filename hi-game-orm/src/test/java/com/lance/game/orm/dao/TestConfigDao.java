@@ -28,6 +28,6 @@ public class TestConfigDao implements ITestConfigDao {
 
     @Override
     public List<TestConfig> getAllTestConfig() {
-        return MongoUtils.find(databaseName, collectionName, new TestConfigDocumentHandler());
+        return MongoUtils.findMany(databaseName, collectionName, null, new TestConfigDocumentHandler());
     }
 }

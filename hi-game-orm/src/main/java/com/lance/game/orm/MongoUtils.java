@@ -1,5 +1,7 @@
 package com.lance.game.orm;
 
+import com.lance.game.orm.exception.TooManyResultException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -70,39 +72,17 @@ public class MongoUtils {
         close(client);
     }
 
+
     /**
-     * 查询单个文档
+     * 根据条件删除文档
      */
-    public static <T> T findOne(String databaseName, String collectionName, String filter, DocumentHandler<T> documentHandler) {
+    public static void deleteOne(String databaseName, String collectionName, String filter) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
 
-        T result = null;
-        for (Document doc : collection.find(Document.parse(filter))) {
-            result = documentHandler.handle(doc);
-            break;
-        }
-
+        collection.deleteOne(Document.parse(filter));
         close(client);
-        return result;
-    }
-
-    /**
-     * 查询所有文档
-     */
-    public static <T> List<T> find(String databaseName, String collectionName, DocumentHandler<T> documentHandler) {
-        MongoClient client = getClient();
-        MongoDatabase database = client.getDatabase(databaseName);
-        MongoCollection<Document> collection = database.getCollection(collectionName);
-
-        List<T> result = new LinkedList<>();
-        for (Document doc : collection.find()) {
-            result.add(documentHandler.handle(doc));
-        }
-
-        close(client);
-        return result;
     }
 
     /**
@@ -115,6 +95,44 @@ public class MongoUtils {
 
         collection.deleteMany(Document.parse(filter));
         close(client);
+    }
+
+    /**
+     * 查询单个文档
+     */
+    public static <T> T findOne(String databaseName, String collectionName, String filter, DocumentHandler<T> documentHandler) {
+        List<T> result = findMany(databaseName, collectionName, filter, documentHandler);
+        if (result.size() == 1) {
+            return result.get(0);
+        } else if (result.size() > 1) {
+            throw new TooManyResultException("太多返回结果：" + result.size());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 查询所有文档
+     */
+    public static <T> List<T> findMany(String databaseName, String collectionName, String filter, DocumentHandler<T> documentHandler) {
+        MongoClient client = getClient();
+        MongoDatabase database = client.getDatabase(databaseName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        List<T> result = new LinkedList<>();
+        FindIterable<Document> documents;
+        if (filter == null) {
+            documents = collection.find();
+        } else {
+            documents = collection.find(Document.parse(filter));
+        }
+
+        for (Document doc : documents) {
+            result.add(documentHandler.handle(doc));
+        }
+
+        close(client);
+        return result;
     }
 
     /**
