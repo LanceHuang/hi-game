@@ -4,6 +4,7 @@ import com.lance.game.orm.annotation.Find;
 import com.lance.game.orm.annotation.FindOne;
 import com.lance.game.orm.annotation.Insert;
 import com.lance.game.orm.annotation.MongoDao;
+import com.lance.game.orm.annotation.UpdateOne;
 import com.lance.game.orm.model.TestConfig;
 
 import java.util.List;
@@ -22,5 +23,8 @@ public interface ITestConfigDao {
 
     @Find
     List<TestConfig> getAllTestConfig();
+
+//    @UpdateOne
+
 
 }

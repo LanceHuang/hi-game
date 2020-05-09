@@ -12,6 +12,28 @@
 3. 自动生成DocumentHandler
 4. 模拟DataSource设计一个连接池
 
+由于没办法一步到位，先分阶段设计
+
+**第一阶段**：最原始的操作方式
+```
+ItemManager -> ItemDao -> MongoUtils
+            -> ItemTypeDao -> MongoUtils
+TestDaoManager -> TestConfigDao -> MongoUtils
+
+class MongoUtils
+    insert
+    find
+    delete
+```
+
+**第二阶段**：统一的API
+```
+ItemManager -> ItemDao$Proxy -> MongoMethodInvoker -> MongoUtils
+            -> ItemTypeDao$Proxy -> MongoMethodInvoker -> MongoUtils
+TestDaoManager -> TestConfigDao$Proxy -> MongoMethodInvoker -> MongoUtils
+```
+
+
 ### 其他
 * manager：用于集中管理dao
 * dao：跟MyBatis类似，用反射生成具体类
