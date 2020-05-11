@@ -50,6 +50,12 @@
             <version>${mongo.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.27.0-GA</version>
+        </dependency>
+
     </dependencies>
 
 </project>
