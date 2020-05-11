@@ -1,6 +1,6 @@
 package com.lance.game.orm;
 
-import com.lance.game.orm.dao.ITestConfigDao;
+import com.lance.game.orm.dao.INewTestConfigDao;
 import com.lance.game.orm.model.TestConfig;
 import javassist.CannotCompileException;
 import javassist.NotFoundException;
@@ -10,21 +10,36 @@ class MongoDaoEnhancerTest {
 
     @Test
     public void test() throws NotFoundException, CannotCompileException, IllegalAccessException, InstantiationException {
-        Class<?> enhanceClass = MongoDaoEnhancer.enhanceClass(ITestConfigDao.class);
+        Class<?> enhanceClass = MongoDaoEnhancer.enhanceClass(INewTestConfigDao.class);
         System.out.println(enhanceClass);
         System.out.println(enhanceClass.getInterfaces()[0]);
-        System.out.println(enhanceClass.getDeclaredMethods()[0]);
+//        System.out.println(enhanceClass.getDeclaredMethods()[0]);
 
-        ITestConfigDao testConfigDao = (ITestConfigDao) enhanceClass.newInstance();
-        System.out.println(testConfigDao);
-
+        INewTestConfigDao newTestConfigDao = (INewTestConfigDao) enhanceClass.newInstance();
+        System.out.println(newTestConfigDao);
 
         TestConfig testConfig = new TestConfig();
-        testConfig.setId(5);
-        testConfig.setName("Alice");
-        testConfig.setAge(22);
-        testConfigDao.addTestConfig(testConfig);
-        testConfigDao.addTestConfigs(null);
+        testConfig.setId(1);
+        testConfig.setName("Lance");
+        testConfig.setAge(25);
+        newTestConfigDao.addTestConfig(testConfig); // C
+
+        TestConfig testConfig2 = new TestConfig();
+        testConfig2.setId(2);
+        testConfig2.setName("alice");
+        testConfig2.setAge(25);
+        newTestConfigDao.addTestConfig(testConfig2); // C
+
+        System.out.println(newTestConfigDao.getTestConfig("{id:1}")); // R
+        System.out.println(newTestConfigDao.getTestConfigs("{age:25}")); // R
+
+        testConfig.setName("Leo");
+        newTestConfigDao.replaceTestConfig("{id:1}", testConfig); // U
+        System.out.println(newTestConfigDao.getTestConfig("{id:1}"));
+
+        newTestConfigDao.deleteTestConfig("{id:1}"); // D
+        System.out.println(newTestConfigDao.getTestConfig("{id:2}"));
+        newTestConfigDao.deleteTestConfigs("{age:25}"); // D
     }
 
 }
