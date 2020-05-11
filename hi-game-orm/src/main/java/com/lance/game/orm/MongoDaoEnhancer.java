@@ -2,8 +2,6 @@ package com.lance.game.orm;
 
 import com.lance.game.orm.annotation.InsertOne;
 import com.lance.game.orm.annotation.MongoDao;
-import com.lance.game.orm.dao.ITestConfigDao;
-import com.lance.game.orm.model.TestConfig;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -86,23 +84,5 @@ public class MongoDaoEnhancer {
             classNames[i] = parameters[i].getType().getName();
         }
         return classPool.get(classNames);
-    }
-
-    public static void main(String[] args) throws NotFoundException, CannotCompileException, IllegalAccessException, InstantiationException {
-        Class<?> enhanceClass = enhanceClass(ITestConfigDao.class);
-        System.out.println(enhanceClass);
-        System.out.println(enhanceClass.getInterfaces()[0]);
-        System.out.println(enhanceClass.getDeclaredMethods()[0]);
-
-        ITestConfigDao testConfigDao = (ITestConfigDao) enhanceClass.newInstance();
-        System.out.println(testConfigDao);
-
-
-        TestConfig testConfig = new TestConfig();
-        testConfig.setId(5);
-        testConfig.setName("Alice");
-        testConfig.setAge(22);
-        testConfigDao.addTestConfig(testConfig);
-        testConfigDao.addTestConfigs(null);
     }
 }
