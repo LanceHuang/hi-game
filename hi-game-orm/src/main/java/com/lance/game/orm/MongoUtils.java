@@ -72,7 +72,6 @@ public class MongoUtils {
         close(client);
     }
 
-
     /**
      * 根据条件删除文档
      */
@@ -136,6 +135,25 @@ public class MongoUtils {
     }
 
     /**
+     * 计数
+     */
+    public static long count(String databaseName, String collectionName, String filter) {
+        MongoClient client = getClient();
+        MongoDatabase database = client.getDatabase(databaseName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        long result;
+        if (filter == null) {
+            result = collection.countDocuments();
+        } else {
+            result = collection.countDocuments(Document.parse(filter));
+        }
+
+        close(client);
+        return result;
+    }
+
+    /**
      * 查询并替换文档
      */
     public static <T> void findOneAndReplace(String databaseName, String collectionName, String filter, T data, DocumentHandler<T> documentHandler) {
@@ -146,5 +164,7 @@ public class MongoUtils {
         collection.findOneAndReplace(Document.parse(filter), documentHandler.parse(data));
         close(client);
     }
+
+    // todo findOneAndUpdate updateOne updateMany 方法签名不好设计，不想给调用者看到Mongo相关内容Bson
 
 }

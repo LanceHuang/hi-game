@@ -27,8 +27,13 @@ public class MongoDaoTest {
         testConfig.setId(1);
         testConfig.setName("Lance");
         testConfig.setAge(998);
-        testConfigDao.saveTestConfig(testConfig);
+        testConfigDao.addTestConfig(testConfig); // C
+        System.out.println(testConfigDao.getTestConfigById(1)); // R
 
+        testConfig.setName("Leo");
+        testConfigDao.replaceTestConfig(1, testConfig); // U
         System.out.println(testConfigDao.getTestConfigById(1));
+
+        testConfigDao.deleteTestConfig(1); // D
     }
 }
