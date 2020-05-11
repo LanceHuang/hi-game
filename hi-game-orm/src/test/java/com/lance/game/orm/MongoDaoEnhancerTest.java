@@ -32,6 +32,7 @@ class MongoDaoEnhancerTest {
 
         System.out.println(newTestConfigDao.getTestConfig("{id:1}")); // R
         System.out.println(newTestConfigDao.getTestConfigs("{age:25}")); // R
+        System.out.println(newTestConfigDao.countTestConfig(null));
 
         testConfig.setName("Leo");
         newTestConfigDao.replaceTestConfig("{id:1}", testConfig); // U

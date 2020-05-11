@@ -1,5 +1,6 @@
 package com.lance.game.orm.dao;
 
+import com.lance.game.orm.annotation.Count;
 import com.lance.game.orm.annotation.DeleteMany;
 import com.lance.game.orm.annotation.DeleteOne;
 import com.lance.game.orm.annotation.FindMany;
@@ -29,6 +30,9 @@ public interface INewTestConfigDao {
 
     @FindMany
     List<TestConfig> getTestConfigs(String filter);
+
+    @Count
+    long countTestConfig(String filter);
 
     @FindOneAndReplace
     void replaceTestConfig(String filter, TestConfig testConfig);

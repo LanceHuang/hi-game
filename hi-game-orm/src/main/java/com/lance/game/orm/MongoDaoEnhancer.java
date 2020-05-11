@@ -1,5 +1,6 @@
 package com.lance.game.orm;
 
+import com.lance.game.orm.annotation.Count;
 import com.lance.game.orm.annotation.DeleteMany;
 import com.lance.game.orm.annotation.DeleteOne;
 import com.lance.game.orm.annotation.FindMany;
@@ -59,6 +60,8 @@ public class MongoDaoEnhancer {
                 generateFindOneMethod(enhanceClass, m, databaseName, collectionName);
             } else if (m.isAnnotationPresent(FindMany.class)) {
                 generateFindManyMethod(enhanceClass, m, databaseName, collectionName);
+            } else if (m.isAnnotationPresent(Count.class)) {
+                generateCountMethod(enhanceClass, m, databaseName, collectionName);
             } else if (m.isAnnotationPresent(FindOneAndReplace.class)) {
                 generateFindOneAndReplaceMethod(enhanceClass, m, databaseName, collectionName);
             } else if (m.isAnnotationPresent(DeleteOne.class)) {
@@ -124,6 +127,21 @@ public class MongoDaoEnhancer {
         CtMethod ctMethod = generateMethodTemplate(enhanceClass, m);
         String methodBody = String.format(
                 "{ return com.lance.game.orm.MongoUtils.findMany(\"%s\", \"%s\", $1, new com.lance.game.orm.handler.TestConfigDocumentHandler()); }",
+                databaseName, collectionName);
+        ctMethod.setBody(methodBody);
+
+        enhanceClass.addMethod(ctMethod);
+    }
+
+    /**
+     * 生成count代理方法
+     */
+    private static void generateCountMethod(CtClass enhanceClass, Method m, String databaseName, String collectionName) throws NotFoundException, CannotCompileException {
+        checkMethodParameter(m, 1);
+
+        CtMethod ctMethod = generateMethodTemplate(enhanceClass, m);
+        String methodBody = String.format(
+                "{ return com.lance.game.orm.MongoUtils.count(\"%s\", \"%s\", $1); }",
                 databaseName, collectionName);
         ctMethod.setBody(methodBody);
 
