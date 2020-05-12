@@ -22,7 +22,12 @@ class MongoUtils
 
 **第二阶段**：统一的API
 ```
-ItemManager -> ItemDao$Proxy -> MongoMethodInvoker -> MongoUtils
-            -> ItemTypeDao$Proxy -> MongoMethodInvoker -> MongoUtils
-TestDaoManager -> TestConfigDao$Proxy -> MongoMethodInvoker -> MongoUtils
+ItemManager -> ItemDao$Enhancer -> MongoUtils
+            -> ItemTypeDao$Enhancer -> MongoUtils
+TestDaoManager -> TestConfigDao$Enhancer -> MongoUtils
 ```
+
+### 小想法
+1. 为什么不像MyBatis那样，直接在$Enhancer中调用MapperProxy？
+MyBatis将sql、model等都配置在.xml，运行时读取配置并注册到容器，不像Hibernate那样自动生成sql，所以需要用MapperProxy转发请求。
+MongoDB没有sql语句，操作相对固定，可以自动生成，没必要配到.xml，所以可以在$Enhancer直接调用MongoUtils。
