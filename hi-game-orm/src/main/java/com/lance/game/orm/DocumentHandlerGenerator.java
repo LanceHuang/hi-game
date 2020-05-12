@@ -47,6 +47,7 @@ public class DocumentHandlerGenerator {
 
         // 4. 实现方法
         generateParseMethod(enhanceClass, clazz, fieldInfos);
+        generateHandleMethod(enhanceClass, clazz, fieldInfos);
 
         return enhanceClass.toClass();
     }
@@ -118,28 +119,50 @@ public class DocumentHandlerGenerator {
         }
     }
 
-//    /**
-//     * 生成InsertOne代理方法
-//     */
-//    private static void generateInsertOneMethod(CtClass enhanceClass, Method m, String databaseName, String collectionName) throws NotFoundException, CannotCompileException {
-//        CtMethod ctMethod = generateMethodTemplate(enhanceClass, m);
-//        String methodBody = String.format(
-//                "{ com.lance.game.orm.MongoUtils.insertOne(\"%s\", \"%s\", $1, new com.lance.game.orm.handler.TestConfigDocumentHandler()); }",
-//                databaseName, collectionName);
-//        ctMethod.setBody(methodBody);
-//
-//        enhanceClass.addMethod(ctMethod);
-//    }
-//
-//
-//    /**
-//     * 生成方法模板
-//     */
-//    private static CtMethod generateMethodTemplate(CtClass enhanceClass, Method m) throws NotFoundException {
-//        CtMethod ctMethod = new CtMethod(classPool.getCtClass(m.getReturnType().getName()), m.getName(), generateParameters(m), enhanceClass);
-//        ctMethod.setModifiers(Modifier.PUBLIC);
-//        return ctMethod;
-//    }
+
+    private static void generateHandleMethod(CtClass enhanceClass, Class<?> clazz, FieldInfo[] fieldInfos) throws NotFoundException, CannotCompileException {
+        CtMethod ctMethod = new CtMethod(
+                classPool.getCtClass(clazz.getName()),
+                "handle",
+                new CtClass[]{classPool.getCtClass(Document.class.getName())},
+                enhanceClass);
+        ctMethod.setModifiers(Modifier.PUBLIC);
+
+        StringBuilder methodBody = new StringBuilder();
+        methodBody.append('{');
+        methodBody.append(String.format("%s obj = new %s();", clazz.getName(), clazz.getName()));
+        for (FieldInfo fieldInfo : fieldInfos) {
+            methodBody.append(generateHandleSentence(fieldInfo));
+        }
+        methodBody.append("return obj;");
+        methodBody.append('}');
+        ctMethod.setBody(methodBody.toString());
+
+        enhanceClass.addMethod(ctMethod);
+    }
+
+    private static String generateHandleSentence(FieldInfo fieldInfo) {
+        Class<?> fieldType = fieldInfo.fieldType;
+
+        // 生成方法名
+        String methodPrefix = "set";
+        String fieldName = fieldInfo.fieldName;
+        String setterMethodName = methodPrefix + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
+
+        // 将原始类型转换成对象类型
+        String template = "obj.%s($1.%s(\"%s\"));";
+        String getDocMethodName = null;
+        if (fieldType.equals(String.class)) {
+            getDocMethodName = "getString";
+        } else if (fieldType.equals(int.class) || fieldType.equals(Integer.class)) {
+            getDocMethodName = "getInteger";
+        } else if (fieldType.equals(long.class)) {
+            getDocMethodName = "getLong";
+        }
+
+        // 生成语句
+        return String.format(template, setterMethodName, getDocMethodName, fieldInfo.fieldName);
+    }
 
     public static class FieldInfo {
         public String fieldName;
