@@ -6,11 +6,11 @@ import javassist.CannotCompileException;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
 
-class MongoDaoGeneratorTest {
+class MongoDaoProxyGeneratorTest {
 
     @Test
     public void test() throws NotFoundException, CannotCompileException, IllegalAccessException, InstantiationException {
-        Class<?> enhanceClass = MongoDaoGenerator.generateProxyClass(INewTestConfigDao.class);
+        Class<?> enhanceClass = MongoDaoProxyGenerator.generateProxyClass(INewTestConfigDao.class);
         System.out.println(enhanceClass);
         System.out.println(enhanceClass.getInterfaces()[0]);
 //        System.out.println(enhanceClass.getDeclaredMethods()[0]);
