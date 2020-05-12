@@ -5,6 +5,7 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.NotFoundException;
+import javassist.bytecode.SignatureAttribute;
 import org.bson.Document;
 
 import java.lang.reflect.Field;
@@ -30,11 +31,11 @@ public class DocumentHandlerGenerator {
         }
 
         // 1. 生成子类
-        CtClass enhanceClass = classPool.makeClass(clazz.getName() + "DocumentHandler");
+        CtClass enhanceClass = classPool.makeClass(clazz.getName() + "$DocumentHandler");
 
         // 2. 实现接口
         enhanceClass.addInterface(classPool.getCtClass(DocumentHandler.class.getName()));
-
+        enhanceClass.setGenericSignature(new SignatureAttribute.TypeVariable("DocumentHandler<" + clazz.getName() + ">").encode());
 
         // 3. 读取成员变量
         Field[] declaredFields = clazz.getDeclaredFields();
@@ -52,21 +53,21 @@ public class DocumentHandlerGenerator {
         return enhanceClass.toClass();
     }
 
-
     private static void generateParseMethod(CtClass enhanceClass, Class<?> clazz, FieldInfo[] fieldInfos) throws NotFoundException, CannotCompileException {
+        // 涉及到反射的实现原理，暂时不处理Document parse(T obj)
         CtMethod ctMethod = new CtMethod(
                 classPool.getCtClass(Document.class.getName()),
                 "parse",
-                new CtClass[]{classPool.getCtClass(clazz.getName())},
+                new CtClass[]{classPool.getCtClass(Object.class.getName())},
                 enhanceClass);
         ctMethod.setModifiers(Modifier.PUBLIC);
 
         StringBuilder methodBody = new StringBuilder();
         methodBody.append('{');
+        methodBody.append(String.format("%s obj = (%s)$1;", clazz.getName(), clazz.getName()));
         methodBody.append("org.bson.Document doc = new org.bson.Document();");
         for (FieldInfo fieldInfo : fieldInfos) {
             methodBody.append(generateParseSentence(fieldInfo));
-//                    String.format("doc.append(\"%s\", $1.%s());", fieldInfo.fieldName, generateGetterMethodName(fieldInfo)));
         }
         methodBody.append("return doc;");
         methodBody.append('}');
@@ -91,7 +92,7 @@ public class DocumentHandlerGenerator {
         // 将原始类型转换成对象类型
         String template;
         if (fieldType.isPrimitive()) {
-            template = "doc.append(\"%s\", %s.valueOf($1.%s()));";
+            template = "doc.append(\"%s\", %s.valueOf(obj.%s()));";
             String primitiveTypeName = null;
             if (fieldType.equals(byte.class)) {
                 primitiveTypeName = Integer.class.getName();
@@ -112,17 +113,16 @@ public class DocumentHandlerGenerator {
             // 生成语句
             return String.format(template, fieldInfo.fieldName, primitiveTypeName, getterMethodName);
         } else {
-            template = "doc.append(\"%s\", $1.%s());";
+            template = "doc.append(\"%s\", obj.%s());";
 
             // 生成语句
             return String.format(template, fieldInfo.fieldName, getterMethodName);
         }
     }
 
-
     private static void generateHandleMethod(CtClass enhanceClass, Class<?> clazz, FieldInfo[] fieldInfos) throws NotFoundException, CannotCompileException {
         CtMethod ctMethod = new CtMethod(
-                classPool.getCtClass(clazz.getName()),
+                classPool.getCtClass(Object.class.getName()),
                 "handle",
                 new CtClass[]{classPool.getCtClass(Document.class.getName())},
                 enhanceClass);
@@ -131,9 +131,10 @@ public class DocumentHandlerGenerator {
         StringBuilder methodBody = new StringBuilder();
         methodBody.append('{');
         methodBody.append(String.format("%s obj = new %s();", clazz.getName(), clazz.getName()));
-        for (FieldInfo fieldInfo : fieldInfos) {
-            methodBody.append(generateHandleSentence(fieldInfo));
-        }
+        // todo 拆包问题
+//        for (FieldInfo fieldInfo : fieldInfos) {
+//            methodBody.append(generateHandleSentence(fieldInfo));
+//        }
         methodBody.append("return obj;");
         methodBody.append('}');
         ctMethod.setBody(methodBody.toString());

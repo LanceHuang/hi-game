@@ -5,8 +5,6 @@ import javassist.CannotCompileException;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class DocumentHandlerGeneratorTest {
 
     @Test
@@ -17,8 +15,14 @@ class DocumentHandlerGeneratorTest {
 
         DocumentHandler<TestConfig> documentHandler = (DocumentHandler<TestConfig>) aClass.newInstance();
         System.out.println(documentHandler);
-        System.out.println(documentHandler.parse(null));
-        System.out.println(documentHandler.handle(null));
+
+        TestConfig testConfig = new TestConfig();
+        testConfig.setId(10);
+        testConfig.setName("Lance");
+        testConfig.setAge(25);
+        System.out.println(documentHandler.parse(testConfig));
+        TestConfig newTestConfig = documentHandler.handle(documentHandler.parse(testConfig));
+        System.out.println(newTestConfig);
     }
 
 }
