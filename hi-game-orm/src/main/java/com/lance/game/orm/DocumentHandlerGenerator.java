@@ -26,7 +26,7 @@ public class DocumentHandlerGenerator {
      * @param clazz 代理接口
      */
     public static Class<?> generateClass(Class<?> clazz) throws NotFoundException, CannotCompileException {
-        if (clazz == null || clazz.isInterface()) { // todo 抽象与final都过滤掉
+        if (clazz == null || clazz.isInterface() || Modifier.isAbstract(clazz.getModifiers()) || Modifier.isFinal(clazz.getModifiers())) {
             return null;
         }
 
@@ -41,8 +41,10 @@ public class DocumentHandlerGenerator {
         Field[] declaredFields = clazz.getDeclaredFields();
         FieldInfo[] fieldInfos = new FieldInfo[declaredFields.length];
         for (int i = 0; i < declaredFields.length; i++) {
-            // todo static final 类型过滤掉
             Field f = declaredFields[i];
+            if (Modifier.isFinal(f.getModifiers())) {
+                continue;
+            }
             fieldInfos[i] = new FieldInfo(f.getName(), f.getType());
         }
 
