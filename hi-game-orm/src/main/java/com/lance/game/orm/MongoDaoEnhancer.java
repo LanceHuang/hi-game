@@ -21,11 +21,13 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
 /**
+ * 自动为接口生成实现类，并调用MongoUtils相应方法
+ *
  * @author Lance
  */
 public class MongoDaoEnhancer {
 
-    public static final ClassPool classPool = ClassPool.getDefault();
+    private static final ClassPool classPool = ClassPool.getDefault();
 
     /**
      * 生成代理类
