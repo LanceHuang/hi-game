@@ -25,7 +25,7 @@ import java.lang.reflect.Parameter;
  *
  * @author Lance
  */
-public class MongoDaoEnhancer {
+public class MongoDaoGenerator {
 
     private static final ClassPool classPool = ClassPool.getDefault();
 
@@ -34,7 +34,7 @@ public class MongoDaoEnhancer {
      *
      * @param clazz 代理接口
      */
-    public static Class<?> enhanceClass(Class<?> clazz) throws NotFoundException, CannotCompileException {
+    public static Class<?> generateProxyClass(Class<?> clazz) throws NotFoundException, CannotCompileException {
         if (clazz == null || !clazz.isInterface()) {
             return null;
         }
@@ -47,7 +47,7 @@ public class MongoDaoEnhancer {
         String collectionName = mongoDaoAnnotation.collectionName(); // 集合名称
 
         // 1. 生成子类
-        CtClass enhanceClass = classPool.makeClass(clazz.getName() + "$Enhancer");
+        CtClass enhanceClass = classPool.makeClass(clazz.getName() + "$Proxy");
 
         // 2. 实现接口
         enhanceClass.addInterface(classPool.getCtClass(clazz.getName()));
