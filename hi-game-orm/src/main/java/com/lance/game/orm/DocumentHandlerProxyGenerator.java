@@ -16,7 +16,7 @@ import java.lang.reflect.Modifier;
  *
  * @author Lance
  */
-public class DocumentHandlerGenerator {
+public class DocumentHandlerProxyGenerator {
 
     private static final ClassPool classPool = ClassPool.getDefault();
 
@@ -31,7 +31,7 @@ public class DocumentHandlerGenerator {
         }
 
         // 1. 生成子类
-        CtClass enhanceClass = classPool.makeClass(clazz.getName() + "$DocumentHandler");
+        CtClass enhanceClass = classPool.makeClass(clazz.getName() + "DocumentHandler$Proxy");
 
         // 2. 实现接口
         enhanceClass.addInterface(classPool.getCtClass(DocumentHandler.class.getName()));

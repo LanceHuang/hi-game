@@ -5,11 +5,11 @@ import javassist.CannotCompileException;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
 
-class DocumentHandlerGeneratorTest {
+class DocumentHandlerProxyGeneratorTest {
 
     @Test
     public void test() throws NotFoundException, CannotCompileException, IllegalAccessException, InstantiationException {
-        Class<?> aClass = DocumentHandlerGenerator.generateClass(TestConfig.class);
+        Class<?> aClass = DocumentHandlerProxyGenerator.generateClass(TestConfig.class);
         System.out.println(aClass);
         System.out.println(aClass.getInterfaces()[0]);
 
