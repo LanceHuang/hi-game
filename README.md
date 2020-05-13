@@ -13,7 +13,7 @@
 hi-game
     hi-game-demo 演示项目
     hi-game-net 网络层
-    hi-game-org 持久层
+    hi-game-orm 持久层
 ```
 
 ### 架构
