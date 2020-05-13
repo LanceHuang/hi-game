@@ -96,7 +96,7 @@ public class DocumentHandlerProxyGenerator {
         String template;
         if (fieldType.isPrimitive()) {
             template = "doc.append(\"%s\", %s.valueOf(obj.%s()));";
-            String primitiveTypeName = null;
+            String primitiveTypeName;
             if (fieldType.equals(boolean.class)) {
                 primitiveTypeName = Boolean.class.getName();
             } else if (fieldType.equals(int.class)) {
@@ -150,7 +150,7 @@ public class DocumentHandlerProxyGenerator {
 
         // 将原始类型转换成对象类型
         String template = "obj.%s($1.%s(\"%s\")%s);";
-        String getDocMethodName = null;
+        String getDocMethodName;
         String castPrimitive = "";
         if (fieldType.equals(String.class)) {
             getDocMethodName = "getString";

@@ -22,5 +22,8 @@ public @interface MongoDao {
      */
     String collectionName();
 
-    // todo handler? 或者自动映射
+    /**
+     * 模型类
+     */
+    Class<?> modelClass();
 }

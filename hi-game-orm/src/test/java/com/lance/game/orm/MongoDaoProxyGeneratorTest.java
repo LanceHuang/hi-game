@@ -6,6 +6,10 @@ import javassist.CannotCompileException;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 class MongoDaoProxyGeneratorTest {
 
     @Test
@@ -13,6 +17,16 @@ class MongoDaoProxyGeneratorTest {
         Class<?> enhanceClass = MongoDaoProxyGenerator.generateProxyClass(INewTestConfigDao.class);
         System.out.println(enhanceClass);
         System.out.println(enhanceClass.getInterfaces()[0]);
+        for (Field f : enhanceClass.getDeclaredFields()) {
+            System.out.println(f);
+        }
+        for (Constructor<?> c : enhanceClass.getDeclaredConstructors()) {
+            System.out.println(c);
+        }
+        for (Method m : enhanceClass.getDeclaredMethods()) {
+            System.out.println(m);
+        }
+
 //        System.out.println(enhanceClass.getDeclaredMethods()[0]);
 
         INewTestConfigDao newTestConfigDao = (INewTestConfigDao) enhanceClass.newInstance();

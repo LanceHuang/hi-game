@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author Lance
  */
-@MongoDao(databaseName = "db_mongo_orm", collectionName = "c_test_config")
+@MongoDao(databaseName = "db_mongo_orm", collectionName = "c_test_config", modelClass = TestConfig.class)
 public interface INewTestConfigDao {
 
     @InsertOne
