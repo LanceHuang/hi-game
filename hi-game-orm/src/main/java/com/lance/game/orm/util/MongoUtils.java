@@ -1,4 +1,4 @@
-package com.lance.game.orm;
+package com.lance.game.orm.util;
 
 import com.lance.game.orm.exception.TooManyResultException;
 import com.lance.game.orm.handler.DocumentHandler;

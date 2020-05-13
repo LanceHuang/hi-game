@@ -48,7 +48,7 @@ public class ResourceUtils {
                 MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(resource);
                 ClassMetadata classMetadata = metadataReader.getClassMetadata();
 
-                // 判断满足条件
+                // 判断是否满足条件
                 Class<?> clazz = Class.forName(classMetadata.getClassName());
                 if (filter.accept(clazz)) {
                     candidates.add(clazz);

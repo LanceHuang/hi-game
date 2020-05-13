@@ -1,6 +1,6 @@
 package com.lance.game.orm.dao;
 
-import com.lance.game.orm.MongoUtils;
+import com.lance.game.orm.util.MongoUtils;
 import com.lance.game.orm.handler.TestConfigDocumentHandler;
 import com.lance.game.orm.model.TestConfig;
 import org.springframework.stereotype.Repository;
