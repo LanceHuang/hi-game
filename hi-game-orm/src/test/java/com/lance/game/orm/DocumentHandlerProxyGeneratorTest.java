@@ -1,5 +1,6 @@
 package com.lance.game.orm;
 
+import com.lance.game.orm.generator.DocumentHandlerProxyGenerator;
 import com.lance.game.orm.handler.DocumentHandler;
 import com.lance.game.orm.model.TestConfig;
 import javassist.CannotCompileException;

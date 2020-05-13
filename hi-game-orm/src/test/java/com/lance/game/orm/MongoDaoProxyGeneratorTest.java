@@ -1,6 +1,7 @@
 package com.lance.game.orm;
 
 import com.lance.game.orm.dao.INewTestConfigDao;
+import com.lance.game.orm.generator.MongoDaoProxyGenerator;
 import com.lance.game.orm.model.TestConfig;
 import javassist.CannotCompileException;
 import javassist.NotFoundException;

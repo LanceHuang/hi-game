@@ -1,4 +1,4 @@
-package com.lance.game.orm;
+package com.lance.game.orm.generator;
 
 import com.lance.game.orm.annotation.Count;
 import com.lance.game.orm.annotation.DeleteMany;

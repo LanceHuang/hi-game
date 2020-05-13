@@ -1,4 +1,4 @@
-package com.lance.game.orm;
+package com.lance.game.orm.generator;
 
 import com.lance.game.orm.exception.UnsupportedTypeException;
 import com.lance.game.orm.handler.DocumentHandler;

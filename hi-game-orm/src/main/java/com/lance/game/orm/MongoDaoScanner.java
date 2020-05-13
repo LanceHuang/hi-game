@@ -1,6 +1,7 @@
 package com.lance.game.orm;
 
 import com.lance.game.orm.annotation.MongoDao;
+import com.lance.game.orm.generator.MongoDaoProxyGenerator;
 import com.lance.game.orm.util.ResourceUtils;
 import javassist.CannotCompileException;
 import javassist.NotFoundException;
