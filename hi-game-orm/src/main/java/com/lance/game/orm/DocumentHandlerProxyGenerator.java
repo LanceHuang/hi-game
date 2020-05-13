@@ -133,10 +133,9 @@ public class DocumentHandlerProxyGenerator {
         StringBuilder methodBody = new StringBuilder();
         methodBody.append('{');
         methodBody.append(String.format("%s obj = new %s();", clazz.getName(), clazz.getName()));
-        // todo 拆包问题
-//        for (FieldInfo fieldInfo : fieldInfos) {
-//            methodBody.append(generateHandleSentence(fieldInfo));
-//        }
+        for (FieldInfo fieldInfo : fieldInfos) {
+            methodBody.append(generateHandleSentence(fieldInfo));
+        }
         methodBody.append("return obj;");
         methodBody.append('}');
         ctMethod.setBody(methodBody.toString());
@@ -153,18 +152,25 @@ public class DocumentHandlerProxyGenerator {
         String setterMethodName = methodPrefix + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
 
         // 将原始类型转换成对象类型
-        String template = "obj.%s($1.%s(\"%s\"));";
+        String template = "obj.%s($1.%s(\"%s\")%s);";
         String getDocMethodName = null;
+        String castPrimitive = "";
         if (fieldType.equals(String.class)) {
             getDocMethodName = "getString";
-        } else if (fieldType.equals(int.class) || fieldType.equals(Integer.class)) {
+        } else if (fieldType.equals(int.class)) {
+            getDocMethodName = "getInteger";
+            castPrimitive = ".intValue()";
+        } else if (fieldType.equals(Integer.class)) {
             getDocMethodName = "getInteger";
         } else if (fieldType.equals(long.class)) {
+            getDocMethodName = "getLong";
+            castPrimitive = ".longValue()";
+        } else if (fieldType.equals(Long.class)) {
             getDocMethodName = "getLong";
         }
 
         // 生成语句
-        return String.format(template, setterMethodName, getDocMethodName, fieldInfo.fieldName);
+        return String.format(template, setterMethodName, getDocMethodName, fieldInfo.fieldName, castPrimitive);
     }
 
     public static class FieldInfo {
