@@ -1,6 +1,7 @@
 package com.lance.game.orm;
 
 import com.lance.game.orm.exception.TooManyResultException;
+import com.lance.game.orm.handler.DocumentHandler;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;

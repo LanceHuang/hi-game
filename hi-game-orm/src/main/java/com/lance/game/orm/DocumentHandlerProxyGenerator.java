@@ -1,6 +1,7 @@
 package com.lance.game.orm;
 
 import com.lance.game.orm.exception.UnsupportedTypeException;
+import com.lance.game.orm.handler.DocumentHandler;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;

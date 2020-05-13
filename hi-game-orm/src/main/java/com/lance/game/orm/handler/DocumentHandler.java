@@ -1,4 +1,4 @@
-package com.lance.game.orm;
+package com.lance.game.orm.handler;
 
 import org.bson.Document;
 
