@@ -38,6 +38,54 @@ TestDaoManager -> ITestConfigDao -> TestConfigDao$Proxy + TestConfigDocumentHand
 
 **第五阶段**：考虑使用连接池
 
+### 框架用法
+1. 创建实体
+```
+public class TestConfig {
+
+    private int id;
+    private String name;
+    private int age;
+
+    //... 省略
+}
+```
+
+2. 创建DAO接口，标注相应的注解
+```
+@MongoDao(databaseName = "db_mongo_orm", collectionName = "c_test_config", modelClass = TestConfig.class)
+public interface INewTestConfigDao {
+
+    @InsertOne
+    void addTestConfig(TestConfig testConfig);
+
+    @FindOne
+    TestConfig getTestConfig(String filter);
+
+    @FindMany
+    List<TestConfig> getTestConfigs(String filter);
+
+    @DeleteOne
+    void deleteTestConfig(String filter);
+}
+```
+
+3. 将MongoDaoScanner添加到Spring容器，设置basePackage，用于扫描DAO接口
+```
+@Bean
+public MongoDaoScanner mongoDaoScanner() {
+    MongoDaoScanner mongoDaoScanner = new MongoDaoScanner();
+    mongoDaoScanner.setBasePackage("com.lance.game.orm.dao");
+    return mongoDaoScanner;
+}
+```
+
+4. 注入即可使用
+```
+@Resource
+private INewTestConfigDao newTestConfigDao;
+```
+
 ### 小想法
 1. 为什么不像MyBatis那样，直接在$Enhancer中调用MapperProxy？
 MyBatis将sql、model等都配置在.xml，运行时读取配置并注册到容器，不像Hibernate那样自动生成sql，所以需要用MapperProxy转发请求。
