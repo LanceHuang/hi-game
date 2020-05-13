@@ -1,5 +1,6 @@
 package com.lance.game.orm;
 
+import com.lance.game.orm.exception.UnsupportedTypeException;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -83,7 +84,7 @@ public class DocumentHandlerProxyGenerator {
 
         // 生成方法名
         String methodPrefix;
-        if (fieldType.equals(Boolean.class) || fieldType.equals(boolean.class)) {
+        if (fieldType.equals(boolean.class)) {
             methodPrefix = "is";
         } else {
             methodPrefix = "get";
@@ -96,20 +97,16 @@ public class DocumentHandlerProxyGenerator {
         if (fieldType.isPrimitive()) {
             template = "doc.append(\"%s\", %s.valueOf(obj.%s()));";
             String primitiveTypeName = null;
-            if (fieldType.equals(byte.class)) {
-                primitiveTypeName = Integer.class.getName();
-            } else if (fieldType.equals(short.class)) {
-                primitiveTypeName = Integer.class.getName();
+            if (fieldType.equals(boolean.class)) {
+                primitiveTypeName = Boolean.class.getName();
             } else if (fieldType.equals(int.class)) {
                 primitiveTypeName = Integer.class.getName();
             } else if (fieldType.equals(long.class)) {
-                primitiveTypeName = Integer.class.getName();
-            } else if (fieldType.equals(float.class)) {
-                primitiveTypeName = Integer.class.getName();
+                primitiveTypeName = Long.class.getName();
             } else if (fieldType.equals(double.class)) {
-                primitiveTypeName = Integer.class.getName();
-            } else if (fieldType.equals(char.class)) {
-                primitiveTypeName = Integer.class.getName();
+                primitiveTypeName = Double.class.getName();
+            } else {
+                throw new UnsupportedTypeException("MongoDB 不支持该类型：" + fieldType);
             }
 
             // 生成语句
@@ -167,6 +164,18 @@ public class DocumentHandlerProxyGenerator {
             castPrimitive = ".longValue()";
         } else if (fieldType.equals(Long.class)) {
             getDocMethodName = "getLong";
+        } else if (fieldType.equals(double.class)) {
+            getDocMethodName = "getDouble";
+            castPrimitive = ".doubleValue()";
+        } else if (fieldType.equals(Double.class)) {
+            getDocMethodName = "getDouble";
+        } else if (fieldType.equals(boolean.class)) {
+            getDocMethodName = "getBoolean";
+            castPrimitive = ".booleanValue()";
+        } else if (fieldType.equals(Boolean.class)) {
+            getDocMethodName = "getBoolean";
+        } else {
+            throw new UnsupportedTypeException("MongoDB 不支持该类型：" + fieldType);
         }
 
         // 生成语句

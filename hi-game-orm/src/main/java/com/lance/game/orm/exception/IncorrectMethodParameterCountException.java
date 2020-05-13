@@ -7,6 +7,9 @@ package com.lance.game.orm.exception;
  */
 public class IncorrectMethodParameterCountException extends RuntimeException {
 
+    public IncorrectMethodParameterCountException() {
+    }
+
     public IncorrectMethodParameterCountException(String message) {
         super(message);
     }

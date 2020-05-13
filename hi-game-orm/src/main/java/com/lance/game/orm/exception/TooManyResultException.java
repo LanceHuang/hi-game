@@ -7,6 +7,9 @@ package com.lance.game.orm.exception;
  */
 public class TooManyResultException extends RuntimeException {
 
+    public TooManyResultException() {
+    }
+
     public TooManyResultException(String message) {
         super(message);
     }

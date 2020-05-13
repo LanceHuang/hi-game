@@ -20,6 +20,14 @@ class DocumentHandlerProxyGeneratorTest {
         testConfig.setId(10);
         testConfig.setName("Lance");
         testConfig.setAge(25);
+        testConfig.setTestIntPrimitive(333);
+        testConfig.setTestInt(334);
+        testConfig.setTestLongPrimitive(444L);
+        testConfig.setTestLong(445L);
+        testConfig.setTestDoublePrimitive(555D);
+        testConfig.setTestDouble(556D);
+        testConfig.setTestBooleanPrimitive(true);
+        testConfig.setTestBoolean(false);
         System.out.println(documentHandler.parse(testConfig));
         TestConfig newTestConfig = documentHandler.handle(documentHandler.parse(testConfig));
         System.out.println(newTestConfig);
