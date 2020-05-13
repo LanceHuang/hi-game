@@ -13,4 +13,8 @@ public class TooManyResultException extends RuntimeException {
     public TooManyResultException(String message) {
         super(message);
     }
+
+    public TooManyResultException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
