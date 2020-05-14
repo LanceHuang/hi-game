@@ -9,7 +9,6 @@ import com.lance.game.orm.annotation.FindOneAndReplace;
 import com.lance.game.orm.annotation.InsertMany;
 import com.lance.game.orm.annotation.InsertOne;
 import com.lance.game.orm.annotation.MongoDao;
-import com.lance.game.orm.exception.IncorrectMethodParameterCountException;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -22,7 +21,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
 /**
- * 代理类生成工具，自动调用MongoUtils相应方法
+ * DAO代理类生成工具，自动调用MongoUtils相应方法
  *
  * @author Lance
  */
@@ -33,16 +32,16 @@ public class MongoDaoProxyGenerator {
     /**
      * 生成代理类
      *
-     * @param clazz 代理接口
+     * @param clazz DAO接口
      */
     public static Class<?> generateProxyClass(Class<?> clazz) throws NotFoundException, CannotCompileException {
         if (clazz == null || !clazz.isInterface()) {
-            return null;
+            throw new IllegalArgumentException("clazz 必须是接口");
         }
 
         MongoDao mongoDaoAnnotation = clazz.getDeclaredAnnotation(MongoDao.class);
         if (mongoDaoAnnotation == null) {
-            return null;
+            throw new IllegalArgumentException("未标注MongoDao：" + clazz);
         }
         String databaseName = mongoDaoAnnotation.databaseName(); // 数据库名称
         String collectionName = mongoDaoAnnotation.collectionName(); // 集合名称
@@ -216,7 +215,7 @@ public class MongoDaoProxyGenerator {
     private static void checkMethodParameter(Method m, int requireCount) {
         int parameterCount = m.getParameterCount();
         if (parameterCount != requireCount) {
-            throw new IncorrectMethodParameterCountException(
+            throw new IllegalArgumentException(
                     "方法[" + m.getName() + "]参数长度不正确，要求长度为：" + requireCount + "，实际长度为：" + parameterCount);
         }
     }

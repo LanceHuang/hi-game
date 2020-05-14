@@ -1,6 +1,6 @@
 package com.lance.game.orm.util;
 
-import com.lance.game.orm.exception.ResolveClassFailureException;
+import com.lance.game.orm.exception.ResolvePackageFailureException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -55,7 +55,7 @@ public class ResourceUtils {
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
-            throw new ResolveClassFailureException("扫描类失败：" + basePackage, e);
+            throw new ResolvePackageFailureException("扫描类失败：" + basePackage, e);
         }
         return candidates;
     }

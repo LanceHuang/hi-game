@@ -29,7 +29,7 @@ public class DocumentHandlerProxyGenerator {
      */
     public static Class<?> generateClass(Class<?> clazz) throws NotFoundException, CannotCompileException {
         if (clazz == null || clazz.isInterface() || Modifier.isAbstract(clazz.getModifiers()) || Modifier.isFinal(clazz.getModifiers())) {
-            return null;
+            throw new IllegalArgumentException("clazz 必须是实体类");
         }
 
         // 1. 生成子类
@@ -184,7 +184,7 @@ public class DocumentHandlerProxyGenerator {
     }
 
     public static class FieldInfo {
-        public String fieldName;
+        public String   fieldName;
         public Class<?> fieldType;
 
         public FieldInfo(String fieldName, Class<?> fieldType) {
