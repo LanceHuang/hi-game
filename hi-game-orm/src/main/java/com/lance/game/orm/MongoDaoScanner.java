@@ -1,14 +1,16 @@
 package com.lance.game.orm;
 
 import com.lance.game.orm.annotation.MongoDao;
+import com.lance.game.orm.exception.GenerateProxyFailureException;
 import com.lance.game.orm.generator.MongoDaoProxyGenerator;
 import com.lance.game.orm.util.ResourceUtils;
-import javassist.CannotCompileException;
-import javassist.NotFoundException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ import java.util.List;
  *
  * @author Lance
  */
-public class MongoDaoScanner implements InitializingBean, BeanFactoryPostProcessor {
+public class MongoDaoScanner implements InitializingBean, BeanDefinitionRegistryPostProcessor {
 
     private String basePackage;
 
@@ -31,26 +33,30 @@ public class MongoDaoScanner implements InitializingBean, BeanFactoryPostProcess
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
+        // Do nothing
+    }
+
+    @Override
+    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         // 1. 扫描符合条件的类
         List<Class<?>> candidates = ResourceUtils.resolvePackage(this.basePackage, (clazz) -> clazz.isAnnotationPresent(MongoDao.class));
 
         // 2. 生成代理类
         for (Class<?> candidate : candidates) {
-            Class<?> enhanceClass = null;
+            Class<?> enhanceClass;
             try {
                 enhanceClass = MongoDaoProxyGenerator.generateProxyClass(candidate);
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-            } catch (CannotCompileException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                throw new GenerateProxyFailureException("无法生成代理类：" + candidate, e);
+            }
+            if (enhanceClass == null) {
+                throw new GenerateProxyFailureException("生成代理类失败：" + candidate);
             }
 
-//            BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.rootBeanDefinition(enhanceClass);
-//            AbstractBeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
-//            configurableListableBeanFactory.regist(enhanceClass.getName(), beanDefinition);
-
-            System.out.println(enhanceClass);
             // 3. 注册到容器
+            BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.rootBeanDefinition(enhanceClass);
+            AbstractBeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
+            registry.registerBeanDefinition(enhanceClass.getSimpleName(), beanDefinition);
         }
     }
 

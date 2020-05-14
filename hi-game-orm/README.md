@@ -1,4 +1,4 @@
-> 仿MyBatis，做个持久层
+> 仿MyBatis，做个持久层，专门用于处理Mongo
 
 ### 设计思路
 1. 连接/关闭由容器管理
@@ -34,7 +34,7 @@ ItemManager -> IItemDao -> ItemDao$Proxy + ItemDocumentHandler$Proxy -> MongoUti
 TestDaoManager -> ITestConfigDao -> TestConfigDao$Proxy + TestConfigDocumentHandler$Proxy -> MongoUtils
 ```
 
-**第四阶段**：仿MyBatis，做个MapperScannerConfigurer，将代理Dao和代理DocumentHandler注册到Spring容器  
+**第四阶段**：仿MyBatis，做个MapperScannerConfigurer，将代理Dao注册到Spring容器  
 
 **第五阶段**：考虑使用连接池
 
