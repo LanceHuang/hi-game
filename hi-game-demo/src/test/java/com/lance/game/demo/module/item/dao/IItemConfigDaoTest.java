@@ -29,7 +29,7 @@ public class IItemConfigDaoTest {
     }
 
     @Test
-    public void insert() throws Exception {
+    public void addItemConfig() throws Exception {
         String[] data = {
                 "{\"id\": 1, \"name\": \"石头\", \"type\": 1}",
                 "{\"id\": 2, \"name\": \"树叶\", \"type\": 1}",
@@ -47,7 +47,7 @@ public class IItemConfigDaoTest {
     }
 
     @Test
-    public void findOne() {
+    public void getItemConfig() {
         String filter = "{id:2004}";
 
         ItemConfig itemConfig = itemConfigDao.getItemConfig(filter);
@@ -58,29 +58,29 @@ public class IItemConfigDaoTest {
     }
 
     @Test
-    public void find() {
+    public void getItemConfigs() {
         List<ItemConfig> itemConfigs = itemConfigDao.getItemConfigs(null);
         itemConfigs.forEach(System.out::println);
     }
 
     @Test
     public void deleteMany() {
-        find();
+        getItemConfigs();
         System.out.println("=================================");
         itemConfigDao.deleteItemConfigs("{type:2,name:'大型生命药水'}");
         System.out.println("=================================");
-        find();
+        getItemConfigs();
     }
 
     @Test
     public void findOneAndReplace() throws Exception {
-        find();
+        getItemConfigs();
         System.out.println("=================================");
         itemConfigDao.replaceItemConfig("{type:2}",
                 JsonUtils.json2object("{\"id\": 2001, \"name\": \"小型生命药水\", \"type\": 2, \"value\": {\"HP\": 100}}", ItemConfig.class)
         );
         System.out.println("=================================");
-        find();
+        getItemConfigs();
     }
 
 }
