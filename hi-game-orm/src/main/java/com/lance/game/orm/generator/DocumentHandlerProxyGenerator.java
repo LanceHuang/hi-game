@@ -1,5 +1,6 @@
 package com.lance.game.orm.generator;
 
+import com.lance.game.orm.annotation.MongoIgnore;
 import com.lance.game.orm.exception.UnsupportedTypeException;
 import com.lance.game.orm.handler.DocumentHandler;
 import javassist.CannotCompileException;
@@ -45,6 +46,9 @@ public class DocumentHandlerProxyGenerator {
         for (int i = 0; i < declaredFields.length; i++) {
             Field f = declaredFields[i];
             if (Modifier.isFinal(f.getModifiers())) {
+                continue;
+            }
+            if (f.isAnnotationPresent(MongoIgnore.class)) {
                 continue;
             }
             fieldInfos[i] = new FieldInfo(f.getName(), f.getType());

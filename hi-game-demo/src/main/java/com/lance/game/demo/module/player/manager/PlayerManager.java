@@ -1,9 +1,10 @@
 package com.lance.game.demo.module.player.manager;
 
-import com.lance.game.demo.module.player.handler.PlayerDocumentHandler;
+import com.lance.game.demo.module.player.dao.IPlayerDao;
 import com.lance.game.demo.module.player.model.Player;
-import com.lance.game.demo.util.MongoUtils;
 import org.springframework.stereotype.Repository;
+
+import javax.annotation.Resource;
 
 /**
  * @author Lance
@@ -11,18 +12,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PlayerManager implements IPlayerManager {
 
-    private static final String DATABASE_NAME   = "game";
-    private static final String COLLECTION_NAME = "player";
+    @Resource
+    private IPlayerDao playerDao;
 
     @Override
     public void savePlayer(Player player) {
-        Player existsPlayer = MongoUtils.findOne(DATABASE_NAME, COLLECTION_NAME, "{id:" + player.getId() + "}", new PlayerDocumentHandler());
+        Player existsPlayer = playerDao.getPlayer("{id:" + player.getId() + "}");
 
         try {
             if (existsPlayer != null) {
-                MongoUtils.findOneAndReplace(DATABASE_NAME, COLLECTION_NAME, "{id:" + player.getId() + "}", player, new PlayerDocumentHandler());
+                playerDao.replacePlayer("{id:" + player.getId() + "}", player);
             } else {
-                MongoUtils.insert(DATABASE_NAME, COLLECTION_NAME, player, new PlayerDocumentHandler());
+                playerDao.addPlayer(player);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,6 +32,6 @@ public class PlayerManager implements IPlayerManager {
 
     @Override
     public Player getPlayer(long id) {
-        return MongoUtils.findOne(DATABASE_NAME, COLLECTION_NAME, "{id:" + id + "}", new PlayerDocumentHandler());
+        return playerDao.getPlayer("{id:" + id + "}");
     }
 }

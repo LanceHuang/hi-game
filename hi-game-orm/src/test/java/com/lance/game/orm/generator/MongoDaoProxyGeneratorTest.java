@@ -1,4 +1,4 @@
-package com.lance.game.orm;
+package com.lance.game.orm.generator;
 
 import com.lance.game.orm.dao.INewTestConfigDao;
 import com.lance.game.orm.generator.MongoDaoProxyGenerator;

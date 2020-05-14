@@ -4,6 +4,7 @@ import com.lance.game.demo.module.attribute.model.AttributeContainer;
 import com.lance.game.demo.module.buff.model.BuffContainer;
 import com.lance.game.demo.module.skill.model.SkillContainer;
 import com.lance.game.demo.module.storage.model.ItemStorage;
+import com.lance.game.orm.annotation.MongoIgnore;
 
 /**
  * 玩家对象
@@ -25,8 +26,11 @@ public class Player {
     /** 经验条 */
     private long   exp;
 
+    @MongoIgnore
     private AttributeContainer attributeContainer;
+    @MongoIgnore
     private SkillContainer     skillContainer;
+    @MongoIgnore
     private BuffContainer      buffContainer;
 
     // todo 背包 Ctrl+I 打开背包，哈哈哈（冒险岛、彩虹岛）
@@ -35,6 +39,7 @@ public class Player {
     // todo 装备栏
 
     // todo 暂时不考虑多种背包的情况，还有仓库的情况
+    @MongoIgnore
     private ItemStorage itemStorage;
 
     public long getId() {

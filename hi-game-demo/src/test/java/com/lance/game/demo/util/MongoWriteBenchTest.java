@@ -1,5 +1,6 @@
 package com.lance.game.demo.util;
 
+import com.lance.game.orm.util.MongoUtils;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;

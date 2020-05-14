@@ -1,16 +1,32 @@
-package com.lance.game.demo.util;
+package com.lance.game.demo.module.item.dao;
 
 import com.lance.common.tool.util.JsonUtils;
 import com.lance.game.demo.module.item.config.ItemConfig;
-import com.lance.game.demo.module.item.handler.ItemDocumentHandler;
+import com.lance.game.orm.MongoDaoScanner;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import java.util.List;
 
-public class MongoUtilsTest {
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = IItemConfigDaoTest.class)
+@Configuration
+public class IItemConfigDaoTest {
 
-    private String databaseName   = "game";
-    private String collectionName = "item";
+    @Resource
+    private IItemConfigDao itemConfigDao;
+
+    @Bean
+    public MongoDaoScanner mongoDaoScanner() {
+        MongoDaoScanner mongoDaoScanner = new MongoDaoScanner();
+        mongoDaoScanner.setBasePackage("com.lance.game.demo.module.item.dao");
+        return mongoDaoScanner;
+    }
 
     @Test
     public void insert() throws Exception {
@@ -26,7 +42,7 @@ public class MongoUtilsTest {
         };
 
         for (String item : data) {
-            MongoUtils.insert(databaseName, collectionName, JsonUtils.json2object(item, ItemConfig.class), new ItemDocumentHandler());
+            itemConfigDao.addItemConfig(JsonUtils.json2object(item, ItemConfig.class));
         }
     }
 
@@ -34,7 +50,7 @@ public class MongoUtilsTest {
     public void findOne() {
         String filter = "{id:2004}";
 
-        ItemConfig itemConfig = MongoUtils.findOne(databaseName, collectionName, filter, new ItemDocumentHandler());
+        ItemConfig itemConfig = itemConfigDao.getItemConfig(filter);
         System.out.println(itemConfig);
         System.out.println(itemConfig.getId());
         System.out.println(itemConfig.getName());
@@ -43,7 +59,7 @@ public class MongoUtilsTest {
 
     @Test
     public void find() {
-        List<ItemConfig> itemConfigs = MongoUtils.find(databaseName, collectionName, new ItemDocumentHandler());
+        List<ItemConfig> itemConfigs = itemConfigDao.getItemConfigs(null);
         itemConfigs.forEach(System.out::println);
     }
 
@@ -51,7 +67,7 @@ public class MongoUtilsTest {
     public void deleteMany() {
         find();
         System.out.println("=================================");
-        MongoUtils.deleteMany(databaseName, collectionName, "{type:2,name:'大型生命药水'}");
+        itemConfigDao.deleteItemConfigs("{type:2,name:'大型生命药水'}");
         System.out.println("=================================");
         find();
     }
@@ -60,12 +76,11 @@ public class MongoUtilsTest {
     public void findOneAndReplace() throws Exception {
         find();
         System.out.println("=================================");
-        MongoUtils.findOneAndReplace(
-                databaseName, collectionName, "{type:2}",
-                JsonUtils.json2object("{\"id\": 2001, \"name\": \"小型生命药水\", \"type\": 2, \"value\": {\"HP\": 100}}", ItemConfig.class),
-                new ItemDocumentHandler()
+        itemConfigDao.replaceItemConfig("{type:2}",
+                JsonUtils.json2object("{\"id\": 2001, \"name\": \"小型生命药水\", \"type\": 2, \"value\": {\"HP\": 100}}", ItemConfig.class)
         );
         System.out.println("=================================");
         find();
     }
+
 }
