@@ -15,6 +15,7 @@ public class MongoDataSourceTest {
     @BeforeEach
     public void beforeEach() {
         DefaultMongoDataSource mds = new DefaultMongoDataSource();
+        mds.setUrl("mongodb://localhost:27017");
         mds.setMaxActive(3);
         this.mongoDataSource = mds;
     }

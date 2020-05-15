@@ -1,10 +1,9 @@
-package com.lance.game.orm.util;
+package com.lance.game.orm.runner;
 
 import com.lance.game.orm.exception.TooManyResultException;
 import com.lance.game.orm.handler.DocumentHandler;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -13,49 +12,34 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * mongo逻辑处理器
+ *
  * @author Lance
  */
-public class MongoUtils {
+public abstract class AbstractMongoRunner {
 
-    private static final String URL = "mongodb://localhost:27017";
+    public static final int DEFAULT_BATCH_COUNT = 1000;
 
     /** 最大批量插入文档数 */
-    private static final int INSERT_BATCH_COUNT = 1000;
+    protected int batchCount = DEFAULT_BATCH_COUNT;
 
-    private MongoUtils() {
-    }
-
-    public static MongoClient getClient() {
-        // todo 不知道mongo有没有连接池
-        return MongoClients.create(URL);
-    }
-
-    public static MongoClient getClient(String url) {
-        return MongoClients.create(url);
-    }
-
-    public static void close(MongoClient mongoClient) {
-        if (mongoClient == null) {
-            return;
-        }
-        mongoClient.close();
-    }
+    protected abstract MongoClient getClient();
 
     /**
      * 插入数据
      */
-    public static <T> void insertOne(String databaseName, String collectionName, T data, DocumentHandler<T> documentHandler) {
+    public <T> void insertOne(String databaseName, String collectionName, T data, DocumentHandler<T> documentHandler) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
         collection.insertOne(documentHandler.parse(data));
-        close(client);
+        client.close();
     }
 
     /**
      * 批量插入数据
      */
-    public static <T> void insertMany(String databaseName, String collectionName, List<T> list, DocumentHandler<T> documentHandler) {
+    public <T> void insertMany(String databaseName, String collectionName, List<T> list, DocumentHandler<T> documentHandler) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
@@ -64,7 +48,7 @@ public class MongoUtils {
         int i = 0;
         for (T item : list) {
             manyDocs.add(documentHandler.parse(item));
-            if (i % INSERT_BATCH_COUNT == 0) {
+            if (i % this.batchCount == 0) {
                 collection.insertMany(manyDocs);
                 manyDocs = new LinkedList<>();
             }
@@ -74,37 +58,37 @@ public class MongoUtils {
             collection.insertMany(manyDocs);
         }
 
-        close(client);
+        client.close();
     }
 
     /**
      * 根据条件删除文档
      */
-    public static void deleteOne(String databaseName, String collectionName, String filter) {
+    public void deleteOne(String databaseName, String collectionName, String filter) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
 
         collection.deleteOne(Document.parse(filter));
-        close(client);
+        client.close();
     }
 
     /**
      * 根据条件删除文档
      */
-    public static void deleteMany(String databaseName, String collectionName, String filter) {
+    public void deleteMany(String databaseName, String collectionName, String filter) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
 
         collection.deleteMany(Document.parse(filter));
-        close(client);
+        client.close();
     }
 
     /**
      * 查询单个文档
      */
-    public static <T> T findOne(String databaseName, String collectionName, String filter, DocumentHandler<T> documentHandler) {
+    public <T> T findOne(String databaseName, String collectionName, String filter, DocumentHandler<T> documentHandler) {
         List<T> result = findMany(databaseName, collectionName, filter, documentHandler);
         if (result.size() == 1) {
             return result.get(0);
@@ -118,7 +102,7 @@ public class MongoUtils {
     /**
      * 查询所有文档
      */
-    public static <T> List<T> findMany(String databaseName, String collectionName, String filter, DocumentHandler<T> documentHandler) {
+    public <T> List<T> findMany(String databaseName, String collectionName, String filter, DocumentHandler<T> documentHandler) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
@@ -135,14 +119,14 @@ public class MongoUtils {
             result.add(documentHandler.handle(doc));
         }
 
-        close(client);
+        client.close();
         return result;
     }
 
     /**
      * 计数
      */
-    public static long count(String databaseName, String collectionName, String filter) {
+    public long count(String databaseName, String collectionName, String filter) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
@@ -154,22 +138,23 @@ public class MongoUtils {
             result = collection.countDocuments(Document.parse(filter));
         }
 
-        close(client);
+        client.close();
         return result;
     }
 
     /**
      * 查询并替换文档
      */
-    public static <T> void findOneAndReplace(String databaseName, String collectionName, String filter, T data, DocumentHandler<T> documentHandler) {
+    public <T> void findOneAndReplace(String databaseName, String collectionName, String filter, T data, DocumentHandler<T> documentHandler) {
         MongoClient client = getClient();
         MongoDatabase database = client.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection(collectionName);
 
         collection.findOneAndReplace(Document.parse(filter), documentHandler.parse(data));
-        close(client);
+        client.close();
     }
 
-    // todo findOneAndUpdate updateOne updateMany 方法签名不好设计，不想给调用者看到Mongo相关内容Bson
-
+    public void setBatchCount(int batchCount) {
+        this.batchCount = batchCount;
+    }
 }

@@ -22,22 +22,24 @@ public class DefaultMongoDataSource implements MongoDataSource, Closeable {
     public static final int DEFAULT_MAX_ACTIVE = 4;
 
     /** 连接池 */
-    private MongoClient[] clientPool;
+    protected MongoClient[] clientPool;
 
     /** 最大连接数 */
-    private int maxActive = DEFAULT_MAX_ACTIVE;
+    protected int maxActive = DEFAULT_MAX_ACTIVE;
     // 最大等待时间
-//    private long maxWait;
+//    protected long maxWait;
 
     /** 当前连接数 */
-    private int activeCount;
+    protected int activeCount;
     /** 连接池连接数 */
-    private int pooledCount;
+    protected int pooledCount;
+
+    protected String url;
 
     /** 关闭 */
-    private volatile boolean close;
+    protected volatile boolean close;
 
-    private final Lock lock = new ReentrantLock();
+    protected Lock lock = new ReentrantLock();
 
     @Override
     public MongoClient getMongoClient() {
@@ -54,7 +56,7 @@ public class DefaultMongoDataSource implements MongoDataSource, Closeable {
             if (this.pooledCount > 0) {
                 rawClient = this.clientPool[--this.pooledCount];
             } else {
-                rawClient = MongoUtils.getClient();
+                rawClient = MongoUtils.getClient(this.url);
             }
             if (rawClient == null) { // 异常情况
                 return null;
@@ -134,4 +136,7 @@ public class DefaultMongoDataSource implements MongoDataSource, Closeable {
         this.maxActive = maxActive;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }
