@@ -82,7 +82,7 @@ public class PooledMongoDataSource implements MongoDataSource, Closeable {
                         throw new IllegalArgumentException("maxActive必须大于0：" + this.maxActive);
                     }
                     if (this.connectionString == null) {
-                        throw new IllegalArgumentException("url不能为null");
+                        throw new IllegalArgumentException("connectionString不能为null");
                     }
 
                     this.clientPool = new MongoClient[this.maxActive];

@@ -10,14 +10,14 @@ import com.mongodb.client.MongoClients;
  */
 public class BasicMongoDataSource implements MongoDataSource {
 
-    private String url;
+    private String connectionString;
 
     @Override
     public MongoClient getMongoClient() {
-        return MongoClients.create(url);
+        return MongoClients.create(connectionString);
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setConnectionString(String connectionString) {
+        this.connectionString = connectionString;
     }
 }

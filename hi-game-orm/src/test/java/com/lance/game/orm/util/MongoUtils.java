@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class MongoUtils {
 
-    private static final String URL = "mongodb://localhost:27017";
+    private static final String CONNECTION_STRING = "mongodb://localhost:27017";
 
     /** 最大批量插入文档数 */
     private static final int INSERT_BATCH_COUNT = 1000;
@@ -26,7 +26,7 @@ public class MongoUtils {
     }
 
     public static MongoClient getClient() {
-        return MongoClients.create(URL);
+        return MongoClients.create(CONNECTION_STRING);
     }
 
     public static void close(MongoClient mongoClient) {
