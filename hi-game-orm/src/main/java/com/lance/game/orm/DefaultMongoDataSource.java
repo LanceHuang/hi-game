@@ -19,17 +19,20 @@ public class DefaultMongoDataSource implements MongoDataSource, Closeable {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public static final int DEFAULT_MAX_ACTIVE = 4;
+
     /** 连接池 */
     private MongoClient[] clientPool;
 
-    /** 连接池连接数 */
-    private int pooledCount;
     /** 最大连接数 */
-    private int maxActive;
+    private int maxActive = DEFAULT_MAX_ACTIVE;
+    // 最大等待时间
+//    private long maxWait;
+
     /** 当前连接数 */
     private int activeCount;
-
-//    private long maxWait;
+    /** 连接池连接数 */
+    private int pooledCount;
 
     /** 关闭 */
     private volatile boolean close;
