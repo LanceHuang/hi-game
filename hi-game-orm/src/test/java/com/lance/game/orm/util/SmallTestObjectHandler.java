@@ -1,4 +1,4 @@
-package com.lance.game.demo.util;
+package com.lance.game.orm.util;
 
 import com.lance.game.orm.handler.DocumentHandler;
 import org.bson.Document;

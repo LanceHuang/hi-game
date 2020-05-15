@@ -26,12 +26,7 @@ public class MongoUtils {
     }
 
     public static MongoClient getClient() {
-        // todo 不知道mongo有没有连接池
         return MongoClients.create(URL);
-    }
-
-    public static MongoClient getClient(String url) {
-        return MongoClients.create(url);
     }
 
     public static void close(MongoClient mongoClient) {

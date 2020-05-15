@@ -1,4 +1,4 @@
-package com.lance.game.demo.util;
+package com.lance.game.orm.util;
 
 /**
  * @author Lance

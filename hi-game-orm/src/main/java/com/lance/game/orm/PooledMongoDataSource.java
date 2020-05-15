@@ -1,7 +1,7 @@
 package com.lance.game.orm;
 
-import com.lance.game.orm.util.MongoUtils;
 import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +11,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 默认连接池
+ * 池化数据源
  *
  * @author Lance
  */
@@ -34,7 +34,7 @@ public class PooledMongoDataSource implements MongoDataSource, Closeable {
     /** 连接池连接数 */
     protected int pooledCount;
 
-    protected String url;
+    protected String connectionString;
 
     /** 关闭 */
     protected volatile boolean close;
@@ -56,7 +56,7 @@ public class PooledMongoDataSource implements MongoDataSource, Closeable {
             if (this.pooledCount > 0) {
                 rawClient = this.clientPool[--this.pooledCount];
             } else {
-                rawClient = MongoUtils.getClient(this.url);
+                rawClient = MongoClients.create(this.connectionString);
             }
             if (rawClient == null) { // 异常情况
                 return null;
@@ -81,7 +81,7 @@ public class PooledMongoDataSource implements MongoDataSource, Closeable {
                     if (this.maxActive <= 0) {
                         throw new IllegalArgumentException("maxActive必须大于0：" + this.maxActive);
                     }
-                    if (this.url == null) {
+                    if (this.connectionString == null) {
                         throw new IllegalArgumentException("url不能为null");
                     }
 
@@ -107,7 +107,7 @@ public class PooledMongoDataSource implements MongoDataSource, Closeable {
                     continue;
                 }
 
-                MongoUtils.close(rawClient);
+                rawClient.close();
             }
 
             this.close = true;
@@ -139,7 +139,7 @@ public class PooledMongoDataSource implements MongoDataSource, Closeable {
         this.maxActive = maxActive;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setConnectionString(String connectionString) {
+        this.connectionString = connectionString;
     }
 }

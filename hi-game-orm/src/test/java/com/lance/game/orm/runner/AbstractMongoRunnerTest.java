@@ -24,7 +24,7 @@ public class AbstractMongoRunnerTest {
     @Bean(initMethod = "init", destroyMethod = "close")
     public PooledMongoDataSource mongoDataSource() {
         PooledMongoDataSource mongoDataSource = new PooledMongoDataSource();
-        mongoDataSource.setUrl("mongodb://localhost:27017");
+        mongoDataSource.setConnectionString("mongodb://localhost:27017");
         mongoDataSource.setMaxActive(3);
         return mongoDataSource;
     }

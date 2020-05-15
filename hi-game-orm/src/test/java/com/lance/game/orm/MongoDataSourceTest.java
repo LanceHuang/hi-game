@@ -15,7 +15,7 @@ public class MongoDataSourceTest {
     @BeforeEach
     public void beforeEach() {
         PooledMongoDataSource mds = new PooledMongoDataSource();
-        mds.setUrl("mongodb://localhost:27017");
+        mds.setConnectionString("mongodb://localhost:27017");
         mds.setMaxActive(3);
         this.mongoDataSource = mds;
     }
