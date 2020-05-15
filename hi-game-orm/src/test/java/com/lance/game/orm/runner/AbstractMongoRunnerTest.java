@@ -1,6 +1,6 @@
 package com.lance.game.orm.runner;
 
-import com.lance.game.orm.DefaultMongoDataSource;
+import com.lance.game.orm.PooledMongoDataSource;
 import com.lance.game.orm.MongoDataSource;
 import com.lance.game.orm.handler.DocumentHandler;
 import org.bson.Document;
@@ -22,8 +22,8 @@ public class AbstractMongoRunnerTest {
     private AbstractMongoRunner mongoRunner;
 
     @Bean(initMethod = "init", destroyMethod = "close")
-    public DefaultMongoDataSource mongoDataSource() {
-        DefaultMongoDataSource mongoDataSource = new DefaultMongoDataSource();
+    public PooledMongoDataSource mongoDataSource() {
+        PooledMongoDataSource mongoDataSource = new PooledMongoDataSource();
         mongoDataSource.setUrl("mongodb://localhost:27017");
         mongoDataSource.setMaxActive(3);
         return mongoDataSource;

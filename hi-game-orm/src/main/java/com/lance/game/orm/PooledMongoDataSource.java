@@ -15,7 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author Lance
  */
-public class DefaultMongoDataSource implements MongoDataSource, Closeable {
+public class PooledMongoDataSource implements MongoDataSource, Closeable {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 

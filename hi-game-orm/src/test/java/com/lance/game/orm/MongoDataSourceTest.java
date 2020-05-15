@@ -10,11 +10,11 @@ import java.io.IOException;
 
 public class MongoDataSourceTest {
 
-    private DefaultMongoDataSource mongoDataSource;
+    private PooledMongoDataSource mongoDataSource;
 
     @BeforeEach
     public void beforeEach() {
-        DefaultMongoDataSource mds = new DefaultMongoDataSource();
+        PooledMongoDataSource mds = new PooledMongoDataSource();
         mds.setUrl("mongodb://localhost:27017");
         mds.setMaxActive(3);
         this.mongoDataSource = mds;

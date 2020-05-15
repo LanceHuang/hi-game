@@ -22,11 +22,11 @@ public class MongoClientWrapper implements MongoClient {
 
     private MongoClient mongoClient;
 
-    private DefaultMongoDataSource mongoDataSource;
+    private PooledMongoDataSource mongoDataSource;
 
     private volatile boolean close;
 
-    public MongoClientWrapper(MongoClient mongoClient, DefaultMongoDataSource mongoDataSource) {
+    public MongoClientWrapper(MongoClient mongoClient, PooledMongoDataSource mongoDataSource) {
         this.mongoClient = mongoClient;
         this.mongoDataSource = mongoDataSource;
     }
