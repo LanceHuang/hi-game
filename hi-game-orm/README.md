@@ -38,6 +38,106 @@ TestDaoManager -> ITestConfigDao -> TestConfigDao$Proxy + TestConfigDocumentHand
 
 **第五阶段**：考虑使用连接池
 
+### 连接池设计
+分阶段设计：
+
+**第一阶段**：每次使用都create 
+```
+MongoClient mongoClient = MongoUtils.getMongoClient();
+// do sth
+MongoUtils.close(mongoClient);
+``` 
+
+**第二阶段**：从MongoDataSource中获取
+```
+MongoClient mongoClient = this.mongoDataSource.getMongoClient();
+// do sth
+mongoClient.close();
+
+class XXMongoDataSource {
+    
+    @Override
+    public MongoClient getMongoClient() {
+        return MongoUtils.getMongoClient();
+    }
+}
+```
+
+**第三阶段**：控制连接数，暂时不考虑回收问题
+```
+class XXMongoDataSource {
+    
+    private int maxActive;
+
+    private int activeCount;
+    
+    @Override
+    public MongoClient getMongoClient() {
+        if (this.activeCount >= this.maxActive) {
+            return null;
+        }
+        return MongoUtils.getMongoClient();
+    }
+}
+```
+
+**第四阶段**：连接回收
+```
+class XXMongoDataSource {
+    
+    /** 连接池 */
+    private MongoClient[] clientPool;
+
+    /** 连接池连接数 */
+    private int pooledCount;
+    
+    // ...
+    
+    @Override
+    public MongoClient getMongoClient() {
+        // ...
+
+        return MongoUtils.getMongoClient();
+    }
+
+    public void recycle(MongoClientWrapper mongoClientWrapper) {
+        this.lock.lock();
+        try {
+            this.clientPool[this.pooledCount++] = mongoClientWrapper.getMongoClient();
+            this.activeCount--;
+        } finally {
+            this.lock.lock();
+        }
+    }
+}
+
+class MongoClientWrapper {
+
+    private MongoClient mongoClient;
+    
+    private DefaultMongoDataSource mongoDataSource;
+    
+    public MongoClientWrapper(MongoClient mongoClient, DefaultMongoDataSource mongoDataSource) {
+        this.mongoClient = mongoClient;
+        this.mongoDataSource = mongoDataSource;
+    }
+    
+    @Override
+    public void close() {
+        // ...
+
+        this.mongoDataSource.recycle(this);
+
+        this.mongoClient = null;
+        this.mongoDataSource = null;
+    }
+
+    // ...
+}
+```
+
+**第五阶段**：orm框架引入MongoDB数据源  
+
 ### 框架用法
 1. 创建实体
 ```

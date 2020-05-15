@@ -2,27 +2,133 @@ package com.lance.game.orm;
 
 import com.lance.game.orm.util.MongoUtils;
 import com.mongodb.client.MongoClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * 默认连接池
+ *
  * @author Lance
  */
 public class DefaultMongoDataSource implements MongoDataSource, Closeable {
 
-//    private LinkedList<MongoClient> pool = new LinkedList<>();
-//
-//    private int maxConnection = 10;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /** 连接池 */
+    private MongoClient[] clientPool;
+
+    /** 连接池连接数 */
+    private int pooledCount;
+    /** 最大连接数 */
+    private int maxActive;
+    /** 当前连接数 */
+    private int activeCount;
+
+//    private long maxWait;
+
+    /** 关闭 */
+    private volatile boolean close;
+
+    private final Lock lock = new ReentrantLock();
 
     @Override
     public MongoClient getMongoClient() {
-        return MongoUtils.getClient();
+        init();
+
+        this.lock.lock();
+        try {
+            if (this.activeCount >= this.maxActive) {
+                return null;
+            }
+
+            // 优先获取池中连接
+            MongoClient rawClient;
+            if (this.pooledCount > 0) {
+                rawClient = this.clientPool[--this.pooledCount];
+            } else {
+                rawClient = MongoUtils.getClient();
+            }
+            if (rawClient == null) { // 异常情况
+                return null;
+            }
+
+            this.activeCount++;
+            logger.debug("获取MongoDB连接，最大连接数：{}，池中连接数：{}，当前连接数：{}", this.maxActive, this.pooledCount, this.activeCount);
+            return new MongoClientWrapper(rawClient, this);
+        } finally {
+            this.lock.unlock();
+        }
+    }
+
+    /**
+     * 初始化连接池
+     */
+    public void init() {
+        if (this.clientPool == null) {
+            this.lock.lock();
+            try {
+                if (this.clientPool == null) {
+                    if (this.maxActive <= 0) {
+                        throw new IllegalArgumentException("maxActive必须大于0：" + this.maxActive);
+                    }
+
+                    this.clientPool = new MongoClient[this.maxActive];
+                    logger.debug("初始化MongoDB连接池");
+                }
+            } finally {
+                this.lock.unlock();
+            }
+        }
     }
 
     @Override
     public void close() throws IOException {
+        if (this.close) {
+            return;
+        }
 
+        this.lock.lock();
+        try {
+            for (MongoClient rawClient : this.clientPool) {
+                if (rawClient == null) {
+                    continue;
+                }
+
+                MongoUtils.close(rawClient);
+            }
+
+            this.close = true;
+            logger.debug("关闭MongoDB连接池");
+        } finally {
+            this.lock.lock();
+        }
     }
+
+    /**
+     * 回收连接
+     */
+    public void recycle(MongoClientWrapper mongoClientWrapper) {
+        if (mongoClientWrapper == null || mongoClientWrapper.getMongoClient() == null) {
+            return;
+        }
+
+        this.lock.lock();
+        try {
+            this.clientPool[this.pooledCount++] = mongoClientWrapper.getMongoClient();
+            this.activeCount--;
+            logger.debug("回收MongoDB连接，最大连接数：{}，池中连接数：{}，当前连接数：{}", this.maxActive, this.pooledCount, this.activeCount);
+        } finally {
+            this.lock.lock();
+        }
+    }
+
+    public void setMaxActive(int maxActive) {
+        this.maxActive = maxActive;
+    }
+
 }
