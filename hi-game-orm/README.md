@@ -136,7 +136,39 @@ class MongoClientWrapper {
 }
 ```
 
-**第五阶段**：orm框架引入MongoDB数据源  
+**第五阶段**：引入MongoDB数据源  
+```
+class MongoUtils {
+
+    public static MongoClient getClient() {
+        return mongoDatasource.getClient();
+    }
+}
+```
+
+**第五阶段**：移除MongoUtils
+```
+class MongoRunner {
+    
+    private MongoDataSource mongoDataSource;
+
+    protected MongoClient getClient() {
+        return this.mongoDataSource.getClient();
+    }
+
+    public <T> void insertOne(String databaseName, String collectionName, T data, DocumentHandler<T> documentHandler) {
+        MongoClient client = getClient();
+        MongoDatabase database = client.getDatabase(databaseName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+        collection.insertOne(documentHandler.parse(data));
+        close(client);
+    }
+
+    // ...
+}
+
+```
+
 
 ### 框架用法
 1. 创建实体
