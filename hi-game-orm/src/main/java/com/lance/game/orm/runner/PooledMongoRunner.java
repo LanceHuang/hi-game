@@ -6,11 +6,11 @@ import com.mongodb.client.MongoClient;
 /**
  * @author Lance
  */
-public class DefaultMongoRunner extends AbstractMongoRunner {
+public class PooledMongoRunner extends AbstractMongoRunner {
 
     protected MongoDataSource mongoDataSource;
 
-    public DefaultMongoRunner(MongoDataSource mongoDataSource) {
+    public PooledMongoRunner(MongoDataSource mongoDataSource) {
         this.mongoDataSource = mongoDataSource;
     }
 

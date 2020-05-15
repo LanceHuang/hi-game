@@ -31,7 +31,7 @@ public class AbstractMongoRunnerTest {
 
     @Bean
     public AbstractMongoRunner mongoRunner(MongoDataSource mongoDataSource) {
-        DefaultMongoRunner runner = new DefaultMongoRunner(mongoDataSource);
+        PooledMongoRunner runner = new PooledMongoRunner(mongoDataSource);
         runner.setBatchCount(50);
         return runner;
     }
