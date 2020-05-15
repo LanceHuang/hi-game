@@ -81,6 +81,9 @@ public class DefaultMongoDataSource implements MongoDataSource, Closeable {
                     if (this.maxActive <= 0) {
                         throw new IllegalArgumentException("maxActive必须大于0：" + this.maxActive);
                     }
+                    if (this.url == null) {
+                        throw new IllegalArgumentException("url不能为null");
+                    }
 
                     this.clientPool = new MongoClient[this.maxActive];
                     logger.debug("初始化MongoDB连接池");
@@ -110,7 +113,7 @@ public class DefaultMongoDataSource implements MongoDataSource, Closeable {
             this.close = true;
             logger.debug("关闭MongoDB连接池");
         } finally {
-            this.lock.lock();
+            this.lock.unlock();
         }
     }
 
@@ -128,7 +131,7 @@ public class DefaultMongoDataSource implements MongoDataSource, Closeable {
             this.activeCount--;
             logger.debug("回收MongoDB连接，最大连接数：{}，池中连接数：{}，当前连接数：{}", this.maxActive, this.pooledCount, this.activeCount);
         } finally {
-            this.lock.lock();
+            this.lock.unlock();
         }
     }
 
