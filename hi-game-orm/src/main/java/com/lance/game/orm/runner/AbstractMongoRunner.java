@@ -18,7 +18,7 @@ import java.util.List;
  */
 public abstract class AbstractMongoRunner {
 
-    public static final int DEFAULT_BATCH_COUNT = 1000;
+    public static final int DEFAULT_BATCH_COUNT = 100;
 
     /** 最大批量插入文档数 */
     protected int batchCount = DEFAULT_BATCH_COUNT;
