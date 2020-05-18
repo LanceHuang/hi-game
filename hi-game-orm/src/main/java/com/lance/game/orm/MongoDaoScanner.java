@@ -3,7 +3,6 @@ package com.lance.game.orm;
 import com.lance.game.orm.annotation.MongoDao;
 import com.lance.game.orm.exception.GenerateProxyFailureException;
 import com.lance.game.orm.generator.MongoDaoProxyGenerator;
-import com.lance.game.orm.runner.DefaultMongoRunner;
 import com.lance.game.orm.util.ResourceUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
@@ -59,11 +58,6 @@ public class MongoDaoScanner implements InitializingBean, BeanDefinitionRegistry
             AbstractBeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
             registry.registerBeanDefinition(enhanceClass.getSimpleName(), beanDefinition);
         }
-
-//        Class<DefaultMongoRunner> defaultMongoRunnerClass = DefaultMongoRunner.class;
-//        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.rootBeanDefinition(defaultMongoRunnerClass);
-//        beanDefinitionBuilder.addConstructorArgReference("mongoDataSource1");
-//        registry.registerBeanDefinition(defaultMongoRunnerClass.getSimpleName(), beanDefinitionBuilder.getBeanDefinition());
     }
 
     public void setBasePackage(String basePackage) {

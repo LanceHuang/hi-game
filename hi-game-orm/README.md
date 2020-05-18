@@ -169,7 +169,6 @@ class MongoRunner {
 
 ```
 
-
 ### 框架用法
 1. 创建实体
 ```
@@ -202,7 +201,26 @@ public interface INewTestConfigDao {
 }
 ```
 
-3. 将MongoDaoScanner添加到Spring容器，设置basePackage，用于扫描DAO接口
+3. 配置数据源，跟c3p0类似
+```
+@Bean(initMethod = "init", destroyMethod = "close")
+public PooledMongoDataSource mongoDataSource() {
+    PooledMongoDataSource mongoDataSource = new PooledMongoDataSource();
+    mongoDataSource.setConnectionString("mongodb://localhost:27017");
+    mongoDataSource.setMaxActive(3);
+    return mongoDataSource;
+}
+```
+
+4. 配置Runner，类似于MyBatis的SqlSessionFactory
+```
+@Bean
+public DefaultMongoRunner defaultMongoRunner(MongoDataSource mongoDataSource) {
+    return new DefaultMongoRunner(mongoDataSource);
+}
+```
+
+5. 将MongoDaoScanner添加到Spring容器，设置basePackage，用于扫描DAO接口
 ```
 @Bean
 public MongoDaoScanner mongoDaoScanner() {
@@ -212,12 +230,13 @@ public MongoDaoScanner mongoDaoScanner() {
 }
 ```
 
-4. 注入即可使用
+5. 注入即可使用
 ```
 @Resource
 private INewTestConfigDao newTestConfigDao;
 ```
 
+如果不使用Spring框架，可以只使用MongoDataSource和MongoRunner  
 
 ### 为什么要用MongoDB？
 这阵子我一直头疼以下问题：

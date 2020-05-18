@@ -2,6 +2,7 @@ package com.lance.game.orm;
 
 import com.lance.game.orm.dao.INewTestConfigDao;
 import com.lance.game.orm.model.TestConfig;
+import com.lance.game.orm.runner.DefaultMongoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,19 @@ public class MongoDaoScannerTest {
 
     @Resource
     private INewTestConfigDao newTestConfigDao;
+
+    @Bean(initMethod = "init", destroyMethod = "close")
+    public PooledMongoDataSource mongoDataSource() {
+        PooledMongoDataSource mongoDataSource = new PooledMongoDataSource();
+        mongoDataSource.setConnectionString("mongodb://localhost:27017");
+        mongoDataSource.setMaxActive(3);
+        return mongoDataSource;
+    }
+
+    @Bean
+    public DefaultMongoRunner defaultMongoRunner(MongoDataSource mongoDataSource) {
+        return new DefaultMongoRunner(mongoDataSource);
+    }
 
     @Bean
     public MongoDaoScanner mongoDaoScanner() {

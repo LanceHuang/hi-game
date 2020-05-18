@@ -9,19 +9,25 @@ import com.lance.game.orm.annotation.FindOneAndReplace;
 import com.lance.game.orm.annotation.InsertMany;
 import com.lance.game.orm.annotation.InsertOne;
 import com.lance.game.orm.annotation.MongoDao;
+import com.lance.game.orm.runner.AbstractMongoRunner;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtField;
 import javassist.CtMethod;
 import javassist.NotFoundException;
+import javassist.bytecode.AnnotationsAttribute;
+import javassist.bytecode.ClassFile;
+import javassist.bytecode.ConstPool;
+import javassist.bytecode.annotation.Annotation;
 
+import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
 /**
- * DAO代理类生成工具，自动调用MongoUtils相应方法
+ * DAO代理类生成工具，自动调用AbstractMongoRunner相应方法
  *
  * @author Lance
  */
@@ -54,6 +60,18 @@ public class MongoDaoProxyGenerator {
         enhanceClass.addInterface(classPool.getCtClass(clazz.getName()));
 
         // 3. 添加成员变量
+        // Runner
+        CtField runnerCtField = new CtField(classPool.getCtClass(AbstractMongoRunner.class.getName()), "runner", enhanceClass);
+        runnerCtField.setModifiers(Modifier.PRIVATE);
+        ClassFile classFile = enhanceClass.getClassFile();
+        ConstPool constPool = classFile.getConstPool();
+        AnnotationsAttribute runnerFieldAttr = new AnnotationsAttribute(constPool, AnnotationsAttribute.visibleTag);
+        Annotation resourceAnnotation = new Annotation(Resource.class.getName(), constPool);
+        runnerFieldAttr.addAnnotation(resourceAnnotation);
+        runnerCtField.getFieldInfo().addAttribute(runnerFieldAttr);
+        enhanceClass.addField(runnerCtField);
+
+        // Handler
         Class<?> handlerClass = DocumentHandlerProxyGenerator.generateClass(modelClass);
         // 这种方式会默认调用 XXDocumentHandler$Proxy(this)，不推荐使用
 //        CtClass handlerCtClass = classPool.getCtClass(handlerClass.getName());
@@ -94,7 +112,7 @@ public class MongoDaoProxyGenerator {
 
         CtMethod ctMethod = generateMethodTemplate(enhanceClass, m);
         String methodBody = String.format(
-                "{ com.lance.game.orm.util.MongoUtils.insertOne(\"%s\", \"%s\", $1, documentHandler); }",
+                "{ runner.insertOne(\"%s\", \"%s\", $1, documentHandler); }",
                 databaseName, collectionName);
         ctMethod.setBody(methodBody);
 
@@ -109,7 +127,7 @@ public class MongoDaoProxyGenerator {
 
         CtMethod ctMethod = generateMethodTemplate(enhanceClass, m);
         String methodBody = String.format(
-                "{ com.lance.game.orm.util.MongoUtils.insertMany(\"%s\", \"%s\", $1, documentHandler); }",
+                "{ runner.insertMany(\"%s\", \"%s\", $1, documentHandler); }",
                 databaseName, collectionName);
         ctMethod.setBody(methodBody);
 
@@ -124,7 +142,7 @@ public class MongoDaoProxyGenerator {
 
         CtMethod ctMethod = generateMethodTemplate(enhanceClass, m);
         String methodBody = String.format(
-                "{ return (" + m.getReturnType().getName() + ") com.lance.game.orm.util.MongoUtils.findOne(\"%s\", \"%s\", $1, documentHandler); }",
+                "{ return (" + m.getReturnType().getName() + ") runner.findOne(\"%s\", \"%s\", $1, documentHandler); }",
                 databaseName, collectionName);
         ctMethod.setBody(methodBody);
 
@@ -139,7 +157,7 @@ public class MongoDaoProxyGenerator {
 
         CtMethod ctMethod = generateMethodTemplate(enhanceClass, m);
         String methodBody = String.format(
-                "{ return com.lance.game.orm.util.MongoUtils.findMany(\"%s\", \"%s\", $1, documentHandler); }",
+                "{ return runner.findMany(\"%s\", \"%s\", $1, documentHandler); }",
                 databaseName, collectionName);
         ctMethod.setBody(methodBody);
 
@@ -154,7 +172,7 @@ public class MongoDaoProxyGenerator {
 
         CtMethod ctMethod = generateMethodTemplate(enhanceClass, m);
         String methodBody = String.format(
-                "{ return com.lance.game.orm.util.MongoUtils.count(\"%s\", \"%s\", $1); }",
+                "{ return runner.count(\"%s\", \"%s\", $1); }",
                 databaseName, collectionName);
         ctMethod.setBody(methodBody);
 
@@ -169,7 +187,7 @@ public class MongoDaoProxyGenerator {
 
         CtMethod ctMethod = generateMethodTemplate(enhanceClass, m);
         String methodBody = String.format(
-                "{ com.lance.game.orm.util.MongoUtils.findOneAndReplace(\"%s\", \"%s\", $1, $2, documentHandler); }",
+                "{ runner.findOneAndReplace(\"%s\", \"%s\", $1, $2, documentHandler); }",
                 databaseName, collectionName);
         ctMethod.setBody(methodBody);
 
@@ -184,7 +202,7 @@ public class MongoDaoProxyGenerator {
 
         CtMethod ctMethod = generateMethodTemplate(enhanceClass, m);
         String methodBody = String.format(
-                "{ com.lance.game.orm.util.MongoUtils.deleteOne(\"%s\", \"%s\", $1); }",
+                "{ runner.deleteOne(\"%s\", \"%s\", $1); }",
                 databaseName, collectionName);
         ctMethod.setBody(methodBody);
 
@@ -200,7 +218,7 @@ public class MongoDaoProxyGenerator {
 
         CtMethod ctMethod = generateMethodTemplate(enhanceClass, m);
         String methodBody = String.format(
-                "{ com.lance.game.orm.util.MongoUtils.deleteMany(\"%s\", \"%s\", $1); }",
+                "{ runner.deleteMany(\"%s\", \"%s\", $1); }",
                 databaseName, collectionName);
         ctMethod.setBody(methodBody);
 
