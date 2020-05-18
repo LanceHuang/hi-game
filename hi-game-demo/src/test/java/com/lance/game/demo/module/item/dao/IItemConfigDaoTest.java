@@ -3,6 +3,9 @@ package com.lance.game.demo.module.item.dao;
 import com.lance.common.tool.util.JsonUtils;
 import com.lance.game.demo.module.item.config.ItemConfig;
 import com.lance.game.orm.MongoDaoScanner;
+import com.lance.game.orm.MongoDataSource;
+import com.lance.game.orm.PooledMongoDataSource;
+import com.lance.game.orm.runner.DefaultMongoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +23,19 @@ public class IItemConfigDaoTest {
 
     @Resource
     private IItemConfigDao itemConfigDao;
+
+    @Bean(initMethod = "init", destroyMethod = "close")
+    public PooledMongoDataSource mongoDataSource() {
+        PooledMongoDataSource mongoDataSource = new PooledMongoDataSource();
+        mongoDataSource.setConnectionString("mongodb://localhost:27017");
+        mongoDataSource.setMaxActive(3);
+        return mongoDataSource;
+    }
+
+    @Bean
+    public DefaultMongoRunner defaultMongoRunner(MongoDataSource mongoDataSource) {
+        return new DefaultMongoRunner(mongoDataSource);
+    }
 
     @Bean
     public MongoDaoScanner mongoDaoScanner() {
