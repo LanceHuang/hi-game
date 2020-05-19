@@ -36,4 +36,12 @@ public class TestRequest {
         this.value = value;
     }
 
+    @Override
+    public String toString() {
+        return "TestRequest{" +
+                "activityId=" + activityId +
+                ", account='" + account + '\'' +
+                ", value=" + value +
+                '}';
+    }
 }
