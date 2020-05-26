@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory;
 import java.io.Closeable;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -72,19 +74,25 @@ public class BioGameServer implements GameServer {
      */
     private void dispatch(Socket socket) {
         new Thread(() -> {
-//            try {
-//                // 数据读取
+            try {
+                // 数据读取
+                byte[] buf = new byte[1024];
 //                while (true) {
-//                    DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-//
-//                    // todo
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } finally {
-            // 断开连接
-            closeQuietly(socket);
-//            }
+                DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+//                int size = inputStream.readInt();
+//                System.out.println(size);
+//                int readCount = inputStream.read(buf, 0, size);
+                int readCount = inputStream.read(buf);
+                if (readCount > 0) {
+                    System.out.println(readCount);
+                    System.out.println(Arrays.toString(buf));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                // 断开连接
+                closeQuietly(socket);
+            }
             int currActiveCount = BioGameServer.this.activeCount.decrementAndGet();
             logger.debug("断开连接，当前连接数：{}", currActiveCount);
         }).start();
