@@ -1,13 +1,17 @@
-package com.lance.game.demo.module.attribute.model;
+package com.lance.game.demo.module.attribute;
 
 /**
+ * 属性
+ *
  * @author Lance
- * @since 2019/7/4 20:40
  */
 public class Attribute {
 
+    /** 属性类型 */
     private AttributeType type;
-    private long          value;
+
+    /** 属性值 */
+    private long value;
 
     public AttributeType getType() {
         return type;
