@@ -14,7 +14,7 @@ import java.util.Map;
 public class AttributeContainer {
 
     /** 原始属性 */
-    private final Map<ModelAttributeId, Map<AttributeType, Long>> rawAttributeMap = new HashMap<>();
+    private Map<ModuleAttributeId, Map<AttributeType, Long>> rawAttributeMap = new HashMap<>();
 
     /** 最终属性 */
     private Map<AttributeType, Long> finalAttributeMap = new HashMap<>();
@@ -25,7 +25,7 @@ public class AttributeContainer {
      * @param mai          模块属性id
      * @param attributeMap 模块属性表
      */
-    public void putModelAttributes(ModelAttributeId mai, Map<AttributeType, Long> attributeMap) {
+    public void putAttributes(ModuleAttributeId mai, Map<AttributeType, Long> attributeMap) {
         if (mai == null || attributeMap == null) {
             return;
         }
@@ -35,9 +35,9 @@ public class AttributeContainer {
     /**
      * 计算属性
      */
-    public void calculate() {
+    public void recompute() {
         // 1. flat
-        Map<AttributeType, Long> calculateAttributeMap = new HashMap<>();
+        Map<AttributeType, Long> flatAttributeMap = new HashMap<>();
         for (Map<AttributeType, Long> map : this.rawAttributeMap.values()) {
             for (Map.Entry<AttributeType, Long> entry : map.entrySet()) {
                 AttributeType type = entry.getKey();
@@ -46,19 +46,19 @@ public class AttributeContainer {
                     continue;
                 }
 
-                calculateAttributeMap.merge(type, value, Long::sum);
+                flatAttributeMap.merge(type, value, Long::sum);
             }
         }
 
         // 2. compute
         // f(x) = x                          formula(x) == null
-        // f(x) = g(calculateAttributeMap)   formula(x) != null
+        // f(x) = g(flatAttributeMap)   formula(x) != null
         Map<AttributeType, Long> tempAttributeMap = new HashMap<>();
         Map<AttributeType, IAttributeFormula> attributeFormulas = AbstractAttributeFormula.getAttributeFormulas();
-        for (Map.Entry<AttributeType, Long> entry : calculateAttributeMap.entrySet()) {
+        for (Map.Entry<AttributeType, Long> entry : flatAttributeMap.entrySet()) {
             AttributeType type = entry.getKey(); // 属性类型
             if (attributeFormulas.containsKey(type)) { // 需要计算的属性
-                long value = attributeFormulas.get(type).calculate(calculateAttributeMap);
+                long value = attributeFormulas.get(type).calculate(flatAttributeMap);
                 tempAttributeMap.put(type, value);
             } else {
                 tempAttributeMap.put(type, entry.getValue());
@@ -70,9 +70,17 @@ public class AttributeContainer {
     }
 
     /**
+     * 清空属性
+     */
+    public void clear() {
+        this.rawAttributeMap = new HashMap<>();
+        this.finalAttributeMap = new HashMap<>();
+    }
+
+    /**
      * 打印最终属性
      */
-    public void printLog() {
+    public void logAttributes() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<AttributeType, Long> entry : this.finalAttributeMap.entrySet()) {
             sb.append(entry.getKey());

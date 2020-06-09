@@ -19,9 +19,9 @@ public class DefenseAttributeFormula extends AbstractAttributeFormula {
     }
 
     @Override
-    public long calculate(Map<AttributeType, Long> calculateAttributeMap) {
-        long defense = calculateAttributeMap.getOrDefault(AttributeType.DEFENSE, 0L);
-        long defenseRate = calculateAttributeMap.getOrDefault(AttributeType.DEFENSE_RATE, 0L);
+    public long calculate(Map<AttributeType, Long> flatAttributeMap) {
+        long defense = flatAttributeMap.getOrDefault(AttributeType.DEFENSE, 0L);
+        long defenseRate = flatAttributeMap.getOrDefault(AttributeType.DEFENSE_RATE, 0L);
         return Math.round(defense * (1 + defenseRate / 10000.0));
     }
 }

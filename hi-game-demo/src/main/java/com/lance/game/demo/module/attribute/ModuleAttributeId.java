@@ -5,7 +5,7 @@ package com.lance.game.demo.module.attribute;
  *
  * @author Lance
  */
-public enum ModelAttributeId {
+public enum ModuleAttributeId {
 
     /** 测试属性，用GM临时增强玩家属性，重登失效 */
     TEST,

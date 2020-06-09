@@ -19,9 +19,9 @@ public class HpAttributeFormula extends AbstractAttributeFormula {
     }
 
     @Override
-    public long calculate(Map<AttributeType, Long> calculateAttributeMap) {
-        long hp = calculateAttributeMap.getOrDefault(AttributeType.HP, 0L);
-        long hpRate = calculateAttributeMap.getOrDefault(AttributeType.HP_RATE, 0L);
+    public long calculate(Map<AttributeType, Long> flatAttributeMap) {
+        long hp = flatAttributeMap.getOrDefault(AttributeType.HP, 0L);
+        long hpRate = flatAttributeMap.getOrDefault(AttributeType.HP_RATE, 0L);
         return Math.round(hp * (1 + hpRate / 10000.0));
     }
 }

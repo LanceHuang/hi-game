@@ -16,15 +16,24 @@ public class AttributeContainerTest {
 
     @Test
     public void test() {
-        Map<AttributeType, Long> attributeMap = new HashMap<>();
-        attributeMap.put(AttributeType.ATK, 200L);
-        attributeMap.put(AttributeType.ATK_RATE, 2000L);
-        attributeMap.put(AttributeType.DEFENSE, 100L);
-        attributeMap.put(AttributeType.HP, 1000L);
+        Map<AttributeType, Long> testAttributeMap = new HashMap<>();
+        testAttributeMap.put(AttributeType.ATK, 200L);
+        testAttributeMap.put(AttributeType.ATK_RATE, 2000L);
+        testAttributeMap.put(AttributeType.DEFENSE, 100L);
+        testAttributeMap.put(AttributeType.HP, 1000L);
+
+        Map<AttributeType, Long> equipAttributeMap = new HashMap<>();
+        equipAttributeMap.put(AttributeType.ATK, 300L);
+        equipAttributeMap.put(AttributeType.DEFENSE, 550L);
+        equipAttributeMap.put(AttributeType.HP, 5000L);
 
         AttributeContainer attributeContainer = new AttributeContainer();
-        attributeContainer.putModelAttributes(ModelAttributeId.TEST, attributeMap);
-        attributeContainer.calculate();
-        attributeContainer.printLog();
+        attributeContainer.putAttributes(ModuleAttributeId.TEST, testAttributeMap);
+        attributeContainer.putAttributes(ModuleAttributeId.EQUIP, equipAttributeMap);
+        attributeContainer.recompute();
+        attributeContainer.logAttributes();
+
+        attributeContainer.clear();
+        attributeContainer.logAttributes();
     }
 }

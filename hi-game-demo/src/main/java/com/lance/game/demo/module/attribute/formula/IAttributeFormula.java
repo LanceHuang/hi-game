@@ -19,7 +19,7 @@ public interface IAttributeFormula {
     /**
      * 计算属性值
      *
-     * @param calculateAttributeMap 原始属性表
+     * @param flatAttributeMap 属性表
      */
-    long calculate(Map<AttributeType, Long> calculateAttributeMap);
+    long calculate(Map<AttributeType, Long> flatAttributeMap);
 }
