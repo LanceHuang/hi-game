@@ -51,6 +51,8 @@ public class AttributeContainer {
         }
 
         // 2. compute
+        // f(x) = x                          formula(x) == null
+        // f(x) = g(calculateAttributeMap)   formula(x) != null
         Map<AttributeType, Long> tempAttributeMap = new HashMap<>();
         Map<AttributeType, IAttributeFormula> attributeFormulas = AbstractAttributeFormula.getAttributeFormulas();
         for (Map.Entry<AttributeType, Long> entry : calculateAttributeMap.entrySet()) {

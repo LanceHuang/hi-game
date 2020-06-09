@@ -21,7 +21,6 @@ public class AttributeContainerTest {
         attributeMap.put(AttributeType.ATK_RATE, 2000L);
         attributeMap.put(AttributeType.DEFENSE, 100L);
         attributeMap.put(AttributeType.HP, 1000L);
-        attributeMap.put(AttributeType.MP, 500L);
 
         AttributeContainer attributeContainer = new AttributeContainer();
         attributeContainer.putModelAttributes(ModelAttributeId.TEST, attributeMap);

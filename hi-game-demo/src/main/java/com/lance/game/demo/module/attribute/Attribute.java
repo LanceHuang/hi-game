@@ -1,7 +1,7 @@
 package com.lance.game.demo.module.attribute;
 
 /**
- * 属性
+ * 属性：{"type":"ATK","value":300}
  *
  * @author Lance
  */

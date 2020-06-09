@@ -26,15 +26,14 @@ public enum AttributeType {
     DEFENSE(3),
     /** 防御加成 */
     DEFENSE_RATE(103, false),
-    /** 蓝条 */
-    MP(4),
 
     //--------------------------- 特殊属性 ---------------------------
     // todo 不归到上述范围的属性，如：金木水火土适应性
     ;
 
     /** 属性id */
-    private int     id;
+    private int id;
+
     /** 是否需要传给客户端 */
     private boolean view;
 
