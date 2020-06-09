@@ -25,7 +25,7 @@ public class AttributeContainerTest {
 
         AttributeContainer attributeContainer = new AttributeContainer();
         attributeContainer.putModelAttributes(ModelAttributeId.TEST, attributeMap);
-        attributeContainer.compute();
+        attributeContainer.calculate();
         attributeContainer.printLog();
     }
 }

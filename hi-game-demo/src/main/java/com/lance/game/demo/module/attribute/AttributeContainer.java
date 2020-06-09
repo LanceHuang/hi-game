@@ -1,7 +1,7 @@
 package com.lance.game.demo.module.attribute;
 
-import com.lance.game.demo.module.attribute.computer.AbstractAttributeComputer;
-import com.lance.game.demo.module.attribute.computer.IAttributeComputer;
+import com.lance.game.demo.module.attribute.formula.AbstractAttributeFormula;
+import com.lance.game.demo.module.attribute.formula.IAttributeFormula;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import java.util.Map;
 public class AttributeContainer {
 
     /** 原始属性 */
-    private Map<ModelAttributeId, Map<AttributeType, Long>> rawAttributeMap = new HashMap<>();
+    private final Map<ModelAttributeId, Map<AttributeType, Long>> rawAttributeMap = new HashMap<>();
 
     /** 最终属性 */
     private Map<AttributeType, Long> finalAttributeMap = new HashMap<>();
@@ -35,9 +35,9 @@ public class AttributeContainer {
     /**
      * 计算属性
      */
-    public void compute() {
+    public void calculate() {
         // 1. flat
-        Map<AttributeType, Long> computeAttributeMap = new HashMap<>();
+        Map<AttributeType, Long> calculateAttributeMap = new HashMap<>();
         for (Map<AttributeType, Long> map : this.rawAttributeMap.values()) {
             for (Map.Entry<AttributeType, Long> entry : map.entrySet()) {
                 AttributeType type = entry.getKey();
@@ -46,17 +46,17 @@ public class AttributeContainer {
                     continue;
                 }
 
-                computeAttributeMap.merge(type, value, Long::sum);
+                calculateAttributeMap.merge(type, value, Long::sum);
             }
         }
 
         // 2. compute
         Map<AttributeType, Long> tempAttributeMap = new HashMap<>();
-        Map<AttributeType, IAttributeComputer> attributeComputers = AbstractAttributeComputer.getAttributeComputers();
-        for (Map.Entry<AttributeType, Long> entry : computeAttributeMap.entrySet()) {
+        Map<AttributeType, IAttributeFormula> attributeFormulas = AbstractAttributeFormula.getAttributeFormulas();
+        for (Map.Entry<AttributeType, Long> entry : calculateAttributeMap.entrySet()) {
             AttributeType type = entry.getKey(); // 属性类型
-            if (attributeComputers.containsKey(type)) { // 需要计算的属性
-                long value = attributeComputers.get(type).compute(computeAttributeMap);
+            if (attributeFormulas.containsKey(type)) { // 需要计算的属性
+                long value = attributeFormulas.get(type).calculate(calculateAttributeMap);
                 tempAttributeMap.put(type, value);
             } else {
                 tempAttributeMap.put(type, entry.getValue());
