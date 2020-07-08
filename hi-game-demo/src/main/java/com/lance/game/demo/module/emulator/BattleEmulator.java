@@ -19,10 +19,11 @@ public class BattleEmulator {
      * @return 战报
      */
     public static BattleReport fight(BattleUnit battleUnit) {
-        battleUnit.init();
+        battleUnit.init(); // 初始化
         while (battleUnit.hasNext()) {
             battleUnit.executeNext();
         }
+        battleUnit.settle(); // 结算
         return battleUnit.getBattleReport();
     }
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 
 /**
  * 战报
+ *
  * @author Lance
  */
 @Data
@@ -15,8 +16,10 @@ public class BattleReport {
     /** 随机种子 */
     private long seed;
 
-    public BattleReport(long id, long seed) {
-        this.id = id;
-        this.seed = seed;
-    }
+    /** 战斗结果 */
+    private int result;
+
+
+
+
 }

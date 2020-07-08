@@ -76,8 +76,15 @@ public class BattleUnit {
      */
     public void executeNext() {
         Instruction instruction = next();
-        System.out.println(String.format("【%d】执行【%s】指令", instruction.getBaseUnit().getId(), instruction.getType()));
+        System.out.println(String.format("================ 【%d】执行【%s】指令 ================",
+                instruction.getBaseUnit().getId(), instruction.getType()));
         instruction.execute(this);
     }
 
+    /**
+     * 结算
+     */
+    public void settle() {
+        // todo
+    }
 }
