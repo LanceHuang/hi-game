@@ -19,7 +19,6 @@ public class BattleReport {
     /** 战斗结果 */
     private int result;
 
-
-
+    // todo 记录战斗流程：快照+行为+变化属性
 
 }

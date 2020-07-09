@@ -1,6 +1,9 @@
 package com.lance.game.demo.module.emulator;
 
+import com.lance.game.demo.module.attribute.AttributeType;
 import lombok.Data;
+
+import java.util.Map;
 
 /**
  * 生物单元
@@ -14,11 +17,16 @@ public class CreatureUnit {
 
     private State state;
 
+    /**
+     * 还不确定是用map，还是成员变量。用map则需要额外的get操作
+     */
+    private Map<AttributeType, Long> attributes;
+
     private long maxHp;
 
-    private long hp;
-
     private long atk;
+
+    private long hp;
 
     public CreatureUnit(long id) {
         this.id = id;
@@ -33,9 +41,27 @@ public class CreatureUnit {
     }
 
     /**
+     * 回血
+     */
+    public void recoverHp(long recover) {
+        this.hp = Math.min(this.maxHp, this.hp + recover);
+    }
+
+    /**
      * 扣血
      */
     public void reduceHp(long reduce) {
         this.hp = Math.max(0L, this.hp - reduce);
     }
+
+    /**
+     * 获取属性值
+     *
+     * @param type 属性类型
+     */
+    public long getAttributeValue(AttributeType type) {
+        Long value = this.attributes.get(type);
+        return value == null ? 0L : value;
+    }
+
 }

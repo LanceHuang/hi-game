@@ -31,6 +31,8 @@ public class BattleUnit {
     /** 战报 */
     private BattleReport battleReport;
 
+    // todo 如何实现持续回血buff？
+
     public BattleUnit(long id, long seed) {
         this.id = id;
         this.seed = seed;

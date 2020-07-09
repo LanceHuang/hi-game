@@ -14,6 +14,16 @@ public class NormalStateHandler implements IStateHandler {
 
     @Override
     public void handle(BattleUnit battleUnit, CreatureUnit creatureUnit) {
-        battleUnit.addInstruction(new Instruction(InstructionType.HIT, creatureUnit));
+
+        // 判断是否处于眩晕、嘲讽状态
+
+        // 判断是否能释放技能
+
+        // 默认普攻
+
+        // todo 需要判断阵营，选择攻击目标，这里暂时只处理两个角色
+        CreatureUnit attacker = creatureUnit;
+        CreatureUnit defender = (battleUnit.getAttacker() == attacker) ? battleUnit.getDefender() : battleUnit.getAttacker();
+        battleUnit.addInstruction(new Instruction(InstructionType.HIT, creatureUnit, defender));
     }
 }

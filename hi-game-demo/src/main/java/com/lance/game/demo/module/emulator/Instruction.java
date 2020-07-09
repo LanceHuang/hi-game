@@ -14,9 +14,17 @@ public class Instruction {
 
     private CreatureUnit baseUnit;
 
+    private CreatureUnit targetUnit;
+
     public Instruction(InstructionType type, CreatureUnit baseUnit) {
         this.type = type;
         this.baseUnit = baseUnit;
+    }
+
+    public Instruction(InstructionType type, CreatureUnit baseUnit, CreatureUnit targetUnit) {
+        this.type = type;
+        this.baseUnit = baseUnit;
+        this.targetUnit = targetUnit;
     }
 
     /**
