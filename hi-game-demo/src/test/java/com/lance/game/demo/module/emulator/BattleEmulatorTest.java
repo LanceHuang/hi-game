@@ -9,7 +9,7 @@ public class BattleEmulatorTest {
         long id = 1;
         long seed = System.currentTimeMillis();
 
-        // 初始化战斗单元
+        // 添加战斗单元
         BattleUnit battleUnit = new BattleUnit(id, seed);
         CreatureUnit attacker = new CreatureUnit(10086L);
         attacker.setAtk(100L);
@@ -22,6 +22,9 @@ public class BattleEmulatorTest {
         defender.setHp(2000L);
         battleUnit.setDefender(defender);
 
+        // 添加初始指令
+        battleUnit.addInstruction(new Instruction(InstructionType.READY, attacker));
+        battleUnit.addInstruction(new Instruction(InstructionType.READY, defender));
         System.out.println(BattleEmulator.fight(battleUnit));
     }
 }

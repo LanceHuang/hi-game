@@ -19,7 +19,6 @@ public class BattleEmulator {
      * @return 战报
      */
     public static BattleReport fight(BattleUnit battleUnit) {
-        battleUnit.init(); // 初始化
         while (battleUnit.hasNext()) {
             battleUnit.executeNext();
         }

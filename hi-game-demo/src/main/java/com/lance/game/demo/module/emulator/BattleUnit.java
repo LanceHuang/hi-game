@@ -25,6 +25,9 @@ public class BattleUnit {
     /** 守方 */
     private CreatureUnit defender;
 
+    /** 时间线 */
+    private long timeline;
+
     /** 指令队列 */
     private Queue<Instruction> instructions;
 
@@ -36,17 +39,8 @@ public class BattleUnit {
     public BattleUnit(long id, long seed) {
         this.id = id;
         this.seed = seed;
-        this.instructions = new LinkedList<>();
+        this.instructions = new LinkedList<>(); // todo 改为优先队列
         // todo 初始化战报
-    }
-
-    /**
-     * 初始化
-     */
-    public void init() {
-        addInstruction(new Instruction(InstructionType.READY, this.attacker));
-        addInstruction(new Instruction(InstructionType.READY, this.defender));
-
     }
 
     /**

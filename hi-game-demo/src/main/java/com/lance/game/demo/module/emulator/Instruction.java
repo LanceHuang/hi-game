@@ -16,6 +16,9 @@ public class Instruction {
 
     private CreatureUnit targetUnit;
 
+    /** 执行时间 */
+    private long executeTime;
+
     public Instruction(InstructionType type, CreatureUnit baseUnit) {
         this.type = type;
         this.baseUnit = baseUnit;
