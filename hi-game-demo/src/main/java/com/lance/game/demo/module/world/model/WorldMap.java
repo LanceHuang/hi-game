@@ -184,6 +184,12 @@ public class WorldMap {
      * 离开地图
      */
     public void leave(Player player) {
+        WorldPosition worldPosition = player.getWorldPosition();
+        int orgMapId = worldPosition.getMapId(); // 原地图id
+        int orgChannelId = worldPosition.getChannelId(); // 原频道id
+
+
+        Scene orgScene = this.sceneMap.get(orgChannelId);
         // todo removePlayer(player)
 
 //        LoggerUtil.info("玩家【{}】离开地图【{}】分线【{}】，当前场景人数【{}】",

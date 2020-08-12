@@ -7,6 +7,7 @@ import com.lance.game.demo.module.player.model.Player;
 import com.lance.game.demo.module.world.config.MapConfig;
 import com.lance.game.demo.module.world.manager.WorldManager;
 import com.lance.game.demo.module.world.model.WorldMap;
+import com.lance.game.demo.module.world.model.WorldPosition;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -43,11 +44,19 @@ public class WorldService implements IWorldService {
             LoggerUtil.error("玩家【{}】进入的地图【{}】不存在", player.getAccount(), mapId);
             throw new GameException(I18nId.WORLD_NOT_EXIST);
         }
-        worldMap.verify(player);
 
-        // todo 离开原地图
-//        WorldMap orgWorldMap = null;
-//        orgWorldMap.leave(player);
+        WorldPosition worldPosition = player.getWorldPosition();
+        int orgMapId = worldPosition.getMapId(); // 原地图id
+        WorldMap orgWorldMap = this.worldMaps.get(mapId);
+        if (orgWorldMap == null) {
+            LoggerUtil.error("玩家【{}】原地图【{}】不存在", player.getAccount(), orgMapId);
+            throw new GameException(I18nId.WORLD_NOT_EXIST);
+        }
+
+        // 先判断能否进入新地图
+        worldMap.verify(player);
+        // 再离开原地图
+        orgWorldMap.leave(player); // todo 需要校验能否离开当前地图，被攻击时不允许离开
         // 进入新地图
         worldMap.enter(player);
     }

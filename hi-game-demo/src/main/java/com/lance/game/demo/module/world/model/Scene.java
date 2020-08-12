@@ -3,6 +3,7 @@ package com.lance.game.demo.module.world.model;
 import com.lance.game.demo.module.player.model.Player;
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -20,11 +21,12 @@ public class Scene {
     private int channelId;
 
     /** 场景内玩家id */
-    private Set<Long> playerIds;
+    private Set<Long> playerIds; // todo 还未考虑可视玩家坐标
 
     public Scene(int mapId, int channelId) {
         this.mapId = mapId;
         this.channelId = channelId;
+        this.playerIds = new HashSet<>();
     }
 
     /**

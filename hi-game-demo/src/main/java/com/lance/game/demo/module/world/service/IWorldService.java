@@ -19,7 +19,7 @@ public interface IWorldService {
      *
      * @param mapId 地图id
      */
-    void enterMap(Player player, int mapId);
+    void enterMap(Player player, int mapId); // todo 现在是自动选频道，如果想实现冒险岛那种选频，则需要修改一下接口
 
-    // todo 看一下要不要搞个离开地图，若场景中没有玩家，则回收
+    // todo 还要解决切换场景的问题
 }
