@@ -4,13 +4,16 @@ import com.lance.game.demo.module.attribute.AttributeContainer;
 import com.lance.game.demo.module.buff.model.BuffContainer;
 import com.lance.game.demo.module.skill.model.SkillContainer;
 import com.lance.game.demo.module.storage.model.ItemStorage;
+import com.lance.game.demo.module.world.model.WorldPosition;
 import com.lance.game.orm.annotation.MongoIgnore;
+import lombok.Data;
 
 /**
  * 玩家对象
  *
  * @author Lance
  */
+@Data
 public class Player {
 
     /** 唯一标识 */
@@ -42,95 +45,6 @@ public class Player {
     @MongoIgnore
     private ItemStorage itemStorage;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public long getExp() {
-        return exp;
-    }
-
-    public void setExp(long exp) {
-        this.exp = exp;
-    }
-
-    public AttributeContainer getAttributeContainer() {
-        return attributeContainer;
-    }
-
-    public void setAttributeContainer(AttributeContainer attributeContainer) {
-        this.attributeContainer = attributeContainer;
-    }
-
-    public SkillContainer getSkillContainer() {
-        return skillContainer;
-    }
-
-    public void setSkillContainer(SkillContainer skillContainer) {
-        this.skillContainer = skillContainer;
-    }
-
-    public BuffContainer getBuffContainer() {
-        return buffContainer;
-    }
-
-    public void setBuffContainer(BuffContainer buffContainer) {
-        this.buffContainer = buffContainer;
-    }
-
-    public ItemStorage getItemStorage() {
-        return itemStorage;
-    }
-
-    public void setItemStorage(ItemStorage itemStorage) {
-        this.itemStorage = itemStorage;
-    }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "id=" + id +
-                ", account='" + account + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", gender=" + gender +
-                ", level=" + level +
-                ", exp=" + exp +
-                '}';
-    }
+    /** 玩家位置 */
+    private WorldPosition worldPosition;
 }

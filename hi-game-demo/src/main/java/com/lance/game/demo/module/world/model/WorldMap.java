@@ -124,22 +124,26 @@ public class WorldMap {
     public void verify(Player player) {
         MapConfig mapConfig = WorldManager.getInstance().getMapConfig(this.mapId);
         mapConfig.getCondition().verifyThrow(player);
-        mapConfig.getConsume().verifyAndConsume(player);
+        mapConfig.getConsume().verifyThrow(player);
     }
 
     /**
      * 进入地图
      */
     public void enter(Player player) {
+        // 扣除进图材料
+        MapConfig mapConfig = WorldManager.getInstance().getMapConfig(this.mapId);
+        mapConfig.getConsume().consume(player);
+
         Scene scene = selectOrCreateScene();
         if (scene == null) {
             LoggerUtil.error("玩家【{}】进入的地图【{}】已满员", player.getAccount(), mapId);
             throw new GameException(I18nId.WORLD_FULL_SCENE);
         }
 
-        scene.addPlayer();
+        scene.addPlayer(player);
         LoggerUtil.info("玩家【{}】进入地图【{}】分线【{}】，当前场景人数【{}】",
-                player.getAccount(), scene.getMapId(), scene.getChannelId(), scene.getPlayerCount());
+                player.getAccount(), scene.getMapId(), scene.getChannelId(), scene.countPlayer());
     }
 
     /**
@@ -148,7 +152,7 @@ public class WorldMap {
     private Scene selectOrCreateScene() { // todo 刚select出来的场景，有可能被删除了
         // 先选择现有的场景
         for (Scene scene : this.sceneMap.values()) {
-            if (scene.getPlayerCount() >= this.addPlayerNum) {
+            if (scene.countPlayer() >= this.addPlayerNum) {
                 continue;
             }
             return scene;
@@ -163,16 +167,26 @@ public class WorldMap {
         int minPlayerNum = Integer.MAX_VALUE;
         Scene selectedScene = null;
         for (Scene scene : this.sceneMap.values()) {
-            if (scene.getPlayerCount() < minPlayerNum) {
-                minPlayerNum = scene.getPlayerCount();
+            if (scene.countPlayer() < minPlayerNum) {
+                minPlayerNum = scene.countPlayer();
                 selectedScene = scene;
             }
         }
 
         // 满员则不允许进入
-        if (selectedScene != null && selectedScene.getPlayerCount() < this.maxPlayerNum) {
+        if (selectedScene != null && selectedScene.countPlayer() < this.maxPlayerNum) {
             return selectedScene;
         }
         return null;
+    }
+
+    /**
+     * 离开地图
+     */
+    public void leave(Player player) {
+        // todo removePlayer(player)
+
+//        LoggerUtil.info("玩家【{}】离开地图【{}】分线【{}】，当前场景人数【{}】",
+//                player.getAccount(), scene.getMapId(), scene.getChannelId(), scene.getPlayerCount());
     }
 }

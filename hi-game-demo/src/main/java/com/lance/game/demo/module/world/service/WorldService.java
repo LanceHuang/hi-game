@@ -43,8 +43,12 @@ public class WorldService implements IWorldService {
             LoggerUtil.error("玩家【{}】进入的地图【{}】不存在", player.getAccount(), mapId);
             throw new GameException(I18nId.WORLD_NOT_EXIST);
         }
-
         worldMap.verify(player);
+
+        // todo 离开原地图
+//        WorldMap orgWorldMap = null;
+//        orgWorldMap.leave(player);
+        // 进入新地图
         worldMap.enter(player);
     }
 }
