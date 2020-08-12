@@ -18,4 +18,7 @@ public class MapConfig {
     private int maxChannelNum;
     /** 最大玩家数（单人场景） */
     private int maxPlayerNum;
+    /** 增线玩家数（一般都会小于maxPlayerNum，这样能让玩家体验更流畅） */
+    private int addPlayerNum;
+
 }

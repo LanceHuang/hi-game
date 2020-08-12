@@ -28,6 +28,8 @@ public class WorldMap {
     private int maxChannelNum;
     /** 最大玩家数 */
     private int maxPlayerNum;
+    /** 增线玩家数 */
+    private int addPlayerNum;
 
     /** 场景组：channelId->场景 */
     private Map<Integer, Scene> sceneMap;
@@ -42,6 +44,7 @@ public class WorldMap {
         this.initChannelNum = mapConfig.getInitChannelNum();
         this.maxChannelNum = mapConfig.getMaxChannelNum();
         this.maxPlayerNum = mapConfig.getMaxPlayerNum();
+        this.addPlayerNum = mapConfig.getAddPlayerNum();
         this.sceneMap = new ConcurrentHashMap<>();
     }
 
@@ -133,13 +136,33 @@ public class WorldMap {
      * 选择或创建场景
      */
     private Scene selectOrCreateScene() { // todo 刚select出来的场景，有可能被删除了
-        // todo 这个可以搞成策略模式，尽量让场景数慢慢减少
+        // 先选择现有的场景
         for (Scene scene : this.sceneMap.values()) {
-            if (scene.getPlayerCount() >= this.maxPlayerNum) {
+            if (scene.getPlayerCount() >= this.addPlayerNum) {
                 continue;
             }
             return scene;
         }
-        return createScene();
+
+        // 再尝试创建场景
+        if (this.sceneMap.size() < this.maxChannelNum) {
+            return createScene();
+        }
+
+        // 最后再挑选最少人的场景
+        int minPlayerNum = Integer.MAX_VALUE;
+        Scene selectedScene = null;
+        for (Scene scene : this.sceneMap.values()) {
+            if (scene.getPlayerCount() < minPlayerNum) {
+                minPlayerNum = scene.getPlayerCount();
+                selectedScene = scene;
+            }
+        }
+
+        // 满员则不允许进入
+        if (selectedScene != null && selectedScene.getPlayerCount() < this.maxPlayerNum) {
+            return selectedScene;
+        }
+        return null;
     }
 }

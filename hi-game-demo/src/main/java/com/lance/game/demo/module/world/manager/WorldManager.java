@@ -27,6 +27,7 @@ public class WorldManager {
             mapConfig.setInitChannelNum(1);
             mapConfig.setMaxChannelNum(3);
             mapConfig.setMaxPlayerNum(10);
+            mapConfig.setAddPlayerNum(5);
             this.mapConfigStorage.put(mapId, mapConfig);
         }
     }
