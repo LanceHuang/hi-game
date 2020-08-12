@@ -17,7 +17,7 @@ public class ConditionUtils {
      * 解析条件定义
      */
     public static ICondition parseCondition(ConditionDef def) {
-        AbstractCondition newCondition = def.getType().create();
+        AbstractCondition newCondition = (AbstractCondition) def.getType().create();
         newCondition.parse(def.getValue());
         return newCondition;
     }

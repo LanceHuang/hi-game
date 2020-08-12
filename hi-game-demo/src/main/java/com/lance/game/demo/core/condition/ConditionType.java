@@ -1,5 +1,7 @@
 package com.lance.game.demo.core.condition;
 
+import com.lance.game.demo.core.ICondition;
+
 /**
  * 条件类型
  *
@@ -16,16 +18,16 @@ public enum ConditionType {
     /** 等级大于等于X级，小于等于Y级 */
     LEVEL_RANGE(LevelRangeCondition.class);
 
-    private Class<? extends AbstractCondition> clazz;
+    private Class<? extends ICondition> clazz;
 
-    ConditionType(Class<? extends AbstractCondition> clazz) {
+    ConditionType(Class<? extends ICondition> clazz) {
         this.clazz = clazz;
     }
 
     /**
      * 创建条件
      */
-    public AbstractCondition create() {
+    public ICondition create() {
         try {
             return clazz.newInstance();
         } catch (Exception e) {
@@ -36,7 +38,7 @@ public enum ConditionType {
 
     //================================= Getter/Setter ==================================
 
-    public Class<? extends AbstractCondition> getClazz() {
+    public Class<? extends ICondition> getClazz() {
         return clazz;
     }
 }
