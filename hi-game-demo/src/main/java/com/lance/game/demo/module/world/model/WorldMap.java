@@ -11,12 +11,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 地图模型
+ * 地图
  *
  * @author Lance
  */
 @Data
-public class MapModel {
+public class WorldMap {
 
     /** 地图id */
     private int mapId;
@@ -33,7 +33,7 @@ public class MapModel {
     /** 下一个频道id */
     private int nextChannelId = 1;
 
-    public MapModel(MapConfig mapConfig) { // 这里不存储mapConfig，为了后面可以热更
+    public WorldMap(MapConfig mapConfig) { // 这里不存储mapConfig，为了后面可以热更
         this.mapId = mapConfig.getMapId();
         this.initChannelNum = mapConfig.getInitChannelNum();
         this.maxChannelNum = mapConfig.getMaxChannelNum();
