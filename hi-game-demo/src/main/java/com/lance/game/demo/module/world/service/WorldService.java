@@ -44,6 +44,7 @@ public class WorldService implements IWorldService {
             throw new GameException(I18nId.WORLD_NOT_EXIST);
         }
 
+        worldMap.verify(player);
         worldMap.enter(player);
     }
 }

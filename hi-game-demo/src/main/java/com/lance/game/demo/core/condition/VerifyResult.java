@@ -1,10 +1,13 @@
 package com.lance.game.demo.core.condition;
 
+import lombok.Data;
+
 /**
  * 校验结果
  *
  * @author Lance
  */
+@Data
 public class VerifyResult {
 
     /** 校验结果 */
@@ -13,24 +16,13 @@ public class VerifyResult {
     /** 错误码 */
     private int errorCode;
 
+    /**
+     * 校验失败
+     *
+     * @param errorCode 错误码
+     */
     public void fail(int errorCode) {
         this.success = false;
-        this.errorCode = errorCode;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public int getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(int errorCode) {
         this.errorCode = errorCode;
     }
 }

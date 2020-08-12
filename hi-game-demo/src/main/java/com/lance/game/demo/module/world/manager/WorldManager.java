@@ -16,8 +16,12 @@ public class WorldManager {
 
     private Map<Integer, MapConfig> mapConfigStorage;
 
+    private static WorldManager instance;
+
     @PostConstruct
     public void init() {
+        instance = this;
+
         // todo 测试数据
         this.mapConfigStorage = new HashMap<>();
         int[] mapIds = {10083, 10084, 10085, 10086, 10087};
@@ -32,10 +36,21 @@ public class WorldManager {
         }
     }
 
+    public static WorldManager getInstance() {
+        return instance;
+    }
+
     /**
      * 获取所有地图配置
      */
     public Collection<MapConfig> getAllMapConfig() {
-        return mapConfigStorage.values();
+        return this.mapConfigStorage.values();
+    }
+
+    /**
+     * 获取地图配置
+     */
+    public MapConfig getMapConfig(int mapId) {
+        return this.mapConfigStorage.get(mapId);
     }
 }

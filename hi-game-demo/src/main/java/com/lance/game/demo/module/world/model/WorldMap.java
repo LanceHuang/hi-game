@@ -5,6 +5,7 @@ import com.lance.game.demo.exception.GameException;
 import com.lance.game.demo.log.LoggerUtil;
 import com.lance.game.demo.module.player.model.Player;
 import com.lance.game.demo.module.world.config.MapConfig;
+import com.lance.game.demo.module.world.manager.WorldManager;
 import lombok.Data;
 
 import java.util.Map;
@@ -115,6 +116,14 @@ public class WorldMap {
             return i;
         }
         return -1;
+    }
+
+    /**
+     * 进图校验
+     */
+    public void verify(Player player) {
+        MapConfig mapConfig = WorldManager.getInstance().getMapConfig(this.mapId);
+        mapConfig.getCondition().verifyThrow(player);
     }
 
     /**
