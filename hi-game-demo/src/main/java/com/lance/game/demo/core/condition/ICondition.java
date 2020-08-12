@@ -1,4 +1,4 @@
-package com.lance.game.demo.core;
+package com.lance.game.demo.core.condition;
 
 import com.lance.game.demo.exception.GameException;
 import com.lance.game.demo.module.player.model.Player;

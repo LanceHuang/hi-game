@@ -1,6 +1,10 @@
-package com.lance.game.demo.core.condition;
+package com.lance.game.demo.core.constant;
 
-import com.lance.game.demo.core.ICondition;
+import com.lance.game.demo.core.condition.AndCondition;
+import com.lance.game.demo.core.condition.ICondition;
+import com.lance.game.demo.core.condition.LevelCondition;
+import com.lance.game.demo.core.condition.LevelRangeCondition;
+import com.lance.game.demo.core.condition.TrueCondition;
 
 /**
  * 条件类型

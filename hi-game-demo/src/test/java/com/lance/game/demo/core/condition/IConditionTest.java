@@ -1,8 +1,8 @@
-package com.lance.game.demo.core;
+package com.lance.game.demo.core.condition;
 
-import com.lance.game.demo.core.condition.ConditionType;
+import com.lance.game.demo.core.constant.ConditionType;
 import com.lance.game.demo.core.model.ConditionDef;
-import com.lance.game.demo.core.util.ConditionUtils;
+import com.lance.game.demo.core.util.CoreUtils;
 import com.lance.game.demo.module.player.model.Player;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ public class IConditionTest {
         ConditionDef conditionDef = new ConditionDef();
         conditionDef.setType(ConditionType.LEVEL);
         conditionDef.setValue("16");
-        ICondition condition = ConditionUtils.parseCondition(conditionDef);
+        ICondition condition = CoreUtils.parseCondition(conditionDef);
 
         Player mockPlayer = new Player();
         mockPlayer.setLevel(15);
@@ -29,7 +29,7 @@ public class IConditionTest {
         ConditionDef conditionDef2 = new ConditionDef();
         conditionDef2.setType(ConditionType.LEVEL_RANGE);
         conditionDef2.setValue("14_14");
-        ICondition condition = ConditionUtils.parseCondition(new ConditionDef[]{conditionDef1, conditionDef2});
+        ICondition condition = CoreUtils.parseCondition(new ConditionDef[]{conditionDef1, conditionDef2});
 
         Player mockPlayer = new Player();
         mockPlayer.setLevel(15);

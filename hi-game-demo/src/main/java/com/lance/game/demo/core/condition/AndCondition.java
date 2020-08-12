@@ -1,5 +1,6 @@
 package com.lance.game.demo.core.condition;
 
+import com.lance.game.demo.core.model.VerifyResult;
 import com.lance.game.demo.module.player.model.Player;
 
 import java.util.LinkedList;
@@ -22,7 +23,7 @@ public class AndCondition extends AbstractCondition {
 
     @Override
     public void doVerify(Player player, VerifyResult verifyResult) {
-        for (AbstractCondition condition : conditions) {
+        for (AbstractCondition condition : this.conditions) {
             condition.doVerify(player, verifyResult);
             if (!verifyResult.isSuccess()) {
                 return;

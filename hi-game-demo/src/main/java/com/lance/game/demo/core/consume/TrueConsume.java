@@ -1,14 +1,14 @@
-package com.lance.game.demo.core.condition;
+package com.lance.game.demo.core.consume;
 
 import com.lance.game.demo.core.model.VerifyResult;
 import com.lance.game.demo.module.player.model.Player;
 
 /**
- * 永真条件
+ * 永真消耗
  *
  * @author Lance
  */
-public class TrueCondition extends AbstractCondition {
+public class TrueConsume extends AbstractConsume {
 
     @Override
     public void parse(String value) {
@@ -17,5 +17,9 @@ public class TrueCondition extends AbstractCondition {
 
     @Override
     public void doVerify(Player player, VerifyResult verifyResult) {
+    }
+
+    @Override
+    public void consume(Player player) {
     }
 }

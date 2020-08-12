@@ -1,8 +1,8 @@
 package com.lance.game.demo.module.world.config;
 
-import com.lance.game.demo.core.ICondition;
+import com.lance.game.demo.core.condition.ICondition;
 import com.lance.game.demo.core.model.ConditionDef;
-import com.lance.game.demo.core.util.ConditionUtils;
+import com.lance.game.demo.core.util.CoreUtils;
 import lombok.Data;
 
 /**
@@ -30,7 +30,7 @@ public class MapConfig {
 
     public ICondition getCondition() {
         if (this.condition == null) {
-            this.condition = ConditionUtils.parseCondition(this.conditionDefs);
+            this.condition = CoreUtils.parseCondition(this.conditionDefs);
         }
         return this.condition;
     }

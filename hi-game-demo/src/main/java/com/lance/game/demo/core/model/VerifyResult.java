@@ -1,4 +1,4 @@
-package com.lance.game.demo.core.condition;
+package com.lance.game.demo.core.model;
 
 import lombok.Data;
 
