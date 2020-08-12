@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +24,9 @@ public class WorldManager {
         for (int mapId : mapIds) {
             MapConfig mapConfig = new MapConfig();
             mapConfig.setMapId(mapId);
+            mapConfig.setInitChannelNum(1);
+            mapConfig.setMaxChannelNum(3);
+            mapConfig.setMaxPlayerNum(10);
             this.mapConfigStorage.put(mapId, mapConfig);
         }
     }
@@ -34,8 +35,6 @@ public class WorldManager {
      * 获取所有地图配置
      */
     public Collection<MapConfig> getAllMapConfig() {
-        // todo
         return mapConfigStorage.values();
     }
-
 }

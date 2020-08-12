@@ -10,5 +10,12 @@ import lombok.Data;
 @Data
 public class MapConfig {
 
+    /** 地图id */
     private int mapId;
+    /** 初始频道数（新手村） */
+    private int initChannelNum;
+    /** 最大频道数 */
+    private int maxChannelNum;
+    /** 最大玩家数（单人场景） */
+    private int maxPlayerNum;
 }

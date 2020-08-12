@@ -5,7 +5,6 @@ import com.lance.game.demo.exception.GameException;
 import com.lance.game.demo.log.LoggerUtil;
 import com.lance.game.demo.module.player.model.Player;
 import com.lance.game.demo.module.world.config.MapConfig;
-import com.lance.game.demo.module.world.constant.WorldConstant;
 import com.lance.game.demo.module.world.manager.WorldManager;
 import com.lance.game.demo.module.world.model.MapModel;
 import org.springframework.stereotype.Service;
@@ -28,28 +27,12 @@ public class WorldService implements IWorldService {
 
     @Override
     public void init() {
-        initMap();
-        initScene();
-    }
-
-    /**
-     * 初始化地图
-     */
-    private void initMap() {
+        // todo 我觉得大多数地图都不需要初始化，可以等到需要时再初始化。但一般都需要一个场景，所以这里暂时不考虑配置初始化
         this.mapModelMap = new HashMap<>();
         for (MapConfig mapConfig : worldManager.getAllMapConfig()) {
-            this.mapModelMap.put(mapConfig.getMapId(), new MapModel(mapConfig.getMapId()));
-        }
-    }
-
-    /**
-     * 初始化场景
-     */
-    private void initScene() {
-        for (MapModel mapModel : this.mapModelMap.values()) {
-            for (int i = 0; i < WorldConstant.INIT_CHANNEL_NUM; i++) {
-                mapModel.createScene();
-            }
+            MapModel mapModel = new MapModel(mapConfig);
+            mapModel.init();
+            this.mapModelMap.put(mapConfig.getMapId(), mapModel);
         }
     }
 
