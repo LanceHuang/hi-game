@@ -7,7 +7,9 @@ package com.lance.game.demo.constant;
  */
 public interface I18nId {
 
-    int ERROR = 10000; // 发生未知错误
+    int ERROR            = 10000; // 发生未知错误
+    int LEVEL_NOT_ENOUGH = 10001; // 等级不足
+    int LEVEL_NOT_MATCH  = 10002; // 等级不匹配
 
     /************************************* 道具 *************************************/
     int ITEM_NOT_EXIST   = 20000; // 道具不存在
