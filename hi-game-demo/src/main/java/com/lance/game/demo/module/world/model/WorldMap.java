@@ -9,6 +9,8 @@ import lombok.Data;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 地图
@@ -33,6 +35,8 @@ public class WorldMap {
     /** 下一个频道id */
     private int nextChannelId = 1;
 
+    private Lock lock = new ReentrantLock();
+
     public WorldMap(MapConfig mapConfig) { // 这里不存储mapConfig，为了后面可以热更
         this.mapId = mapConfig.getMapId();
         this.initChannelNum = mapConfig.getInitChannelNum();
@@ -53,22 +57,41 @@ public class WorldMap {
     /**
      * 创建场景
      */
-    public Scene createScene() { // todo 创建和回收场景需要上锁
-        // 没有可创建场景
-        if (this.sceneMap.size() >= this.maxChannelNum) {
-            return null;
-        }
+    public Scene createScene() {
+        lock.lock();
+        try {
+            // 没有可创建场景
+            if (this.sceneMap.size() >= this.maxChannelNum) {
+                return null;
+            }
 
-        // 生成频道id
-        int channelId = nextChannelId();
-        if (channelId <= 0) {
-            return null;
-        }
+            // 生成频道id
+            int channelId = nextChannelId();
+            if (channelId <= 0) {
+                return null;
+            }
 
-        // 生成场景
-        Scene scene = new Scene(this.mapId, channelId);
-        this.sceneMap.put(channelId, scene);
-        return scene;
+            // 生成场景
+            Scene scene = new Scene(this.mapId, channelId);
+            this.sceneMap.put(channelId, scene);
+            return scene;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    /**
+     * 删除场景
+     *
+     * @param channelId 频道id
+     */
+    public void deleteScene(int channelId) {
+        lock.lock();
+        try {
+            this.sceneMap.remove(channelId);
+        } finally {
+            lock.unlock();
+        }
     }
 
     /**
@@ -102,15 +125,14 @@ public class WorldMap {
         }
 
         scene.addPlayer();
-        // todo
-        System.out.println(String.format("玩家【%s】进入地图【%d】分线【%d】，当前场景人数【%d】",
-                player.getAccount(), scene.getMapId(), scene.getChannelId(), scene.getPlayerCount()));
+        LoggerUtil.info("玩家【{}】进入地图【{}】分线【{}】，当前场景人数【{}】",
+                player.getAccount(), scene.getMapId(), scene.getChannelId(), scene.getPlayerCount());
     }
 
     /**
      * 选择或创建场景
      */
-    private Scene selectOrCreateScene() {
+    private Scene selectOrCreateScene() { // todo 刚select出来的场景，有可能被删除了
         // todo 这个可以搞成策略模式，尽量让场景数慢慢减少
         for (Scene scene : this.sceneMap.values()) {
             if (scene.getPlayerCount() >= this.maxPlayerNum) {
