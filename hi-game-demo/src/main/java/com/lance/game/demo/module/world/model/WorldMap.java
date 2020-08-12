@@ -124,6 +124,7 @@ public class WorldMap {
     public void verify(Player player) {
         MapConfig mapConfig = WorldManager.getInstance().getMapConfig(this.mapId);
         mapConfig.getCondition().verifyThrow(player);
+        mapConfig.getConsume().verifyAndConsume(player);
     }
 
     /**

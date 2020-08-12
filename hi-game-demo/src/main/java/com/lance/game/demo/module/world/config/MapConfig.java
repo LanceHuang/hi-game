@@ -1,7 +1,9 @@
 package com.lance.game.demo.module.world.config;
 
 import com.lance.game.demo.core.condition.ICondition;
+import com.lance.game.demo.core.consume.IConsume;
 import com.lance.game.demo.core.model.ConditionDef;
+import com.lance.game.demo.core.model.ConsumeDef;
 import com.lance.game.demo.core.util.CoreUtils;
 import lombok.Data;
 
@@ -28,10 +30,21 @@ public class MapConfig {
     private ConditionDef[] conditionDefs;
     private ICondition     condition;
 
+    /** 进图消耗 */
+    private ConsumeDef[] consumeDefs;
+    private IConsume     consume;
+
     public ICondition getCondition() {
         if (this.condition == null) {
             this.condition = CoreUtils.parseCondition(this.conditionDefs);
         }
         return this.condition;
+    }
+
+    public IConsume getConsume() {
+        if (this.consume == null) {
+            this.consume = CoreUtils.parseConsume(this.consumeDefs);
+        }
+        return this.consume;
     }
 }
