@@ -17,9 +17,7 @@ public class CreatureUnit {
 
     private State state;
 
-    /**
-     * 还不确定是用map，还是成员变量。用map则需要额外的get操作
-     */
+    /** 属性 */
     private Map<AttributeType, Long> attributes;
 
     private long maxHp;
