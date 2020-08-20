@@ -3,7 +3,7 @@ package com.lance.game.lab.quadtree;
 import lombok.Data;
 
 /**
- * 四叉树形状
+ * 矩形
  *
  * @author Lance
  */
