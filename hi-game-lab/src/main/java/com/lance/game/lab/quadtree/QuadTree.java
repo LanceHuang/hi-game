@@ -125,17 +125,21 @@ public class QuadTree {
     /**
      * 检索可能会与物体发生碰撞的所有物体（同象限）
      */
-    public List<Rectangle> retrieve(Rectangle rect) {
+    public List<Rectangle> retrieve(Rectangle rect) { // todo 切割会产生大量小对象，不切割就没办法迭代处理
         if (this.nodes.size() <= 0) { // 没有子节点，则直接返回当前节点的对象
             return new LinkedList<>(this.objects);
         }
 
-        List<Rectangle> result = new LinkedList<>();
+        final List<Rectangle> result = new LinkedList<>();
         int index = this.getIndex(rect);
         if (index != UNABLE_TO_INDEX) { // 返回子节点的对象
-            result = this.nodes.get(index).retrieve(rect);
+            result.addAll(this.nodes.get(index).retrieve(rect));
         } else { // 分块，并返回分块所在子节点的对象
-            // todo
+            List<Rectangle> sRectList = rect.carve(this.bounds);
+            sRectList.forEach(r -> {
+                int idx = this.getIndex(r); // 计算象限
+                result.addAll(this.nodes.get(idx).retrieve(r)); // todo A在第2层，C在第0层。A检测到会与C碰撞，C检测到不会与A碰撞
+            });
         }
         result.addAll(this.objects); // 当前节点的对象
         return result;
@@ -183,6 +187,28 @@ public class QuadTree {
                 && rect.getX() + rect.getWidth() <= bounds.getX() + bounds.getWidth()
                 && rect.getY() >= bounds.getY()
                 && rect.getY() + rect.getHeight() <= bounds.getY() + bounds.getHeight();
+    }
+
+    /**
+     * 打印四叉树结构
+     */
+    public void printRoot() {
+        print(0);
+    }
+
+    private void print(int tab) {
+        printTab(tab);
+        System.out.print("Level" + this.level + "(" + this.objects.size() + ")");
+        System.out.println();
+        for (QuadTree sTree : this.nodes) {
+            sTree.print(tab + 1);
+        }
+    }
+
+    private void printTab(int tab) {
+        for (int i = 0; i < tab; i++) {
+            System.out.print('\t');
+        }
     }
 
 }
