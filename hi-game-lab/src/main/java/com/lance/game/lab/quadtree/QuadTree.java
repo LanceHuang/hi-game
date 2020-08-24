@@ -152,23 +152,32 @@ public class QuadTree {
     /**
      * 检索可能会与物体发生碰撞的所有物体（同象限）
      */
-    private List<QuadModel> retrieve(Rectangle rect) { // todo 切割会产生大量小对象，不切割就没办法迭代处理
-        if (this.nodes.size() <= 0) { // 没有子节点，则直接返回当前节点的对象
+    private List<QuadModel> retrieve(Rectangle rect) {
+        // 没有子节点，直接返回当前节点的对象
+        if (this.nodes.size() <= 0) {
             return new LinkedList<>(this.objects.values());
         }
 
         final List<QuadModel> result = new LinkedList<>();
         int index = this.getIndex(rect);
-        if (index != UNABLE_TO_INDEX) { // 返回子节点的对象
-            result.addAll(this.nodes.get(index).retrieve(rect));
-        } else { // 分块，并返回分块所在子节点的对象
-            List<Rectangle> sRectList = rect.carve(this.bounds);
-            sRectList.forEach(r -> {
-                int idx = this.getIndex(r); // 计算象限
-                result.addAll(this.nodes.get(idx).retrieve(r)); // todo A在第2层，C在第0层。A检测到会与C碰撞，C检测到不会与A碰撞
-            });
+        if (index != UNABLE_TO_INDEX) {
+            result.addAll(this.nodes.get(index).retrieve(rect)); // 子节点对象
+            result.addAll(this.objects.values()); // 当前节点对象
+        } else {
+            // 所有子节点都会检测到被碰撞
+            result.addAll(collect());
         }
-        result.addAll(this.objects.values()); // 当前节点的对象
+        return result;
+    }
+
+    /**
+     * 统计该四叉树节点下所有对象
+     */
+    public List<QuadModel> collect() {
+        List<QuadModel> result = new LinkedList<>(this.objects.values());
+        for (QuadTree cTree : this.nodes) {
+            result.addAll(cTree.collect());
+        }
         return result;
     }
 

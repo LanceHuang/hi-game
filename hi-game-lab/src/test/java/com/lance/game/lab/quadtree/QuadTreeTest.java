@@ -44,7 +44,7 @@ public class QuadTreeTest {
     }
 
     @Test
-    public void retrieve() { // todo A能碰撞到D，D碰撞不到A
+    public void retrieve() {
         QuadTree tree = new QuadTree(new Rectangle(0, 0, 300, 200), 0);
         models.forEach(tree::insert);
         models.forEach(model -> {
