@@ -3,8 +3,11 @@ package com.lance.game.lab.quadtree;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static com.lance.game.lab.quadtree.Constant.*;
 
@@ -18,7 +21,7 @@ import static com.lance.game.lab.quadtree.Constant.*;
 public class QuadTree {
 
     /** 当前节点下的对象 */
-    private List<QuadModel> objects;
+    private Map<Long, QuadModel> objects;
 
     /** 子节点 */
     private List<QuadTree> nodes;
@@ -30,7 +33,7 @@ public class QuadTree {
     private Rectangle bounds;
 
     public QuadTree(Rectangle bounds, int level) {
-        this.objects = new ArrayList<>();
+        this.objects = new HashMap<>();
         this.nodes = new ArrayList<>(4); // 只有四个象限
         this.level = level;
         this.bounds = bounds;
@@ -104,10 +107,15 @@ public class QuadTree {
             // 创建子节点
             this.split();
 
-            for (int i = this.objects.size() - 1; i >= 0; i--) { // 倒序遍历
-                int index = this.getIndex(this.objects.get(i));
+            // 将当前节点的对象插入子节点
+            Iterator<Map.Entry<Long, QuadModel>> iterator = this.objects.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<Long, QuadModel> entry = iterator.next();
+                QuadModel sModel = entry.getValue();
+                int index = this.getIndex(sModel);
                 if (index != UNABLE_TO_INDEX) {
-                    this.nodes.get(index).insert(this.objects.remove(i));
+                    this.nodes.get(index).insert(sModel);
+                    iterator.remove();
                 }
             }
 
@@ -116,22 +124,31 @@ public class QuadTree {
             if (index != UNABLE_TO_INDEX) {
                 this.nodes.get(index).insert(model);
             } else {
-                this.objects.add(model);
+                this.objects.put(model.getId(), model);
             }
         } else {
             // 否则存储在当前节点下
-            this.objects.add(model);
+            this.objects.put(model.getId(), model);
         }
     }
 
-    // todo remove Rectangle需要保存tree对象
+    /**
+     * 移除对象（需要通知各个实体）
+     */
+    public void remove(QuadModel model) {
+        // todo 计算所有会碰撞的对象，移除关注
+        List<QuadModel> retrieveModels = retrieve(model);
+
+        // todo 从四叉树中移除对象
+
+    }
 
     /**
      * 检索可能会与物体发生碰撞的所有物体（同象限）
      */
     public List<QuadModel> retrieve(Rectangle rect) { // todo 切割会产生大量小对象，不切割就没办法迭代处理
         if (this.nodes.size() <= 0) { // 没有子节点，则直接返回当前节点的对象
-            return new LinkedList<>(this.objects);
+            return new LinkedList<>(this.objects.values());
         }
 
         final List<QuadModel> result = new LinkedList<>();
@@ -145,7 +162,7 @@ public class QuadTree {
                 result.addAll(this.nodes.get(idx).retrieve(r)); // todo A在第2层，C在第0层。A检测到会与C碰撞，C检测到不会与A碰撞
             });
         }
-        result.addAll(this.objects); // 当前节点的对象
+        result.addAll(this.objects.values()); // 当前节点的对象
         return result;
     }
 
@@ -162,19 +179,22 @@ public class QuadTree {
      */
     public void refresh(QuadTree root) { // todo 移动时才更新
         root = (root == null ? this : root);
-        List<QuadModel> objs = this.objects;
 
-        for (int i = objs.size() - 1; i >= 0; i--) {
-            QuadModel model = objs.get(i);
+        Iterator<Map.Entry<Long, QuadModel>> iterator = this.objects.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Long, QuadModel> entry = iterator.next();
+            QuadModel model = entry.getValue();
 
             if (!isInner(model.getRect(), this.bounds)) { // 如果矩形不属于该象限，则将该矩形重新插入
                 if (this != root) { // 同一层没必要再次插入
-                    root.insert(objs.remove(i));
+                    root.insert(model);
+                    iterator.remove();
                 }
             } else if (this.nodes.size() > 0) { // 如果矩形属于该象限 且 该象限具有子象限，则尝试将该矩形插入到子象限中
                 int index = this.getIndex(model.getRect());
                 if (index != UNABLE_TO_INDEX) {
-                    this.nodes.get(index).insert(objs.remove(i));
+                    this.nodes.get(index).insert(model);
+                    iterator.remove();
                 }
             }
         }
