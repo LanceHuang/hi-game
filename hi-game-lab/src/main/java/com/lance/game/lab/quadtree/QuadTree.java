@@ -18,7 +18,7 @@ import static com.lance.game.lab.quadtree.Constant.*;
 public class QuadTree {
 
     /** 当前节点下的对象 */
-    private List<Rectangle> objects;
+    private List<QuadModel> objects;
 
     /** 子节点 */
     private List<QuadTree> nodes;
@@ -62,6 +62,10 @@ public class QuadTree {
         return UNABLE_TO_INDEX;
     }
 
+    public int getIndex(QuadModel model) {
+        return getIndex(model.getRect());
+    }
+
     /**
      * 划分象限 O(1)
      */
@@ -84,12 +88,12 @@ public class QuadTree {
     /**
      * 插入对象
      */
-    public void insert(Rectangle rect) {
+    public void insert(QuadModel model) {
         // 如果该节点下存在子节点，则尝试插入子节点
         if (this.nodes.size() > 0) {
-            int index = this.getIndex(rect);
+            int index = this.getIndex(model);
             if (index != UNABLE_TO_INDEX) {
-                this.nodes.get(index).insert(rect);
+                this.nodes.get(index).insert(model);
                 return;
             }
         }
@@ -108,15 +112,15 @@ public class QuadTree {
             }
 
             // 插入新添加的节点
-            int index = this.getIndex(rect);
+            int index = this.getIndex(model);
             if (index != UNABLE_TO_INDEX) {
-                this.nodes.get(index).insert(rect);
+                this.nodes.get(index).insert(model);
             } else {
-                this.objects.add(rect);
+                this.objects.add(model);
             }
         } else {
             // 否则存储在当前节点下
-            this.objects.add(rect);
+            this.objects.add(model);
         }
     }
 
@@ -125,12 +129,12 @@ public class QuadTree {
     /**
      * 检索可能会与物体发生碰撞的所有物体（同象限）
      */
-    public List<Rectangle> retrieve(Rectangle rect) { // todo 切割会产生大量小对象，不切割就没办法迭代处理
+    public List<QuadModel> retrieve(Rectangle rect) { // todo 切割会产生大量小对象，不切割就没办法迭代处理
         if (this.nodes.size() <= 0) { // 没有子节点，则直接返回当前节点的对象
             return new LinkedList<>(this.objects);
         }
 
-        final List<Rectangle> result = new LinkedList<>();
+        final List<QuadModel> result = new LinkedList<>();
         int index = this.getIndex(rect);
         if (index != UNABLE_TO_INDEX) { // 返回子节点的对象
             result.addAll(this.nodes.get(index).retrieve(rect));
@@ -145,6 +149,10 @@ public class QuadTree {
         return result;
     }
 
+    public List<QuadModel> retrieve(QuadModel model) {
+        return retrieve(model.getRect());
+    }
+
     // todo 移动时怎么处理？
 
     /**
@@ -154,17 +162,17 @@ public class QuadTree {
      */
     public void refresh(QuadTree root) { // todo 移动时才更新
         root = (root == null ? this : root);
-        List<Rectangle> objs = this.objects;
+        List<QuadModel> objs = this.objects;
 
         for (int i = objs.size() - 1; i >= 0; i--) {
-            Rectangle rect = objs.get(i);
+            QuadModel model = objs.get(i);
 
-            if (!isInner(rect, this.bounds)) { // 如果矩形不属于该象限，则将该矩形重新插入
+            if (!isInner(model.getRect(), this.bounds)) { // 如果矩形不属于该象限，则将该矩形重新插入
                 if (this != root) { // 同一层没必要再次插入
                     root.insert(objs.remove(i));
                 }
             } else if (this.nodes.size() > 0) { // 如果矩形属于该象限 且 该象限具有子象限，则尝试将该矩形插入到子象限中
-                int index = this.getIndex(rect);
+                int index = this.getIndex(model.getRect());
                 if (index != UNABLE_TO_INDEX) {
                     this.nodes.get(index).insert(objs.remove(i));
                 }
