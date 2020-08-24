@@ -59,6 +59,16 @@ public class QuadTreeTest {
     }
 
     @Test
+    public void remove() {
+        QuadTree tree = new QuadTree(new Rectangle(0, 0, 300, 200), 0);
+        models.forEach(tree::insert);
+        tree.printRoot();
+        System.out.println("==============");
+        tree.remove(models.get(2));
+        tree.printRoot();
+    }
+
+    @Test
     public void refresh() {
         QuadTree tree = new QuadTree(new Rectangle(0, 0, 300, 200), 0);
         models.forEach(tree::insert);

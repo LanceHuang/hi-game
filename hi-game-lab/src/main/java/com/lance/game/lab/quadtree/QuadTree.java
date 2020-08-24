@@ -1,6 +1,7 @@
 package com.lance.game.lab.quadtree;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +18,8 @@ import static com.lance.game.lab.quadtree.Constant.*;
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class QuadTree {
 
     /** 当前节点下的对象 */
@@ -42,7 +44,14 @@ public class QuadTree {
     /**
      * 获取物体对应的象限序号 O(1)
      */
-    public int getIndex(Rectangle rect) {
+    public int getIndex(QuadModel model) {
+        return getIndex(model.getRect());
+    }
+
+    /**
+     * 获取物体对应的象限序号 O(1)
+     */
+    private int getIndex(Rectangle rect) {
         int centroidX = this.bounds.getCentroidX(); // 重心x坐标
         int centroidY = this.bounds.getCentroidY(); // 重心y坐标
 
@@ -63,10 +72,6 @@ public class QuadTree {
             return BOTTOM_RIGHT;
         }
         return UNABLE_TO_INDEX;
-    }
-
-    public int getIndex(QuadModel model) {
-        return getIndex(model.getRect());
     }
 
     /**
@@ -124,29 +129,30 @@ public class QuadTree {
             if (index != UNABLE_TO_INDEX) {
                 this.nodes.get(index).insert(model);
             } else {
-                this.objects.put(model.getId(), model);
+                insert0(model);
             }
         } else {
             // 否则存储在当前节点下
-            this.objects.put(model.getId(), model);
+            insert0(model);
         }
     }
 
-    /**
-     * 移除对象（需要通知各个实体）
-     */
-    public void remove(QuadModel model) {
-        // todo 计算所有会碰撞的对象，移除关注
-        List<QuadModel> retrieveModels = retrieve(model);
-
-        // todo 从四叉树中移除对象
-
+    private void insert0(QuadModel model) {
+        this.objects.put(model.getId(), model);
+        model.setTree(this);
     }
 
     /**
      * 检索可能会与物体发生碰撞的所有物体（同象限）
      */
-    public List<QuadModel> retrieve(Rectangle rect) { // todo 切割会产生大量小对象，不切割就没办法迭代处理
+    public List<QuadModel> retrieve(QuadModel model) {
+        return retrieve(model.getRect());
+    }
+
+    /**
+     * 检索可能会与物体发生碰撞的所有物体（同象限）
+     */
+    private List<QuadModel> retrieve(Rectangle rect) { // todo 切割会产生大量小对象，不切割就没办法迭代处理
         if (this.nodes.size() <= 0) { // 没有子节点，则直接返回当前节点的对象
             return new LinkedList<>(this.objects.values());
         }
@@ -166,11 +172,19 @@ public class QuadTree {
         return result;
     }
 
-    public List<QuadModel> retrieve(QuadModel model) {
-        return retrieve(model.getRect());
-    }
-
     // todo 移动时怎么处理？
+
+    /**
+     * 移除对象（需要通知各个实体）
+     */
+    public void remove(QuadModel model) {
+        // todo 计算所有会碰撞的对象，移除关注
+//        List<QuadModel> retrieveModels = retrieve(model);
+
+        // 从四叉树中移除对象
+        model.getTree().getObjects().remove(model.getId());
+        model.setTree(null);
+    }
 
     /**
      * 动态更新
