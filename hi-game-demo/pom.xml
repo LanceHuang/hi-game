@@ -16,7 +16,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <netty.version>4.1.42.Final</netty.version>
-        <mysql.version>5.0.7</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
         <mongo.version>3.12.3</mongo.version>
     </properties>
 
