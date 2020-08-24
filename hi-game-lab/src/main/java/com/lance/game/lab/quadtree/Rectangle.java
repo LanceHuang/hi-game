@@ -67,4 +67,13 @@ public class Rectangle {
         return result;
     }
 
+    /**
+     * 更新坐标
+     */
+    public void update(int newX, int newY) {
+        this.x = newX;
+        this.y = newY;
+        this.centroidX = (this.x + this.width) / 2;
+        this.centroidY = (this.y + this.height) / 2;
+    }
 }

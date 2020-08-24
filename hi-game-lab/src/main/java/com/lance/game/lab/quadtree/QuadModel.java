@@ -28,6 +28,13 @@ public class QuadModel {
         return model;
     }
 
+    /**
+     * 移动到(x,y)
+     */
+    public void move(int newX, int newY) {
+        this.rect.update(newX, newY);
+    }
+
     @Override
     public String toString() {
         return "QuadModel{" +

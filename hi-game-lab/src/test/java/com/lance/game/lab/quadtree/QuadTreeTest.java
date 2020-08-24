@@ -72,10 +72,12 @@ public class QuadTreeTest {
     public void refresh() {
         QuadTree tree = new QuadTree(new Rectangle(0, 0, 300, 200), 0);
         models.forEach(tree::insert);
+        tree.printRoot();
 
-        // todo 对象移动
-
-        // 刷新
+        System.out.println("==============");
+        models.get(2).move(141, 91); // (140,90) => (141,91)
+        tree.printRoot();
         tree.refresh(tree);
+        tree.printRoot();
     }
 }

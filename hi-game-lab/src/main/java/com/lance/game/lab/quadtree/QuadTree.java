@@ -172,8 +172,6 @@ public class QuadTree {
         return result;
     }
 
-    // todo 移动时怎么处理？
-
     /**
      * 移除对象（需要通知各个实体）
      */
@@ -191,7 +189,7 @@ public class QuadTree {
      *
      * @param root 顶层节点
      */
-    public void refresh(QuadTree root) { // todo 移动时才更新
+    public void refresh(QuadTree root) {
         root = (root == null ? this : root);
 
         Iterator<Map.Entry<Long, QuadModel>> iterator = this.objects.entrySet().iterator();
