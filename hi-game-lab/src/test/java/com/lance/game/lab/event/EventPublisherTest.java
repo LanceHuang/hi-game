@@ -3,7 +3,6 @@ package com.lance.game.lab.event;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.event.EventListener;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -20,8 +19,23 @@ public class EventPublisherTest {
     public EventPublisher eventPublisher;
 
     @Bean
+    public EventContext eventContext() {
+        return new EventContext();
+    }
+
+    @Bean
+    public EventHandlerProcessor eventHandlerProcessor() {
+        return new EventHandlerProcessor();
+    }
+
+    @Bean
+    public EventMulticaster eventMulticaster() {
+        return new SimpleEventMulticaster();
+    }
+
+    @Bean
     public EventPublisher eventPublisher() {
-        return new SpringEventPublisher();
+        return new SimpleEventPublisher();
     }
 
     @EventListener

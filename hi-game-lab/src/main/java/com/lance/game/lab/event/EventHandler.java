@@ -6,4 +6,14 @@ package com.lance.game.lab.event;
  * @author Lance
  */
 public interface EventHandler {
+
+    /**
+     * 获取处理的事件类型
+     */
+    Class<?> getEventType();
+
+    /**
+     * 处理事件
+     */
+    void onEvent(Object event);
 }
