@@ -15,5 +15,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import(SimpleEventConfiguration.class)
+@Deprecated
 public @interface EnableEvent { // todo 这个应该要做成通用
 }
