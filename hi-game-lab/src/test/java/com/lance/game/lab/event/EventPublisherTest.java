@@ -19,7 +19,7 @@ public class EventPublisherTest {
     public EventPublisher eventPublisher;
 
     @EventListener
-    public void doTestEvent(TestEvent event) {
+    public void onTestEvent(TestEvent event) {
         System.out.println("Receive TestEvent");
         System.out.println(this);
     }
