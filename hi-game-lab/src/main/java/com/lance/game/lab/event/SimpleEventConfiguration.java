@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 /**
  * @author Lance
  */
-public class EventConfiguration {
+public class SimpleEventConfiguration {
 
     @Bean
     public EventContext eventContext() {
@@ -18,12 +18,9 @@ public class EventConfiguration {
     }
 
     @Bean
-    public EventMulticaster eventMulticaster() {
-        return new SimpleEventMulticaster();
-    }
-
-    @Bean
     public EventPublisher eventPublisher() {
-        return new SimpleEventPublisher();
+        SimpleEventPublisher simpleEventPublisher = new SimpleEventPublisher();
+        simpleEventPublisher.setEventMulticaster(new SimpleEventMulticaster());
+        return simpleEventPublisher;
     }
 }

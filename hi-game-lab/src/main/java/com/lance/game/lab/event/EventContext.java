@@ -10,6 +10,7 @@ import java.util.Set;
  */
 public class EventContext {
 
+    /** 事件处理器 */
     private Set<EventHandler> eventHandlers;
 
     public EventContext() {

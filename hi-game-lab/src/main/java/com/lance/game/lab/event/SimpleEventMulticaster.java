@@ -3,6 +3,8 @@ package com.lance.game.lab.event;
 import javax.annotation.Resource;
 
 /**
+ * 遍历所有的监听者，同步执行任务
+ *
  * @author Lance
  */
 public class SimpleEventMulticaster implements EventMulticaster {
