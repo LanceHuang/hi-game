@@ -2,6 +2,7 @@ package com.lance.game.lab.event;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -13,21 +14,17 @@ import javax.annotation.Resource;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = EventPublisherTest.class)
+@ComponentScan("com.lance.game.lab.event")
 @Import(SimpleEventConfiguration.class)
 public class EventPublisherTest {
 
     @Resource
-    public EventPublisher eventPublisher;
-
-    @EventListener
-    public void onTestEvent(TestEvent event) {
-        System.out.println("Receive TestEvent");
-        System.out.println(this);
-    }
+    private IEventBusService eventBusService;
 
     @Test
     public void testPublishEvent() {
         System.out.println("Hello world");
-        eventPublisher.publishEvent(new TestEvent());
+        System.out.println(Thread.currentThread());
+        eventBusService.publishEvent(new TestEvent());
     }
 }
