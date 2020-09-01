@@ -9,7 +9,6 @@ import javax.annotation.Resource;
  */
 public class SimpleEventMulticaster implements EventMulticaster {
 
-    // todo 没地方注入
     @Resource
     private EventContext eventContext;
 

@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import java.lang.reflect.Method;
 
 /**
+ * 注册事件处理器
+ *
  * @author Lance
  */
 public class EventHandlerProcessor implements InstantiationAwareBeanPostProcessor {

@@ -3,6 +3,8 @@ package com.lance.game.lab.event;
 import org.springframework.context.annotation.Bean;
 
 /**
+ * 常见配置
+ *
  * @author Lance
  */
 public class SimpleEventConfiguration {
@@ -18,9 +20,12 @@ public class SimpleEventConfiguration {
     }
 
     @Bean
+    public EventMulticaster eventMulticaster() {
+        return new SimpleEventMulticaster();
+    }
+
+    @Bean
     public EventPublisher eventPublisher() {
-        SimpleEventPublisher simpleEventPublisher = new SimpleEventPublisher();
-        simpleEventPublisher.setEventMulticaster(new SimpleEventMulticaster());
-        return simpleEventPublisher;
+        return new SimpleEventPublisher();
     }
 }
