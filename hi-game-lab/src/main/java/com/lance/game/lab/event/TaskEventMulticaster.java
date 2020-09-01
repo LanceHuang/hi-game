@@ -16,10 +16,6 @@ public class TaskEventMulticaster implements EventMulticaster {
     /** 任务执行线程 */
     private Executor taskExecutor;
 
-    public TaskEventMulticaster(Executor taskExecutor) {
-        this.taskExecutor = taskExecutor;
-    }
-
     @Override
     public void multicastEvent(Object event) {
         for (final EventHandler eventHandler : eventContext.getEventHandler(event.getClass())) {
@@ -34,5 +30,9 @@ public class TaskEventMulticaster implements EventMulticaster {
 
     public Executor getTaskExecutor() {
         return taskExecutor;
+    }
+
+    public void setTaskExecutor(Executor taskExecutor) {
+        this.taskExecutor = taskExecutor;
     }
 }

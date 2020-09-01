@@ -15,7 +15,9 @@ import javax.annotation.Resource;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = EventPublisherTest.class)
 @ComponentScan("com.lance.game.lab.event")
-@Import(SimpleEventConfiguration.class)
+//@Import(SimpleEventConfiguration.class)
+@Import(TaskEventConfiguration.class)
+//@Import(CrossServerEventConfiguration.class)
 public class EventPublisherTest {
 
     @Resource
@@ -23,8 +25,8 @@ public class EventPublisherTest {
 
     @Test
     public void testPublishEvent() {
-        System.out.println("Hello world");
-        System.out.println(Thread.currentThread());
+        System.out.println(Thread.currentThread() + ": Hello world");
         eventBusService.publishEvent(new TestEvent());
     }
 }
+

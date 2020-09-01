@@ -10,7 +10,6 @@ public class EventBusController {
 
     @EventListener
     public void onTestEvent(TestEvent event) {
-        System.out.println("Receive TestEvent");
-        System.out.println(Thread.currentThread());
+        System.out.println(Thread.currentThread() + ": Receive TestEvent");
     }
 }
