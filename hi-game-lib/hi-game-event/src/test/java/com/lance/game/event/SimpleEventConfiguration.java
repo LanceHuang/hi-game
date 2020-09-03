@@ -1,15 +1,13 @@
-package com.lance.game.lab.event;
+package com.lance.game.event;
 
 import org.springframework.context.annotation.Bean;
 
-import java.util.concurrent.Executors;
-
 /**
- * 任务事件配置
+ * 常见事件配置
  *
  * @author Lance
  */
-public class TaskEventConfiguration {
+public class SimpleEventConfiguration {
 
     @Bean
     public EventContext eventContext() {
@@ -23,9 +21,7 @@ public class TaskEventConfiguration {
 
     @Bean
     public EventMulticaster eventMulticaster() {
-        TaskEventMulticaster taskEventMulticaster = new TaskEventMulticaster();
-        taskEventMulticaster.setTaskExecutor(Executors.newSingleThreadExecutor());
-        return taskEventMulticaster;
+        return new SimpleEventMulticaster();
     }
 
     @Bean

@@ -1,4 +1,4 @@
-package com.lance.game.lab.event;
+package com.lance.game.event;
 
 /**
  * 跨服事件发布者

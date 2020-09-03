@@ -1,4 +1,4 @@
-package com.lance.game.lab.event;
+package com.lance.game.event;
 
 import javax.annotation.Resource;
 import java.util.concurrent.Executor;

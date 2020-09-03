@@ -1,4 +1,4 @@
-package com.lance.game.lab.event;
+package com.lance.game.event;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

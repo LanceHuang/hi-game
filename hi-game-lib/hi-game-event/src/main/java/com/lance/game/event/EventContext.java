@@ -1,4 +1,4 @@
-package com.lance.game.lab.event;
+package com.lance.game.event;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,22 +24,25 @@ public class EventContext {
         this.eventHandlers.add(eventHandler);
     }
 
-    /**
-     * 删除事件处理器
-     */
-    public void removeEventHandler(EventHandler eventHandler) {
-        this.eventHandlers.remove(eventHandler);
-    }
-
-    /**
-     * 删除所有事件处理器
-     */
-    public void removeAllEventHandlers() {
-        this.eventHandlers.clear();
-    }
+    // 整个生命周期里好像都不会删除
+//    /**
+//     * 删除事件处理器
+//     */
+//    public void removeEventHandler(EventHandler eventHandler) {
+//        this.eventHandlers.remove(eventHandler);
+//    }
+//
+//    /**
+//     * 删除所有事件处理器
+//     */
+//    public void removeAllEventHandlers() {
+//        this.eventHandlers.clear();
+//    }
 
     /**
      * 获取事件处理器
+     *
+     * @param eventType 事件类型
      */
     public Set<EventHandler> getEventHandler(Class<?> eventType) {
         Set<EventHandler> result = new HashSet<>();

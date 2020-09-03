@@ -1,4 +1,4 @@
-package com.lance.game.lab.event;
+package com.lance.game.event;
 
 /**
  * 事件广播器（既可以同步，又可以异步，还可以队列）

@@ -1,4 +1,4 @@
-package com.lance.game.lab.event;
+package com.lance.game.event;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
