@@ -14,6 +14,8 @@ public enum LogModule {
 
     TEST,
     BUFF,
+    /** 坐骑 */
+    HORSE,
     ;
 
     private Logger logger;

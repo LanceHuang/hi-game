@@ -10,8 +10,11 @@ public enum LogCode {
     TEST(10000, "测试"),
 
     /** buff */
-    BUFF_ADD(10001, "添加buff"),
-    BUFF_REMOVE(10002, "移除buff"),
+    BUFF_ADD(10100, "添加buff"),
+    BUFF_REMOVE(10101, "移除buff"),
+
+    /** 坐骑 */
+    HORSE_RIDE(10200, "上坐骑"),
     ;
 
     LogCode(int code, String desc) {
