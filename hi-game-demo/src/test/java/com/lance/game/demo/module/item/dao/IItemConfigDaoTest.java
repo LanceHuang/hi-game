@@ -2,10 +2,10 @@ package com.lance.game.demo.module.item.dao;
 
 import com.lance.common.tool.util.JsonUtils;
 import com.lance.game.demo.module.item.config.ItemConfig;
-import com.lance.game.orm.MongoDaoScanner;
-import com.lance.game.orm.MongoDataSource;
-import com.lance.game.orm.PooledMongoDataSource;
-import com.lance.game.orm.runner.DefaultMongoRunner;
+import com.lance.game.mongodb.MongoDaoScanner;
+import com.lance.game.mongodb.MongoDataSource;
+import com.lance.game.mongodb.PooledMongoDataSource;
+import com.lance.game.mongodb.runner.DefaultMongoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;

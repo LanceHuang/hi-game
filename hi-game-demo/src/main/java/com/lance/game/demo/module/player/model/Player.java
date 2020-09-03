@@ -5,7 +5,7 @@ import com.lance.game.demo.module.buff.model.BuffContainer;
 import com.lance.game.demo.module.skill.model.SkillContainer;
 import com.lance.game.demo.module.storage.model.ItemStorage;
 import com.lance.game.demo.module.world.model.WorldPosition;
-import com.lance.game.orm.annotation.MongoIgnore;
+import com.lance.game.mongodb.annotation.MongoIgnore;
 import lombok.Data;
 
 /**

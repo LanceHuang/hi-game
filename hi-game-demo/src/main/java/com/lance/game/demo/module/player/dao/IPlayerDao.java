@@ -1,10 +1,10 @@
 package com.lance.game.demo.module.player.dao;
 
 import com.lance.game.demo.module.player.model.Player;
-import com.lance.game.orm.annotation.FindOne;
-import com.lance.game.orm.annotation.FindOneAndReplace;
-import com.lance.game.orm.annotation.InsertOne;
-import com.lance.game.orm.annotation.MongoDao;
+import com.lance.game.mongodb.annotation.FindOne;
+import com.lance.game.mongodb.annotation.FindOneAndReplace;
+import com.lance.game.mongodb.annotation.InsertOne;
+import com.lance.game.mongodb.annotation.MongoDao;
 
 /**
  * @author Lance
