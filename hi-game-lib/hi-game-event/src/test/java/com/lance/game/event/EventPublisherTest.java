@@ -14,10 +14,9 @@ import javax.annotation.Resource;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = EventPublisherTest.class)
-@ComponentScan("com.lance.game.lab.event")
+@ComponentScan("com.lance.game.event")
 //@Import(SimpleEventConfiguration.class)
 @Import(TaskEventConfiguration.class)
-//@Import(CrossServerEventConfiguration.class)
 public class EventPublisherTest {
 
     @Resource

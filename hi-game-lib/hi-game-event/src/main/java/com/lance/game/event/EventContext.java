@@ -47,7 +47,7 @@ public class EventContext {
     public Set<EventHandler> getEventHandler(Class<?> eventType) {
         Set<EventHandler> result = new HashSet<>();
         for (EventHandler eventHandler : this.eventHandlers) {
-            if (eventHandler.getEventType() == eventType) {
+            if (eventHandler.supportEventType(eventType)) {
                 result.add(eventHandler);
             }
         }

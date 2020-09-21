@@ -20,8 +20,8 @@ public class SimpleEventHandler implements EventHandler {
     }
 
     @Override
-    public Class<?> getEventType() {
-        return this.eventType;
+    public boolean supportEventType(Class<?> eventType) {
+        return this.eventType == eventType;
     }
 
     @Override

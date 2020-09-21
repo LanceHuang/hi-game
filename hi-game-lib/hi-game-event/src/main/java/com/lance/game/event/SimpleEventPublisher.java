@@ -1,13 +1,10 @@
 package com.lance.game.event;
 
-import javax.annotation.Resource;
-
 /**
  * @author Lance
  */
 public class SimpleEventPublisher implements EventPublisher {
 
-    @Resource
     private EventMulticaster eventMulticaster;
 
     @Override
@@ -15,4 +12,7 @@ public class SimpleEventPublisher implements EventPublisher {
         this.eventMulticaster.multicastEvent(event);
     }
 
+    public void setEventMulticaster(EventMulticaster eventMulticaster) {
+        this.eventMulticaster = eventMulticaster;
+    }
 }

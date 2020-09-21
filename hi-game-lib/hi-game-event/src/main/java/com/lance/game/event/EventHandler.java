@@ -8,9 +8,11 @@ package com.lance.game.event;
 public interface EventHandler {
 
     /**
-     * 获取处理的事件类型
+     * 判断是否支持的事件类型
+     *
+     * @param eventType 事件类型
      */
-    Class<?> getEventType();
+    boolean supportEventType(Class<?> eventType);
 
     /**
      * 处理事件

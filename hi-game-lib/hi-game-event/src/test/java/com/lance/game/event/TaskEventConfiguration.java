@@ -22,14 +22,16 @@ public class TaskEventConfiguration {
     }
 
     @Bean
-    public EventMulticaster eventMulticaster() {
-        TaskEventMulticaster taskEventMulticaster = new TaskEventMulticaster();
+    public EventMulticaster eventMulticaster(EventContext eventContext) {
+        TaskEventMulticaster taskEventMulticaster = new TaskEventMulticaster(eventContext);
         taskEventMulticaster.setTaskExecutor(Executors.newSingleThreadExecutor());
         return taskEventMulticaster;
     }
 
     @Bean
-    public EventPublisher eventPublisher() {
-        return new SimpleEventPublisher();
+    public EventPublisher eventPublisher(EventMulticaster eventMulticaster) {
+        SimpleEventPublisher simpleEventPublisher = new SimpleEventPublisher();
+        simpleEventPublisher.setEventMulticaster(eventMulticaster);
+        return simpleEventPublisher;
     }
 }

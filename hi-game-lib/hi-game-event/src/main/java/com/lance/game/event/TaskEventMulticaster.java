@@ -1,6 +1,5 @@
 package com.lance.game.event;
 
-import javax.annotation.Resource;
 import java.util.concurrent.Executor;
 
 /**
@@ -10,11 +9,14 @@ import java.util.concurrent.Executor;
  */
 public class TaskEventMulticaster implements EventMulticaster {
 
-    @Resource
     private EventContext eventContext;
 
     /** 任务执行线程 */
     private Executor taskExecutor;
+
+    public TaskEventMulticaster(EventContext eventContext) {
+        this.eventContext = eventContext;
+    }
 
     @Override
     public void multicastEvent(Object event) {

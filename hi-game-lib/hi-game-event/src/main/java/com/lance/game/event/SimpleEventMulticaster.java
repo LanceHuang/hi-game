@@ -1,7 +1,5 @@
 package com.lance.game.event;
 
-import javax.annotation.Resource;
-
 /**
  * 遍历所有的监听者，同步执行任务
  *
@@ -9,8 +7,11 @@ import javax.annotation.Resource;
  */
 public class SimpleEventMulticaster implements EventMulticaster {
 
-    @Resource
     private EventContext eventContext;
+
+    public SimpleEventMulticaster(EventContext eventContext) {
+        this.eventContext = eventContext;
+    }
 
     @Override
     public void multicastEvent(Object event) {

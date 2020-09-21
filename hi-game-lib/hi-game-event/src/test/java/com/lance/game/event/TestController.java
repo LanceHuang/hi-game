@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
  * @author Lance
  */
 @Controller
-public class EventBusController {
+public class TestController {
 
     @EventListener
     public void onTestEvent(TestEvent event) {

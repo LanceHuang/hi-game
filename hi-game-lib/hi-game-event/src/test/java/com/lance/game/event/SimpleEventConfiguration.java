@@ -20,12 +20,14 @@ public class SimpleEventConfiguration {
     }
 
     @Bean
-    public EventMulticaster eventMulticaster() {
-        return new SimpleEventMulticaster();
+    public EventMulticaster eventMulticaster(EventContext eventContext) {
+        return new SimpleEventMulticaster(eventContext);
     }
 
     @Bean
-    public EventPublisher eventPublisher() {
-        return new SimpleEventPublisher();
+    public EventPublisher eventPublisher(EventMulticaster eventMulticaster) {
+        SimpleEventPublisher simpleEventPublisher = new SimpleEventPublisher();
+        simpleEventPublisher.setEventMulticaster(eventMulticaster);
+        return simpleEventPublisher;
     }
 }
