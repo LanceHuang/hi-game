@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.lance.game</groupId>
         <artifactId>hi-game</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>hi-game-demo</artifactId>
 
@@ -23,12 +23,12 @@
         <dependency>
             <groupId>com.lance.game</groupId>
             <artifactId>hi-game-net</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.lance.game</groupId>
             <artifactId>hi-game-mongodb</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- common -->

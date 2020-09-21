@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.lance.game</groupId>
     <artifactId>hi-game</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -17,6 +17,9 @@
     </modules>
 
     <properties>
+        <!-- 统一版本号 -->
+        <revision>1.0-SNAPSHOT</revision>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -126,5 +129,41 @@
             <artifactId>spring-context</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 精简POM -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <!-- 也处理package=pom的pom.xml -->
+                    <updatePomFile>true</updatePomFile>
+                    <!-- 不删除dependencyManagement相关信息 -->
+                    <flattenMode>bom</flattenMode>
+                </configuration>
+                <executions>
+                    <!-- 清理flatten配置 -->
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- 替换版本占位符，精简POM -->
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
