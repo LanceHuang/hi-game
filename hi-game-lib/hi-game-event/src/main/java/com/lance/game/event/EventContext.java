@@ -1,7 +1,10 @@
 package com.lance.game.event;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 事件上下文
@@ -10,47 +13,33 @@ import java.util.Set;
  */
 public class EventContext {
 
-    /** 事件处理器 */
-    private Set<EventHandler> eventHandlers;
+    private static final List<EventHandler> EMPTY_EVENT_HANDLERS = Collections.emptyList();
 
-    public EventContext() {
-        this.eventHandlers = new HashSet<>();
-    }
+    /** 事件处理器注册表：事件类型 -> 事件处理器 */
+    private final Map<Class<?>, List<EventHandler>> eventHandlerMap = new HashMap<>();
 
     /**
-     * 添加事件处理器
+     * 注册事件处理器
+     *
+     * @param eventType    事件类型
+     * @param eventHandler 事件处理器
      */
-    public void addEventHandler(EventHandler eventHandler) {
-        this.eventHandlers.add(eventHandler);
+    public void registerEventHandler(Class<?> eventType, EventHandler eventHandler) {
+        this.eventHandlerMap.compute(eventType, (k, v) -> {
+            if (v == null) {
+                v = new LinkedList<>();
+            }
+            v.add(eventHandler);
+            return v;
+        });
     }
-
-    // 整个生命周期里好像都不会删除
-//    /**
-//     * 删除事件处理器
-//     */
-//    public void removeEventHandler(EventHandler eventHandler) {
-//        this.eventHandlers.remove(eventHandler);
-//    }
-//
-//    /**
-//     * 删除所有事件处理器
-//     */
-//    public void removeAllEventHandlers() {
-//        this.eventHandlers.clear();
-//    }
 
     /**
      * 获取事件处理器
      *
      * @param eventType 事件类型
      */
-    public Set<EventHandler> getEventHandler(Class<?> eventType) {
-        Set<EventHandler> result = new HashSet<>();
-        for (EventHandler eventHandler : this.eventHandlers) {
-            if (eventHandler.supportEventType(eventType)) {
-                result.add(eventHandler);
-            }
-        }
-        return result;
+    public List<EventHandler> getEventHandler(Class<?> eventType) {
+        return this.eventHandlerMap.getOrDefault(eventType, EMPTY_EVENT_HANDLERS);
     }
 }

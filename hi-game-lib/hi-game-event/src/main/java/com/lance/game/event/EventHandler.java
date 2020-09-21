@@ -7,12 +7,12 @@ package com.lance.game.event;
  */
 public interface EventHandler {
 
-    /**
-     * 判断是否支持的事件类型
-     *
-     * @param eventType 事件类型
-     */
-    boolean supportEventType(Class<?> eventType);
+//    /**
+//     * 判断是否支持的事件类型
+//     *
+//     * @param eventType 事件类型
+//     */
+//    boolean supportEventType(Class<?> eventType);
 
     /**
      * 处理事件

@@ -35,9 +35,11 @@ public class EventHandlerProcessor implements InstantiationAwareBeanPostProcesso
     private void parseEventHandler(Object bean, Method method) {
         Class<?>[] parameterTypes = method.getParameterTypes();
         if (parameterTypes.length != 1) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(
+                    bean.getClass().getName() + "#" + method.getName() + "事件监听方法注册失败，期望参数长度：1");
         }
 
-        eventContext.addEventHandler(new SimpleEventHandler(bean, method, parameterTypes[0]));
+        Class<?> handleEventType = parameterTypes[0]; // 处理事件类型
+        this.eventContext.registerEventHandler(handleEventType, new SimpleEventHandler(bean, method, handleEventType));
     }
 }

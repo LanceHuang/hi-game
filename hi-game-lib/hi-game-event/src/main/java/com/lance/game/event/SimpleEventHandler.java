@@ -3,6 +3,8 @@ package com.lance.game.event;
 import java.lang.reflect.Method;
 
 /**
+ * 直接反射调用监听方法
+ *
  * @author Lance
  */
 public class SimpleEventHandler implements EventHandler {
@@ -17,11 +19,6 @@ public class SimpleEventHandler implements EventHandler {
         this.bean = bean;
         this.m = m;
         this.eventType = eventType;
-    }
-
-    @Override
-    public boolean supportEventType(Class<?> eventType) {
-        return this.eventType == eventType;
     }
 
     @Override
