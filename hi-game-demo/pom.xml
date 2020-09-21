@@ -27,6 +27,11 @@
         </dependency>
         <dependency>
             <groupId>com.lance.game</groupId>
+            <artifactId>hi-game-event</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lance.game</groupId>
             <artifactId>hi-game-mongodb</artifactId>
             <version>${revision}</version>
         </dependency>
