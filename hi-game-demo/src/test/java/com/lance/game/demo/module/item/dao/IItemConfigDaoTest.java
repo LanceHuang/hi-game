@@ -1,6 +1,6 @@
 package com.lance.game.demo.module.item.dao;
 
-import com.lance.common.tool.util.JsonUtils;
+import com.lance.common.tool.JsonUtils;
 import com.lance.game.demo.module.item.config.ItemConfig;
 import com.lance.game.mongodb.MongoDaoScanner;
 import com.lance.game.mongodb.MongoDataSource;

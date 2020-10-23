@@ -1,6 +1,5 @@
 package com.lance.game.demo.module.activity.service;
 
-import com.lance.common.tool.util.TimeUtils;
 import com.lance.game.demo.module.activity.config.ActivityConfig;
 import com.lance.game.demo.module.activity.handler.AbstractActivityHandler;
 import com.lance.game.demo.module.activity.handler.IActivityHandler;
@@ -61,7 +60,7 @@ public class ActivityService implements IActivityService {
             activityInfo.setActivityOpen();
         }
 
-        long now = TimeUtils.now();
+        long now = System.currentTimeMillis();
         if (now < activityInfo.getStartDate().getTime()) { // 活动开启定时器
             LoggerUtil.debug("创建活动开启定时器 name【{}】, id【{}】", activityInfo.getName(), activityInfo.getId());
             Future<?> startFuture = activityScheduler.schedule("活动开启定时器", new Runnable() {

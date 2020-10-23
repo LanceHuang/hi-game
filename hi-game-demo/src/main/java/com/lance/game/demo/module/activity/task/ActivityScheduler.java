@@ -1,6 +1,5 @@
 package com.lance.game.demo.module.activity.task;
 
-import com.lance.common.tool.util.TimeUtils;
 import com.lance.game.demo.log.LoggerUtil;
 import com.lance.game.net.util.NamedThreadFactory;
 import org.springframework.stereotype.Component;
@@ -42,7 +41,7 @@ public class ActivityScheduler {
      * @param date 运行任务时间点
      */
     public ScheduledFuture<?> schedule(String name, Runnable task, Date date) {
-        return schedule(name, task, date.getTime() - TimeUtils.now());
+        return schedule(name, task, date.getTime() - System.currentTimeMillis());
     }
 
     /**

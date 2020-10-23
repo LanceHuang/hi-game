@@ -1,6 +1,5 @@
 package com.lance.game.demo.module.activity.model;
 
-import com.lance.common.tool.util.TimeUtils;
 import com.lance.game.demo.module.activity.config.ActivityConfig;
 
 import java.util.Date;
@@ -64,7 +63,7 @@ public class ActivityInfo {
      * 判断活动是否在开启时间内
      */
     public boolean isInOpenTime() {
-        long now = TimeUtils.now();
+        long now = System.currentTimeMillis();
         return this.startDate.getTime() <= now && now < this.stopDate.getTime();
     }
 
