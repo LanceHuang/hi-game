@@ -1,13 +1,15 @@
 package com.lance.game.demo.module.world.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 玩家位置
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class WorldPosition {
 
     /** 地图id */

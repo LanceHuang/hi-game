@@ -1,13 +1,15 @@
 package com.lance.game.demo.condition;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 条件定义
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class ConditionDef {
 
     /** 条件类型 */

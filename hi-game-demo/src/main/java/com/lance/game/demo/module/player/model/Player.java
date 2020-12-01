@@ -6,14 +6,16 @@ import com.lance.game.demo.module.skill.model.SkillContainer;
 import com.lance.game.demo.module.storage.model.ItemStorage;
 import com.lance.game.demo.module.world.model.WorldPosition;
 import com.lance.game.mongodb.annotation.MongoIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 玩家对象
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class Player {
 
     /** 唯一标识 */

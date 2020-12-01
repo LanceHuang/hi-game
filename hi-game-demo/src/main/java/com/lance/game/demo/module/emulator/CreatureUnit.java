@@ -1,7 +1,8 @@
 package com.lance.game.demo.module.emulator;
 
 import com.lance.game.demo.module.attribute.AttributeType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 
@@ -10,7 +11,8 @@ import java.util.Map;
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class CreatureUnit {
 
     private long id;

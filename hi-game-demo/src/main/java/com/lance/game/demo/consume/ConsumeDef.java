@@ -1,13 +1,15 @@
 package com.lance.game.demo.consume;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 消耗定义
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class ConsumeDef {
 
     /** 条件类型 */

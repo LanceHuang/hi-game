@@ -1,7 +1,8 @@
 package com.lance.game.demo.module.world.model;
 
 import com.lance.game.demo.module.player.model.Player;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +12,8 @@ import java.util.Set;
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class Scene {
 
     /** 地图id */

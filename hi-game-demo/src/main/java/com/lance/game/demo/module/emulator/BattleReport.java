@@ -1,13 +1,15 @@
 package com.lance.game.demo.module.emulator;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 战报
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class BattleReport {
 
     /** 战斗id */

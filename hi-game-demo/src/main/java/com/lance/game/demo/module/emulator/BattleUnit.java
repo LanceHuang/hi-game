@@ -1,6 +1,7 @@
 package com.lance.game.demo.module.emulator;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -10,7 +11,8 @@ import java.util.Queue;
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class BattleUnit {
 
     /** 战斗id */

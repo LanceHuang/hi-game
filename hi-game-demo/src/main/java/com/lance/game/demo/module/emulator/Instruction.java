@@ -1,13 +1,15 @@
 package com.lance.game.demo.module.emulator;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 指令
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class Instruction {
 
     private InstructionType type;

@@ -6,14 +6,16 @@ import com.lance.game.demo.consume.ConsumeUtils;
 import com.lance.game.demo.consume.IConsume;
 import com.lance.game.demo.condition.ConditionDef;
 import com.lance.game.demo.consume.ConsumeDef;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 地图配置
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class MapConfig {
 
     /** 地图id */

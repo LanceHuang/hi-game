@@ -1,13 +1,15 @@
 package com.lance.game.demo.util;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 校验结果
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class VerifyResult {
 
     /** 校验结果 */

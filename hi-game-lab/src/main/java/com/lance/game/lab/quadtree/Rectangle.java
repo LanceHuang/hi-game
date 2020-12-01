@@ -1,6 +1,7 @@
 package com.lance.game.lab.quadtree;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.List;
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class Rectangle {
 
     private int x;

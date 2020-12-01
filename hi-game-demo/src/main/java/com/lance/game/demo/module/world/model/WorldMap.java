@@ -6,7 +6,8 @@ import com.lance.game.demo.log.LoggerUtil;
 import com.lance.game.demo.module.player.model.Player;
 import com.lance.game.demo.module.world.config.MapConfig;
 import com.lance.game.demo.module.world.manager.WorldManager;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,7 +19,8 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author Lance
  */
-@Data
+@Getter
+@Setter
 public class WorldMap {
 
     /** 地图id */
