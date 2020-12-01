@@ -17,8 +17,8 @@ public class ItemStorage {
     private static final int CAPACITY_MAX = 100;
 
     private AbstractItem[] items;
-    private int            capacity;
-    private int            size;
+    private int capacity;
+    private int size;
 
     public ItemStorage() {
         this.items = new AbstractItem[CAPACITY_MAX];

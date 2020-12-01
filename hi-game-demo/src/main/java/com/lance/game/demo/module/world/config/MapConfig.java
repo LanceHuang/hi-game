@@ -28,11 +28,11 @@ public class MapConfig {
 
     /** 进图条件 */
     private ConditionDef[] conditionDefs;
-    private ICondition     condition;
+    private ICondition condition;
 
     /** 进图消耗 */
     private ConsumeDef[] consumeDefs;
-    private IConsume     consume;
+    private IConsume consume;
 
     public ICondition getCondition() {
         if (this.condition == null) {

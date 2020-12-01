@@ -17,7 +17,7 @@ import com.lance.game.demo.consume.ConsumeDef;
 public class CoreUtils {
 
     private static final ICondition trueCondition = ConditionType.TRUE.create();
-    private static final IConsume   trueConsume   = ConsumeType.TRUE.create();
+    private static final IConsume trueConsume = ConsumeType.TRUE.create();
 
     /**
      * 解析条件定义

@@ -18,7 +18,7 @@ import java.net.Socket;
 public class Bootstrap {
 
     private static final String APPLICATION_CONTEXT_LOCATION = "application-context.xml";
-    private static final String ADMIN_CONTEXT_LOCATION       = "admin-context.xml";
+    private static final String ADMIN_CONTEXT_LOCATION = "admin-context.xml";
 
     public static void main(String[] args) {
         if (args.length != 1) {

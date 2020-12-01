@@ -8,11 +8,11 @@ package com.lance.game.demo.module.buff.config;
 public class BuffConfig {
 
     /** buffId */
-    private int    id;
+    private int id;
     /** 类型 */
-    private int    type;
+    private int type;
     /** 持续时间 */
-    private long   duration;
+    private long duration;
     /** 配置值 */
     private String value;
 

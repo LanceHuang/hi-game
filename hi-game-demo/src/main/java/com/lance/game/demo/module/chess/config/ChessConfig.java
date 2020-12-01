@@ -7,11 +7,11 @@ package com.lance.game.demo.module.chess.config;
  */
 public class ChessConfig {
 
-    private int  id;
+    private int id;
     /** 类型 */
-    private int  type;
+    private int type;
     /** 星级 */
-    private int  star;
+    private int star;
     /** 血量 */
     private long hp;
     /** 攻击力 */

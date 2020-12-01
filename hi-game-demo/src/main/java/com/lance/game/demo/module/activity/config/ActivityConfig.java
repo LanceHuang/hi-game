@@ -9,15 +9,15 @@ package com.lance.game.demo.module.activity.config;
 public class ActivityConfig {
 
     /** 活动id */
-    private int    id;
+    private int id;
     /** 活动类型 */
-    private int    type;
+    private int type;
     /** 活动名称 */
     private String name;
     /** 活动时间 */
     private String timeConfig; // todo 兼容不同渠道的开服时间（国际服和国服）
     /** 活动奖励 */
-    private int    rewardId; // todo 兼容多种条件及奖励（譬如，AFK的N档玫瑰花兑换）
+    private int rewardId; // todo 兼容多种条件及奖励（譬如，AFK的N档玫瑰花兑换）
 
     public int getId() {
         return id;

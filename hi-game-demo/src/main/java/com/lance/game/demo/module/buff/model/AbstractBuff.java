@@ -16,8 +16,8 @@ import java.util.concurrent.Future;
  */
 public abstract class AbstractBuff {
 
-    protected int  id;
-    protected int  type;
+    protected int id;
+    protected int type;
     protected long startTime;
     protected long duration;
     protected long endTime;

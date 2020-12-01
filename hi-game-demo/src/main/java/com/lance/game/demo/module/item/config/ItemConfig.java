@@ -7,9 +7,9 @@ package com.lance.game.demo.module.item.config;
  */
 public class ItemConfig {
 
-    private int    id;
+    private int id;
     private String name;
-    private int    type;
+    private int type;
 
     // todo 属性
 

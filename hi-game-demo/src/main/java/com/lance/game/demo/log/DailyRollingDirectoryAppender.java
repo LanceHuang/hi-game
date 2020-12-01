@@ -26,12 +26,12 @@ public class DailyRollingDirectoryAppender extends FileAppender {
     // The code assumes that the following constants are in a increasing
     // sequence.
     static final int TOP_OF_TROUBLE = -1;
-    static final int TOP_OF_MINUTE  = 0;
-    static final int TOP_OF_HOUR    = 1;
-    static final int HALF_DAY       = 2;
-    static final int TOP_OF_DAY     = 3;
-    static final int TOP_OF_WEEK    = 4;
-    static final int TOP_OF_MONTH   = 5;
+    static final int TOP_OF_MINUTE = 0;
+    static final int TOP_OF_HOUR = 1;
+    static final int HALF_DAY = 2;
+    static final int TOP_OF_DAY = 3;
+    static final int TOP_OF_WEEK = 4;
+    static final int TOP_OF_MONTH = 5;
 
     private String basePath = "";
 

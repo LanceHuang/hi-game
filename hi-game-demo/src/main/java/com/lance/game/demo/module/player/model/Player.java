@@ -17,24 +17,24 @@ import lombok.Data;
 public class Player {
 
     /** 唯一标识 */
-    private long   id;
+    private long id;
     /** 账号 */
     private String account;
     /** 昵称 */
     private String nickname;
     /** 性别 */
-    private int    gender;
+    private int gender;
     /** 等级 */
-    private int    level;
+    private int level;
     /** 经验条 */
-    private long   exp;
+    private long exp;
 
     @MongoIgnore
     private AttributeContainer attributeContainer;
     @MongoIgnore
-    private SkillContainer     skillContainer;
+    private SkillContainer skillContainer;
     @MongoIgnore
-    private BuffContainer      buffContainer;
+    private BuffContainer buffContainer;
 
     // todo 背包 Ctrl+I 打开背包，哈哈哈（冒险岛、彩虹岛）
     // 1. 客户端设计快捷键？并且支持保存配置
