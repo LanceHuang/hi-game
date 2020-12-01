@@ -11,11 +11,11 @@ import com.lance.game.demo.module.player.model.Player;
 public class TrueCondition extends AbstractCondition {
 
     @Override
-    public void parse(String value) {
-        throw new UnsupportedOperationException();
+    public void doVerify(Player player, VerifyResult verifyResult) {
     }
 
     @Override
-    public void doVerify(Player player, VerifyResult verifyResult) {
+    public void parse(String value) {
+        throw new UnsupportedOperationException();
     }
 }

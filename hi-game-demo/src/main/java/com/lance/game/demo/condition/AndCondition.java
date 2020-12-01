@@ -14,12 +14,7 @@ import java.util.List;
 public class AndCondition extends AbstractCondition {
 
     /** 条件集 */
-    private List<AbstractCondition> conditions = new LinkedList<>();
-
-    @Override
-    public void parse(String value) {
-        throw new UnsupportedOperationException();
-    }
+    private final List<AbstractCondition> conditions = new LinkedList<>();
 
     @Override
     public void doVerify(Player player, VerifyResult verifyResult) {
@@ -29,6 +24,11 @@ public class AndCondition extends AbstractCondition {
                 return;
             }
         }
+    }
+
+    @Override
+    public void parse(String value) {
+        throw new UnsupportedOperationException();
     }
 
     /**

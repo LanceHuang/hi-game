@@ -11,7 +11,7 @@ public class IConditionTest {
         ConditionDef conditionDef = new ConditionDef();
         conditionDef.setType(ConditionType.LEVEL);
         conditionDef.setValue("16");
-        ICondition condition = CoreUtils.parseCondition(conditionDef);
+        ICondition condition = ConditionUtils.parseCondition(conditionDef);
 
         Player mockPlayer = new Player();
         mockPlayer.setLevel(15);
@@ -27,7 +27,7 @@ public class IConditionTest {
         ConditionDef conditionDef2 = new ConditionDef();
         conditionDef2.setType(ConditionType.LEVEL_RANGE);
         conditionDef2.setValue("14_14");
-        ICondition condition = CoreUtils.parseCondition(new ConditionDef[]{conditionDef1, conditionDef2});
+        ICondition condition = ConditionUtils.parseCondition(new ConditionDef[]{conditionDef1, conditionDef2});
 
         Player mockPlayer = new Player();
         mockPlayer.setLevel(15);

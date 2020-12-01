@@ -1,5 +1,6 @@
 package com.lance.game.demo.module.world.config;
 
+import com.lance.game.demo.condition.ConditionUtils;
 import com.lance.game.demo.condition.ICondition;
 import com.lance.game.demo.consume.IConsume;
 import com.lance.game.demo.condition.ConditionDef;
@@ -36,7 +37,7 @@ public class MapConfig {
 
     public ICondition getCondition() {
         if (this.condition == null) {
-            this.condition = CoreUtils.parseCondition(this.conditionDefs);
+            this.condition = ConditionUtils.parseCondition(this.conditionDefs);
         }
         return this.condition;
     }

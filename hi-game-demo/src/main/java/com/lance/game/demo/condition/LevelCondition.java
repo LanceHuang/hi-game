@@ -5,23 +5,14 @@ import com.lance.game.demo.util.VerifyResult;
 import com.lance.game.demo.module.player.model.Player;
 
 /**
- * 等级大于等于X级
+ * 等级大于或等于X
  *
  * @author Lance
  */
 public class LevelCondition extends AbstractCondition {
 
+    /** 等级 */
     private int level;
-
-    @Override
-    public void parse(String value) {
-        this.level = Integer.parseInt(value);
-    }
-
-    @Override
-    public boolean verify(Player player) {
-        return player.getLevel() >= this.level;
-    }
 
     @Override
     public void doVerify(Player player, VerifyResult verifyResult) {
@@ -29,4 +20,10 @@ public class LevelCondition extends AbstractCondition {
             verifyResult.fail(I18nId.LEVEL_NOT_ENOUGH);
         }
     }
+
+    @Override
+    public void parse(String value) {
+        this.level = Integer.parseInt(value);
+    }
+
 }

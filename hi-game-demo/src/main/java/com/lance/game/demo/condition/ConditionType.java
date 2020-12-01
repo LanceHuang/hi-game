@@ -11,12 +11,12 @@ public enum ConditionType {
     TRUE(TrueCondition.class),
     /** 与条件 */
     AND(AndCondition.class),
-    /** 等级大于等于X级 */
+    /** 等级大于或等于X */
     LEVEL(LevelCondition.class),
-    /** 等级大于等于X级，小于等于Y级 */
+    /** 等级在[X,Y]范围 */
     LEVEL_RANGE(LevelRangeCondition.class);
 
-    private Class<? extends ICondition> clazz;
+    private final Class<? extends ICondition> clazz;
 
     ConditionType(Class<? extends ICondition> clazz) {
         this.clazz = clazz;
@@ -34,7 +34,7 @@ public enum ConditionType {
         throw new IllegalArgumentException("创建条件失败：" + this.name());
     }
 
-    //================================= Getter/Setter ==================================
+    //================================= Getter ==================================
 
     public Class<? extends ICondition> getClazz() {
         return clazz;

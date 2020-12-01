@@ -9,11 +9,6 @@ import com.lance.game.demo.module.player.model.Player;
  */
 public abstract class AbstractCondition implements ICondition {
 
-    /**
-     * 解析条件值
-     */
-    public abstract void parse(String value);
-
     @Override
     public boolean verify(Player player) {
         VerifyResult verifyResult = new VerifyResult();
@@ -30,5 +25,18 @@ public abstract class AbstractCondition implements ICondition {
         }
     }
 
+    /**
+     * 条件校验
+     *
+     * @param verifyResult 校验结果
+     */
     public abstract void doVerify(Player player, VerifyResult verifyResult);
+
+    /**
+     * 解析配置
+     *
+     * @param value 配置信息
+     */
+    public abstract void parse(String value);
+
 }
