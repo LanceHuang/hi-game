@@ -1,5 +1,7 @@
 package com.lance.game.demo.condition;
 
+import com.lance.game.demo.condition.impl.AndCondition;
+
 /**
  * 条件工具
  *

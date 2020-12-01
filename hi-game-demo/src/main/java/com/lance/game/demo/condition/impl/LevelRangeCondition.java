@@ -1,5 +1,6 @@
-package com.lance.game.demo.condition;
+package com.lance.game.demo.condition.impl;
 
+import com.lance.game.demo.condition.AbstractCondition;
 import com.lance.game.demo.constant.I18nId;
 import com.lance.game.demo.util.VerifyResult;
 import com.lance.game.demo.module.player.model.Player;
