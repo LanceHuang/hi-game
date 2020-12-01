@@ -1,5 +1,6 @@
-package com.lance.game.demo.consume;
+package com.lance.game.demo.consume.impl;
 
+import com.lance.game.demo.consume.AbstractConsume;
 import com.lance.game.demo.util.VerifyResult;
 import com.lance.game.demo.module.player.model.Player;
 
@@ -14,12 +15,7 @@ import java.util.List;
 public class AndConsume extends AbstractConsume {
 
     /** 消耗集 */
-    private List<AbstractConsume> consumes = new LinkedList<>();
-
-    @Override
-    public void parse(String value) {
-        throw new UnsupportedOperationException();
-    }
+    private final List<AbstractConsume> consumes = new LinkedList<>();
 
     @Override
     public void doVerify(Player player, VerifyResult verifyResult) {
@@ -36,6 +32,11 @@ public class AndConsume extends AbstractConsume {
         for (AbstractConsume consume : this.consumes) {
             consume.consume(player);
         }
+    }
+
+    @Override
+    public void parse(String value) {
+        throw new UnsupportedOperationException();
     }
 
     /**

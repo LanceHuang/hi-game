@@ -1,5 +1,6 @@
-package com.lance.game.demo.consume;
+package com.lance.game.demo.consume.impl;
 
+import com.lance.game.demo.consume.AbstractConsume;
 import com.lance.game.demo.util.VerifyResult;
 import com.lance.game.demo.module.player.model.Player;
 
@@ -16,13 +17,6 @@ public class ItemConsume extends AbstractConsume {
     private int itemNum;
 
     @Override
-    public void parse(String value) {
-        String[] split = value.split(":");
-        this.itemId = Integer.parseInt(split[0]);
-        this.itemNum = Integer.parseInt(split[1]);
-    }
-
-    @Override
     public void doVerify(Player player, VerifyResult verifyResult) {
         // todo 背包校验
     }
@@ -30,5 +24,12 @@ public class ItemConsume extends AbstractConsume {
     @Override
     public void consume(Player player) {
         // todo 扣除道具
+    }
+
+    @Override
+    public void parse(String value) {
+        String[] split = value.split(":");
+        this.itemId = Integer.parseInt(split[0]);
+        this.itemNum = Integer.parseInt(split[1]);
     }
 }

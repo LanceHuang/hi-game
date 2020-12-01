@@ -1,9 +1,11 @@
 package com.lance.game.demo.condition;
 
-import com.lance.game.demo.util.CoreUtils;
 import com.lance.game.demo.module.player.model.Player;
 import org.junit.Test;
 
+/**
+ * @author Lance
+ */
 public class IConditionTest {
 
     @Test

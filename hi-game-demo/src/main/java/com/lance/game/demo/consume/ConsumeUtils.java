@@ -1,23 +1,26 @@
-package com.lance.game.demo.util;
+package com.lance.game.demo.consume;
 
-import com.lance.game.demo.consume.ConsumeType;
-import com.lance.game.demo.consume.AbstractConsume;
-import com.lance.game.demo.consume.AndConsume;
-import com.lance.game.demo.consume.IConsume;
-import com.lance.game.demo.consume.ConsumeDef;
+import com.lance.game.demo.consume.impl.AndConsume;
 
 /**
+ * 消耗工具
+ *
  * @author Lance
+ * @since 2020/12/1
  */
-public class CoreUtils {
+public class ConsumeUtils {
 
+    /** 永真消耗 */
     private static final IConsume trueConsume = ConsumeType.TRUE.create();
-
 
     /**
      * 解析消耗定义
      */
     public static IConsume parseConsume(ConsumeDef def) {
+        if (def == null) {
+            return null;
+        }
+
         AbstractConsume newConsume = (AbstractConsume) def.getType().create();
         newConsume.parse(def.getValue());
         return newConsume;
@@ -30,10 +33,14 @@ public class CoreUtils {
         if (defs == null || defs.length == 0) {
             return trueConsume;
         }
-        if (defs.length == 1) { // 减少小对象
-            return parseConsume(defs[0]);
+
+        // 减少小对象
+        if (defs.length == 1) {
+            IConsume consume = parseConsume(defs[0]);
+            return consume == null ? trueConsume : consume;
         }
 
+        // 与消耗
         AndConsume andConsume = (AndConsume) ConsumeType.AND.create();
         for (ConsumeDef def : defs) {
             if (def == null) {

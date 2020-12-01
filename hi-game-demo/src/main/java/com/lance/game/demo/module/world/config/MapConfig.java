@@ -2,10 +2,10 @@ package com.lance.game.demo.module.world.config;
 
 import com.lance.game.demo.condition.ConditionUtils;
 import com.lance.game.demo.condition.ICondition;
+import com.lance.game.demo.consume.ConsumeUtils;
 import com.lance.game.demo.consume.IConsume;
 import com.lance.game.demo.condition.ConditionDef;
 import com.lance.game.demo.consume.ConsumeDef;
-import com.lance.game.demo.util.CoreUtils;
 import lombok.Data;
 
 /**
@@ -44,7 +44,7 @@ public class MapConfig {
 
     public IConsume getConsume() {
         if (this.consume == null) {
-            this.consume = CoreUtils.parseConsume(this.consumeDefs);
+            this.consume = ConsumeUtils.parseConsume(this.consumeDefs);
         }
         return this.consume;
     }

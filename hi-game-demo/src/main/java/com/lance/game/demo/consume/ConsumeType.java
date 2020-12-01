@@ -1,5 +1,9 @@
 package com.lance.game.demo.consume;
 
+import com.lance.game.demo.consume.impl.AndConsume;
+import com.lance.game.demo.consume.impl.ItemConsume;
+import com.lance.game.demo.consume.impl.TrueConsume;
+
 /**
  * 消耗类型
  *
@@ -12,11 +16,9 @@ public enum ConsumeType {
     /** 与消耗 */
     AND(AndConsume.class),
     /** 道具消耗 */
-    ITEM(ItemConsume.class),
-    /** 钻石消耗 */
-    GOLD(GoldConsume.class);
+    ITEM(ItemConsume.class);
 
-    private Class<? extends IConsume> clazz;
+    private final Class<? extends IConsume> clazz;
 
     ConsumeType(Class<? extends IConsume> clazz) {
         this.clazz = clazz;
@@ -34,7 +36,7 @@ public enum ConsumeType {
         throw new IllegalArgumentException("创建消耗失败：" + this.name());
     }
 
-    //================================= Getter/Setter ==================================
+    //================================= Getter ==================================
 
     public Class<? extends IConsume> getClazz() {
         return clazz;
