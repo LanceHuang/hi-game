@@ -5,7 +5,7 @@ import com.lance.game.demo.module.activity.handler.AbstractActivityHandler;
 import com.lance.game.demo.module.activity.handler.IActivityHandler;
 import com.lance.game.demo.module.activity.manager.ActivityManager;
 import com.lance.game.demo.module.activity.model.ActivityInfo;
-import com.lance.game.demo.log.LoggerUtil;
+import com.lance.game.demo.core.log.LoggerUtil;
 import com.lance.game.demo.module.activity.task.ActivityScheduler;
 import org.springframework.stereotype.Service;
 

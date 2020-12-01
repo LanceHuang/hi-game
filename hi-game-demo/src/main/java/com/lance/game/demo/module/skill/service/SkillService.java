@@ -1,7 +1,7 @@
 package com.lance.game.demo.module.skill.service;
 
-import com.lance.game.demo.constant.I18nId;
-import com.lance.game.demo.exception.GameException;
+import com.lance.game.demo.core.constant.I18nId;
+import com.lance.game.demo.core.exception.GameException;
 import com.lance.game.demo.module.player.model.Player;
 import com.lance.game.demo.module.skill.config.SkillConfig;
 import com.lance.game.demo.module.skill.manager.SkillManager;

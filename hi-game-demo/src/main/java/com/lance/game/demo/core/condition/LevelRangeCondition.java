@@ -1,6 +1,6 @@
 package com.lance.game.demo.core.condition;
 
-import com.lance.game.demo.constant.I18nId;
+import com.lance.game.demo.core.constant.I18nId;
 import com.lance.game.demo.core.model.VerifyResult;
 import com.lance.game.demo.module.player.model.Player;
 

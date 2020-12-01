@@ -1,4 +1,4 @@
-package com.lance.game.demo.log;
+package com.lance.game.demo.core.log;
 
 import org.junit.Test;
 

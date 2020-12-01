@@ -1,4 +1,4 @@
-package com.lance.game.demo.log;
+package com.lance.game.demo.core.log;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;

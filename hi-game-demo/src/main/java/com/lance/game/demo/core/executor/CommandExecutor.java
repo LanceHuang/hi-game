@@ -1,4 +1,4 @@
-package com.lance.game.demo.executor;
+package com.lance.game.demo.core.executor;
 
 import org.springframework.stereotype.Component;
 

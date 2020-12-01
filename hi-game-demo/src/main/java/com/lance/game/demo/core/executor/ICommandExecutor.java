@@ -1,4 +1,4 @@
-package com.lance.game.demo.executor;
+package com.lance.game.demo.core.executor;
 
 /**
  * 命令执行器

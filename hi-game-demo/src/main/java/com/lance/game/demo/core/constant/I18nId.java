@@ -1,4 +1,4 @@
-package com.lance.game.demo.constant;
+package com.lance.game.demo.core.constant;
 
 /**
  * 国际化id，这里不采用user.button.info这种格式，因为策划配置很麻烦

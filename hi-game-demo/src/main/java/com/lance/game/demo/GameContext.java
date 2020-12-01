@@ -1,6 +1,6 @@
 package com.lance.game.demo;
 
-import com.lance.game.demo.executor.ICommandExecutor;
+import com.lance.game.demo.core.executor.ICommandExecutor;
 import com.lance.game.demo.module.chess.service.IChessService;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
