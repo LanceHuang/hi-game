@@ -2,10 +2,10 @@ package com.lance.game.demo.module.chess.service;
 
 import com.lance.game.demo.GameContext;
 import com.lance.game.demo.constant.I18nId;
-import com.lance.game.demo.exception.GameException;
 import com.lance.game.demo.module.chess.command.MatchGameCommand;
 import com.lance.game.demo.module.chess.manager.IChessManager;
 import com.lance.game.demo.module.player.model.Player;
+import com.lance.game.demo.util.Assert;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,9 +21,7 @@ public class ChessService implements IChessService {
 
     @Override
     public void match(Player player) {
-        if (player == null) {
-            throw new GameException(I18nId.ERROR);
-        }
+        Assert.notNull(player, I18nId.ERROR);
 
         GameContext.getCommandExecutor().submit(player.getAccount(), MatchGameCommand.valueOf(player.getAccount()));
     }
@@ -35,17 +33,13 @@ public class ChessService implements IChessService {
 
     @Override
     public void buy(Player player, int id) {
-        if (player == null) {
-            throw new GameException(I18nId.ERROR);
-        }
+        Assert.notNull(player, I18nId.ERROR);
 
     }
 
     @Override
     public void ready(Player player) {
-        if (player == null) {
-            throw new GameException(I18nId.ERROR);
-        }
+        Assert.notNull(player, I18nId.ERROR);
 
     }
 }

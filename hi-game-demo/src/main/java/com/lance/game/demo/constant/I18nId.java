@@ -1,12 +1,13 @@
 package com.lance.game.demo.constant;
 
 /**
- * 国际化id，这里不采用user.button.info这种格式，因为策划配置很麻烦
+ * 国际化id，命名规范：模块名+内容名（统一管理，以后方便维护）
  *
  * @author Lance
  */
 public interface I18nId {
 
+    /************************************* 通用 10000-11000 *************************************/
     int ERROR = 10000; // 发生未知错误
     int LEVEL_NOT_ENOUGH = 10001; // 等级不足
     int LEVEL_NOT_MATCH = 10002; // 等级不匹配
