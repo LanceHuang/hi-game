@@ -35,11 +35,4 @@ public enum ConsumeType {
         }
         throw new IllegalArgumentException("创建消耗失败：" + this.name());
     }
-
-    //================================= Getter ==================================
-
-    public Class<? extends IConsume> getClazz() {
-        return clazz;
-    }
-
 }

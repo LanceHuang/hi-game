@@ -38,10 +38,4 @@ public enum ConditionType {
         }
         throw new IllegalArgumentException("创建条件失败：" + this.name());
     }
-
-    //================================= Getter ==================================
-
-    public Class<? extends ICondition> getClazz() {
-        return clazz;
-    }
 }

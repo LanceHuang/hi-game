@@ -1,15 +1,15 @@
 package com.lance.game.demo.consume;
 
 import com.lance.game.demo.module.player.model.Player;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Lance
  */
-public class IConsumeTest {
+class IConsumeTest {
 
     @Test
-    public void test() {
+    void test() {
         ConsumeDef consumeDef = new ConsumeDef();
         consumeDef.setType(ConsumeType.ITEM);
         consumeDef.setValue("10086:1");
@@ -21,7 +21,7 @@ public class IConsumeTest {
     }
 
     @Test
-    public void testAnd() {
+    void testAnd() {
         ConsumeDef consumeDef1 = new ConsumeDef();
         consumeDef1.setType(ConsumeType.ITEM);
         consumeDef1.setValue("10086:1");
