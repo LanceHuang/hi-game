@@ -1,6 +1,6 @@
 package com.lance.game.demo.module.activity.task;
 
-import com.lance.game.demo.core.log.LoggerUtil;
+import com.lance.game.demo.log.LoggerUtil;
 import com.lance.game.net.util.NamedThreadFactory;
 import org.springframework.stereotype.Component;
 

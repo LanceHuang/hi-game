@@ -1,8 +1,8 @@
 package com.lance.game.demo.module.chess.service;
 
 import com.lance.game.demo.GameContext;
-import com.lance.game.demo.core.constant.I18nId;
-import com.lance.game.demo.core.exception.GameException;
+import com.lance.game.demo.constant.I18nId;
+import com.lance.game.demo.exception.GameException;
 import com.lance.game.demo.module.chess.command.MatchGameCommand;
 import com.lance.game.demo.module.chess.manager.IChessManager;
 import com.lance.game.demo.module.player.model.Player;

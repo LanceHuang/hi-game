@@ -1,9 +1,9 @@
 package com.lance.game.demo.module.buff.model;
 
 import com.lance.game.demo.module.player.model.Player;
-import com.lance.game.demo.core.log.LogCode;
-import com.lance.game.demo.core.log.LogModule;
-import com.lance.game.demo.core.log.LoggerUtil;
+import com.lance.game.demo.log.LogCode;
+import com.lance.game.demo.log.LogModule;
+import com.lance.game.demo.log.LoggerUtil;
 
 import java.util.HashMap;
 import java.util.Map;
