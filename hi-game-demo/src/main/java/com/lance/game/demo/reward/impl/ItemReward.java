@@ -11,6 +11,18 @@ import com.lance.game.demo.reward.AbstractReward;
  */
 public class ItemReward extends AbstractReward {
 
+    /** 道具id */
+    private int itemId;
+    /** 道具数量 */
+    private int itemNum;
+
+    @Override
+    public void parse(String value) {
+        String[] split = value.split(":");
+        this.itemId = Integer.parseInt(split[0]);
+        this.itemNum = Integer.parseInt(split[1]);
+    }
+
     @Override
     public void reward(Player player) {
         // todo

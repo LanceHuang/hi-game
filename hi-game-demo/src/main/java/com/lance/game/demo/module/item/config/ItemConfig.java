@@ -1,48 +1,23 @@
 package com.lance.game.demo.module.item.config;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 道具配置
  *
  * @author Lance
  */
+@Getter
+@Setter
 public class ItemConfig {
 
+    /** 道具id */
     private int id;
+    /** 道具名称 */
     private String name;
+    /** 道具类型 */
     private int type;
 
     // todo 属性
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    @Override
-    public String toString() {
-        return "ItemConfig{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type=" + type +
-                '}';
-    }
 }

@@ -2,6 +2,7 @@ package com.lance.game.demo.reward;
 
 import com.lance.game.demo.reward.impl.AndReward;
 import com.lance.game.demo.reward.impl.ItemReward;
+import com.lance.game.demo.reward.impl.TrueReward;
 
 /**
  * 奖励类型
@@ -11,6 +12,8 @@ import com.lance.game.demo.reward.impl.ItemReward;
  */
 public enum RewardType {
 
+    /** 空奖励 */
+    TRUE(TrueReward.class),
     /** 合并奖励 */
     AND(AndReward.class),
     /** 道具奖励 */
