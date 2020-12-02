@@ -17,8 +17,8 @@ public class ConsumeUtils {
      * 解析消耗定义
      */
     public static IConsume parseConsume(ConsumeDef def) {
-        if (def == null) {
-            return null;
+        if (def == null || def.getType() == null) {
+            return trueConsume;
         }
 
         AbstractConsume newConsume = (AbstractConsume) def.getType().create();
@@ -36,17 +36,11 @@ public class ConsumeUtils {
 
         // 减少小对象
         if (defs.length == 1) {
-            IConsume consume = parseConsume(defs[0]);
-            return consume == null ? trueConsume : consume;
+            return parseConsume(defs[0]);
         }
 
-        // 与消耗
         AndConsume andConsume = (AndConsume) ConsumeType.AND.create();
         for (ConsumeDef def : defs) {
-            if (def == null) {
-                continue;
-            }
-
             andConsume.addConsume((AbstractConsume) parseConsume(def));
         }
         return andConsume;

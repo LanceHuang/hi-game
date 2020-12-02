@@ -17,8 +17,8 @@ public class RewardUtils {
      * 解析奖励定义
      */
     public static IReward parseReward(RewardDef def) {
-        if (def == null) {
-            return null;
+        if (def == null || def.getType() == null) {
+            return trueReward;
         }
 
         AbstractReward newReward = (AbstractReward) def.getType().create();
@@ -36,18 +36,12 @@ public class RewardUtils {
 
         // 减少小对象
         if (defs.length == 1) {
-            IReward reward = parseReward(defs[0]);
-            return reward == null ? trueReward : reward;
+            return parseReward(defs[0]);
         }
 
-        // 合并奖励
         AndReward andReward = (AndReward) RewardType.AND.create();
         for (RewardDef def : defs) {
-            if (def == null) {
-                continue;
-            }
-
-            andReward.addReward((AbstractReward) parseReward(def));
+            andReward.addReward(parseReward(def));
         }
         return andReward;
     }

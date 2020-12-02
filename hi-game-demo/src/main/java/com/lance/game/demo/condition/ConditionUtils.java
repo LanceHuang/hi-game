@@ -17,8 +17,8 @@ public class ConditionUtils {
      * 解析条件定义
      */
     public static ICondition parseCondition(ConditionDef def) {
-        if (def == null) {
-            return null;
+        if (def == null || def.getType() == null) {
+            return trueCondition;
         }
 
         AbstractCondition newCondition = (AbstractCondition) def.getType().create();
@@ -36,17 +36,11 @@ public class ConditionUtils {
 
         // 减少小对象
         if (defs.length == 1) {
-            ICondition condition = parseCondition(defs[0]);
-            return condition == null ? trueCondition : condition;
+            return parseCondition(defs[0]);
         }
 
-        // 与条件
         AndCondition andCondition = (AndCondition) ConditionType.AND.create();
         for (ConditionDef def : defs) {
-            if (def == null) {
-                continue;
-            }
-
             andCondition.addCondition((AbstractCondition) parseCondition(def));
         }
         return andCondition;
