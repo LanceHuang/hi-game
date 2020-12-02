@@ -1,7 +1,6 @@
 package com.lance.game.demo;
 
 import com.lance.game.demo.executor.ICommandExecutor;
-import com.lance.game.demo.module.chess.service.IChessService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -22,9 +21,6 @@ public class GameContext {
     @Resource
     private ICommandExecutor commandExecutor;
 
-    @Resource
-    private IChessService chessService;
-
     private static GameContext instance;
 
     @PostConstruct
@@ -38,9 +34,5 @@ public class GameContext {
 
     public static ICommandExecutor getCommandExecutor() {
         return instance.commandExecutor;
-    }
-
-    public static IChessService getChessService() {
-        return instance.chessService;
     }
 }
