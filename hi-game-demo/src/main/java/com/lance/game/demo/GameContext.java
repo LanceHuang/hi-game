@@ -2,9 +2,7 @@ package com.lance.game.demo;
 
 import com.lance.game.demo.executor.ICommandExecutor;
 import com.lance.game.demo.module.chess.service.IChessService;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -16,10 +14,9 @@ import javax.annotation.Resource;
  * @author Lance
  */
 @Component
-public class GameContext implements ApplicationContextAware {
+public class GameContext {
 
-    private static GameContext instance;
-
+    @Resource
     private ApplicationContext applicationContext;
 
     @Resource
@@ -28,14 +25,11 @@ public class GameContext implements ApplicationContextAware {
     @Resource
     private IChessService chessService;
 
+    private static GameContext instance;
+
     @PostConstruct
     public void init() {
         instance = this;
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
     }
 
     public static <T> T getBean(Class<T> clazz) {
