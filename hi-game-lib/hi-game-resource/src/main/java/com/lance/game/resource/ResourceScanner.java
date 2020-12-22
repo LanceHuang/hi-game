@@ -32,7 +32,7 @@ public class ResourceScanner {
         for (Class<?> resourceClass : scanResult) {
             String resourcePath = resolveResourcePath(resourceClass);
             ResourceDefinition definition = new ResourceDefinition(resourceClass, resourcePath);
-            context.addDefinition(definition);
+            context.registerStorage(definition);
         }
     }
 
@@ -43,7 +43,7 @@ public class ResourceScanner {
      */
     private String resolveResourcePath(Class<?> resourceClass) {
         // resource/ItemResource.xlsx
-        return properties.getResourcePath() + resourceClass.getSimpleName() + "." + properties.getSuffix();
+        return properties.getResourcePath() + resourceClass.getSimpleName() + properties.getSuffix();
     }
 
     public void setContext(ResourceContext context) {

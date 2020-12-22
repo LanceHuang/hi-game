@@ -18,21 +18,21 @@ public class ResourceContext {
     private final Map<String, Class<?>> simpleNameMap = new HashMap<>();
 
     /**
-     * 添加定义
+     * 注册资源存储器
      */
-    public void addDefinition(ResourceDefinition definition) {
+    public void registerStorage(ResourceDefinition definition) {
         ResourceStorage<?, ?> resourceStorage = new ResourceStorage<>(definition);
         resourceStorage.init();
-        registerStorage(definition.getClazz(), resourceStorage);
+        addStorage(definition.getClazz(), resourceStorage);
     }
 
     /**
-     * 注册资源存储器
+     * 添加资源存储器
      *
      * @param clazz   资源类
      * @param storage 资源存储器
      */
-    public void registerStorage(Class<?> clazz, ResourceStorage<?, ?> storage) {
+    private void addStorage(Class<?> clazz, ResourceStorage<?, ?> storage) {
         this.storageMap.put(clazz, storage);
         this.simpleNameMap.put(clazz.getSimpleName(), clazz);
     }
