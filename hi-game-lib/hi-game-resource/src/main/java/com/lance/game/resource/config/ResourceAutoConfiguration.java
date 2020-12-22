@@ -1,5 +1,6 @@
 package com.lance.game.resource.config;
 
+import com.lance.game.resource.ResourceInjectProcessor;
 import com.lance.game.resource.ResourceScanner;
 import com.lance.game.resource.ResourceContext;
 import org.springframework.context.annotation.Bean;
@@ -27,5 +28,10 @@ public class ResourceAutoConfiguration {
         resourceScanner.setProperties(properties);
         resourceScanner.scan();
         return resourceContext;
+    }
+
+    @Bean
+    public ResourceInjectProcessor resourceInjectProcessor() {
+        return new ResourceInjectProcessor();
     }
 }
