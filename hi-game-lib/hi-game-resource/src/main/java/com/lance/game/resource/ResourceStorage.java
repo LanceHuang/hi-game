@@ -12,16 +12,16 @@ import java.util.Map;
  * @author Lance
  * @since 2020/12/2
  */
-public class GameResourceStorage<K, V> {
+public class ResourceStorage<K, V> {
 
     /** 资源定义 */
-    private GameResourceDefinition gameResourceDefinition;
+    private ResourceDefinition resourceDefinition;
 
     /** 资源集合 */
     private Map<K, V> data;
 
-    public GameResourceStorage(GameResourceDefinition gameResourceDefinition) {
-        this.gameResourceDefinition = gameResourceDefinition;
+    public ResourceStorage(ResourceDefinition resourceDefinition) {
+        this.resourceDefinition = resourceDefinition;
     }
 
     /**

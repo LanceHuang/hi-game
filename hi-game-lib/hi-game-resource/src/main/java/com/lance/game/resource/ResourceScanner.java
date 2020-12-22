@@ -8,12 +8,12 @@ import java.lang.reflect.Modifier;
 import java.util.Collection;
 
 /**
- * 资源扫描器
+ * 资源扫描
  *
  * @author Lance
  * @since 2020/12/3
  */
-public class GameResourceScanner {
+public class ResourceScanner {
 
     /** 资源配置路径 */
     private static final String resourcePath = "resource/";
@@ -36,11 +36,11 @@ public class GameResourceScanner {
                 && clazz.isAnnotationPresent(GameResource.class));
 
         // 注册
-        GameResourceStorageManager gameResourceStorageManager = applicationContext.getBean(GameResourceStorageManager.class);
+        ResourceStorageManager resourceStorageManager = applicationContext.getBean(ResourceStorageManager.class);
         for (Class<?> resourceClass : scanResult) {
             String resourcePath = resolveResourcePath(resourceClass);
-            GameResourceDefinition definition = new GameResourceDefinition(resourceClass, resourcePath);
-            gameResourceStorageManager.addDefinition(definition);
+            ResourceDefinition definition = new ResourceDefinition(resourceClass, resourcePath);
+            resourceStorageManager.addDefinition(definition);
         }
     }
 

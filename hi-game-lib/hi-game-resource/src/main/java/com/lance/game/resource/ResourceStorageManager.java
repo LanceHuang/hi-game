@@ -9,10 +9,10 @@ import java.util.Map;
  * @author Lance
  * @since 2020/12/3
  */
-public class GameResourceStorageManager {
+public class ResourceStorageManager {
 
     /** 资源存储器映射：com.lance.item.resource.ItemResource -> storage */
-    private final Map<Class<?>, GameResourceStorage<?, ?>> storageMap = new HashMap<>();
+    private final Map<Class<?>, ResourceStorage<?, ?>> storageMap = new HashMap<>();
 
     /** 资源简称映射：ItemResource -> com.lance.item.resource.ItemResource */
     private final Map<String, Class<?>> simpleNameMap = new HashMap<>();
@@ -20,10 +20,10 @@ public class GameResourceStorageManager {
     /**
      * 添加定义
      */
-    public void addDefinition(GameResourceDefinition definition) {
-        GameResourceStorage<?, ?> gameResourceStorage = new GameResourceStorage<>(definition);
-        gameResourceStorage.init();
-        registerStorage(definition.getClazz(), gameResourceStorage);
+    public void addDefinition(ResourceDefinition definition) {
+        ResourceStorage<?, ?> resourceStorage = new ResourceStorage<>(definition);
+        resourceStorage.init();
+        registerStorage(definition.getClazz(), resourceStorage);
     }
 
     /**
@@ -32,7 +32,7 @@ public class GameResourceStorageManager {
      * @param clazz   资源类
      * @param storage 资源存储器
      */
-    public void registerStorage(Class<?> clazz, GameResourceStorage<?, ?> storage) {
+    public void registerStorage(Class<?> clazz, ResourceStorage<?, ?> storage) {
         this.storageMap.put(clazz, storage);
         this.simpleNameMap.put(clazz.getSimpleName(), clazz);
     }
@@ -42,7 +42,7 @@ public class GameResourceStorageManager {
      *
      * @param clazz 资源类
      */
-    public GameResourceStorage<?, ?> getStorage(Class<?> clazz) {
+    public ResourceStorage<?, ?> getStorage(Class<?> clazz) {
         return this.storageMap.get(clazz);
     }
 

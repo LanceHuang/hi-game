@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 游戏资源注入
+ * 资源注入
  *
  * @author Lance
  * @since 2020/12/3

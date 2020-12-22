@@ -14,7 +14,7 @@ import org.springframework.context.ApplicationContextAware;
  * @author Lance
  * @since 2020/12/3
  */
-public class GameResourceProcessor implements ApplicationContextAware, InitializingBean, BeanFactoryPostProcessor {
+public class ResourceProcessor implements ApplicationContextAware, InitializingBean, BeanFactoryPostProcessor {
 
     private ApplicationContext applicationContext;
 
@@ -36,11 +36,11 @@ public class GameResourceProcessor implements ApplicationContextAware, Initializ
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        GameResourceScanner gameResourceScanner = new GameResourceScanner();
-        gameResourceScanner.setApplicationContext(applicationContext);
-        gameResourceScanner.setBasePackage(basePackage);
-        gameResourceScanner.setSuffix(suffix);
-        gameResourceScanner.scan();
+        ResourceScanner resourceScanner = new ResourceScanner();
+        resourceScanner.setApplicationContext(applicationContext);
+        resourceScanner.setBasePackage(basePackage);
+        resourceScanner.setSuffix(suffix);
+        resourceScanner.scan();
     }
 
     @Override

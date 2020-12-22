@@ -6,7 +6,7 @@ package com.lance.game.resource;
  * @author Lance
  * @since 2020/12/3
  */
-public class GameResourceDefinition {
+public class ResourceDefinition {
 
     /** 资源类 */
     private Class<?> clazz;
@@ -14,7 +14,7 @@ public class GameResourceDefinition {
     /** 资源路径 */
     private String path;
 
-    public GameResourceDefinition(Class<?> clazz, String path) {
+    public ResourceDefinition(Class<?> clazz, String path) {
         this.clazz = clazz;
         this.path = path;
     }
