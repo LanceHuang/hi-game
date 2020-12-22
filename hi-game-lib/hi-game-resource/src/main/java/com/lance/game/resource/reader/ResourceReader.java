@@ -11,11 +11,6 @@ import java.util.Iterator;
 public interface ResourceReader {
 
     /**
-     * 资源类型
-     */
-    String getType();
-
-    /**
      * 读取配置资源
      *
      * @param path  资源路径

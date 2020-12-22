@@ -1,5 +1,8 @@
 package com.lance.game.resource;
 
+import com.lance.game.resource.reader.AbstractResourceReader;
+import com.lance.game.resource.reader.ResourceReader;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -28,6 +31,9 @@ public class ResourceStorage<K, V> {
      * 热更资源
      */
     public void reload() {
+        ResourceReader resourceReader = AbstractResourceReader.getResourceReader(resourceDefinition.getType());
+//        resourceReader
+
         // todo 读取配置，生成新data
         // todo 直接覆盖原data
 
