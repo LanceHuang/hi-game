@@ -15,13 +15,13 @@ import java.util.Collection;
  */
 public class ResourceScanner {
 
-    /** 资源配置路径 */
-    private static final String resourcePath = "resource/";
-
     private ApplicationContext applicationContext;
 
-    /** 扫描路径 */
+    /** 资源包 */
     private String basePackage;
+
+    /** 资源配置路径 */
+    private String resourcePath;
 
     /** 资源文件后缀 */
     private String suffix;
@@ -60,6 +60,10 @@ public class ResourceScanner {
 
     public void setBasePackage(String basePackage) {
         this.basePackage = basePackage;
+    }
+
+    public void setResourcePath(String resourcePath) {
+        this.resourcePath = resourcePath;
     }
 
     public void setSuffix(String suffix) {
