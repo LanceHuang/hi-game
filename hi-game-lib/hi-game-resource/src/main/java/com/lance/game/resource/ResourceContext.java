@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 资源存储管理
+ * 资源上下文
  *
  * @author Lance
  * @since 2020/12/3
  */
-public class ResourceStorageManager {
+public class ResourceContext {
 
     /** 资源存储器映射：com.lance.item.resource.ItemResource -> storage */
     private final Map<Class<?>, ResourceStorage<?, ?>> storageMap = new HashMap<>();

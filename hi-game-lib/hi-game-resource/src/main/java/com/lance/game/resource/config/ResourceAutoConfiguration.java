@@ -1,7 +1,7 @@
 package com.lance.game.resource.config;
 
-import com.lance.game.resource.ResourcePostProcessor;
-import com.lance.game.resource.ResourceStorageManager;
+import com.lance.game.resource.ResourceScanner;
+import com.lance.game.resource.ResourceContext;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -9,11 +9,6 @@ import org.springframework.context.annotation.Bean;
  * @since 2020/12/3
  */
 public class ResourceAutoConfiguration {
-
-    @Bean
-    public ResourceStorageManager resourceStorageManager() {
-        return new ResourceStorageManager();
-    }
 
     @Bean
     public ResourceProperties resourceProperties() {
@@ -25,11 +20,12 @@ public class ResourceAutoConfiguration {
     }
 
     @Bean
-    public ResourcePostProcessor resourceProcessor(ResourceProperties properties) {
-        ResourcePostProcessor processor = new ResourcePostProcessor();
-        processor.setBasePackage(properties.getBasePackage());
-        processor.setResourcePath(properties.getResourcePath());
-        processor.setSuffix(properties.getSuffix());
-        return processor;
+    public ResourceContext resourceScanner(ResourceProperties properties) {
+        ResourceContext resourceContext = new ResourceContext();
+        ResourceScanner resourceScanner = new ResourceScanner();
+        resourceScanner.setContext(resourceContext);
+        resourceScanner.setProperties(properties);
+        resourceScanner.scan();
+        return resourceContext;
     }
 }
