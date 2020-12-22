@@ -8,11 +8,14 @@ package com.lance.game.resource.config;
  */
 public class ResourceProperties {
 
-    /** 资源包 */
+    /** 资源类路径 */
     private String basePackage;
 
     /** 资源配置路径 */
     private String resourcePath;
+
+    /** 资源解析类型 */
+    private String type;
 
     /** 资源文件后缀 */
     private String suffix;
@@ -31,6 +34,14 @@ public class ResourceProperties {
 
     public void setResourcePath(String resourcePath) {
         this.resourcePath = resourcePath;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getSuffix() {

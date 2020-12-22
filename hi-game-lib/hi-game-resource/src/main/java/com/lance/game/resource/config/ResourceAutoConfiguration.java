@@ -16,7 +16,7 @@ public class ResourceAutoConfiguration {
         ResourceProperties properties = new ResourceProperties();
         properties.setBasePackage("com.lance.game.resource"); // TODO 可以配成xx.propertis；如果用springboot，可以配成ConfigurationProperties
         properties.setResourcePath("/resource/");
-        properties.setSuffix(".xlsx");
+        properties.setSuffix("xlsx");
         return properties;
     }
 

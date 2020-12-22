@@ -25,9 +25,9 @@ public class ResourceStorage<K, V> {
     }
 
     /**
-     * 初始化资源
+     * 热更资源
      */
-    public void init() {
+    public void reload() {
         // todo 读取配置，生成新data
         // todo 直接覆盖原data
 

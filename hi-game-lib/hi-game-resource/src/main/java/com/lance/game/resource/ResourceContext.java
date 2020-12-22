@@ -22,7 +22,7 @@ public class ResourceContext {
      */
     public void registerStorage(ResourceDefinition definition) {
         ResourceStorage<?, ?> resourceStorage = new ResourceStorage<>(definition);
-        resourceStorage.init();
+        resourceStorage.reload();
         addStorage(definition.getClazz(), resourceStorage);
     }
 
@@ -52,16 +52,23 @@ public class ResourceContext {
      * @param clazz 资源类
      */
     public void reload(Class<?> clazz) {
-        this.storageMap.get(clazz).init();
+        ResourceStorage<?, ?> resourceStorage = this.storageMap.get(clazz);
+        if (resourceStorage == null) {
+            return;
+        }
+        resourceStorage.reload();
     }
 
     /**
      * 热更资源
      *
-     * @param className 资源类名
+     * @param className 资源类名简称，如：ItemResource
      */
     public void reload(String className) {
         Class<?> clazz = this.simpleNameMap.get(className);
-        this.storageMap.get(clazz).init();
+        if (clazz == null) {
+            return;
+        }
+        reload(clazz);
     }
 }

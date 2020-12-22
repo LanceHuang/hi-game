@@ -11,11 +11,15 @@ public class ResourceDefinition {
     /** 资源类 */
     private Class<?> clazz;
 
+    /** 资源解析类型 */
+    private String type;
+
     /** 资源路径 */
     private String path;
 
-    public ResourceDefinition(Class<?> clazz, String path) {
+    public ResourceDefinition(Class<?> clazz, String type, String path) {
         this.clazz = clazz;
+        this.type = type;
         this.path = path;
     }
 
@@ -25,6 +29,14 @@ public class ResourceDefinition {
 
     public void setClazz(Class<?> clazz) {
         this.clazz = clazz;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getPath() {
