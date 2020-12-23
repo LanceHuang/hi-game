@@ -11,12 +11,7 @@ import java.util.Iterator;
  * @since 2020/12/3
  */
 @Component
-public class XlsxResourceReader extends AbstractResourceReader {
-
-    @Override
-    public String getType() {
-        return "xlsx";
-    }
+public class XlsxResourceReader implements ResourceReader {
 
     @Override
     public <T> Iterator<T> read(String path, Class<T> clazz) {

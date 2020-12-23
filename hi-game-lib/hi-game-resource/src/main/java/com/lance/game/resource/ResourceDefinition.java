@@ -1,5 +1,7 @@
 package com.lance.game.resource;
 
+import com.lance.game.resource.reader.ResourceReader;
+
 /**
  * 资源定义
  *
@@ -11,15 +13,15 @@ public class ResourceDefinition {
     /** 资源类 */
     private Class<?> clazz;
 
-    /** 资源解析类型 */
-    private String type;
+    /** 资源解析类 */
+    private ResourceReader resourceReader;
 
     /** 资源路径 */
     private String path;
 
-    public ResourceDefinition(Class<?> clazz, String type, String path) {
+    public ResourceDefinition(Class<?> clazz, ResourceReader resourceReader, String path) {
         this.clazz = clazz;
-        this.type = type;
+        this.resourceReader = resourceReader;
         this.path = path;
     }
 
@@ -31,12 +33,12 @@ public class ResourceDefinition {
         this.clazz = clazz;
     }
 
-    public String getType() {
-        return type;
+    public ResourceReader getResourceReader() {
+        return resourceReader;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setResourceReader(ResourceReader resourceReader) {
+        this.resourceReader = resourceReader;
     }
 
     public String getPath() {

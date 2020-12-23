@@ -1,11 +1,7 @@
 package com.lance.game.resource.reader;
 
-import org.springframework.stereotype.Component;
-
 import java.io.BufferedReader;
 import java.io.Closeable;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
@@ -18,13 +14,7 @@ import java.util.List;
  * @author Lance
  * @since 2020/12/3
  */
-@Component
-public class JsonResourceReader extends AbstractResourceReader {
-
-    @Override
-    public String getType() {
-        return "json";
-    }
+public class JsonResourceReader implements ResourceReader {
 
     @Override
     public <T> Iterator<T> read(String path, Class<T> clazz) {

@@ -3,6 +3,7 @@ package com.lance.game.resource.config;
 import com.lance.game.resource.ResourceInjectProcessor;
 import com.lance.game.resource.ResourceScanner;
 import com.lance.game.resource.ResourceContext;
+import com.lance.game.resource.reader.XlsxResourceReader;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -16,6 +17,7 @@ public class ResourceAutoConfiguration {
         ResourceProperties properties = new ResourceProperties();
         properties.setBasePackage("com.lance.game.resource"); // TODO 可以配成xx.propertis；如果用springboot，可以配成ConfigurationProperties
         properties.setResourcePath("/resource/");
+        properties.setReader(XlsxResourceReader.class);
         properties.setSuffix("xlsx");
         return properties;
     }

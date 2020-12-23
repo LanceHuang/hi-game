@@ -1,5 +1,7 @@
 package com.lance.game.resource.config;
 
+import com.lance.game.resource.reader.ResourceReader;
+
 /**
  * 资源配置
  *
@@ -14,8 +16,8 @@ public class ResourceProperties {
     /** 资源配置路径 */
     private String resourcePath;
 
-    /** 资源解析类型 */
-    private String type;
+    /** 资源解析类 */
+    private Class<? extends ResourceReader> reader;
 
     /** 资源文件后缀 */
     private String suffix;
@@ -36,12 +38,12 @@ public class ResourceProperties {
         this.resourcePath = resourcePath;
     }
 
-    public String getType() {
-        return type;
+    public Class<? extends ResourceReader> getReader() {
+        return reader;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setReader(Class<? extends ResourceReader> reader) {
+        this.reader = reader;
     }
 
     public String getSuffix() {
