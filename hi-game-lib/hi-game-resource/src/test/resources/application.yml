@@ -1,0 +1,6 @@
+game:
+  resource:
+    basePackage: com.lance.game
+    resourcePath: /resource/
+    reader: com.lance.game.resource.reader.XlsxResourceReader
+    suffix: xlsx

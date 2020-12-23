@@ -1,6 +1,7 @@
 package com.lance.game.resource.config;
 
 import com.lance.game.resource.reader.ResourceReader;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 资源配置
@@ -8,6 +9,7 @@ import com.lance.game.resource.reader.ResourceReader;
  * @author Lance
  * @since 2020/12/22
  */
+@ConfigurationProperties("game.resource")
 public class ResourceProperties {
 
     /** 资源类路径 */

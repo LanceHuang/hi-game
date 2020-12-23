@@ -1,5 +1,6 @@
 package com.lance.game.resource;
 
+import com.lance.game.resource.annotation.EnableResource;
 import com.lance.game.resource.config.ResourceAutoConfiguration;
 import com.lance.game.resource.manager.ItemManager;
 import org.junit.Test;
@@ -18,7 +19,7 @@ import javax.annotation.Resource;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = ResourceTest.class)
 @ComponentScan("com.lance.game.resource")
-@Import(ResourceAutoConfiguration.class)
+@EnableResource
 public class ResourceTest {
 
     @Resource

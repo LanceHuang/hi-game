@@ -1,7 +1,5 @@
 package com.lance.game.resource.reader;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Iterator;
 
 /**
@@ -10,7 +8,6 @@ import java.util.Iterator;
  * @author Lance
  * @since 2020/12/3
  */
-@Component
 public class XlsxResourceReader implements ResourceReader {
 
     @Override
