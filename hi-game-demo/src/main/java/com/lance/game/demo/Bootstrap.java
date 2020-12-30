@@ -1,6 +1,8 @@
 package com.lance.game.demo;
 
 import com.lance.game.demo.log.LoggerUtil;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,32 +10,31 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-// TODO: 2020/2/24 可以换成SpringBoot方式
-
 /**
  * 引导工具
  *
  * @author Lance
  */
+@SpringBootApplication
 public class Bootstrap {
-
-    private static final String APPLICATION_CONTEXT_LOCATION = "application-context.xml";
-    private static final String ADMIN_CONTEXT_LOCATION = "admin-context.xml";
 
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Please provide command");
+            System.err.println("Bootstrap [command]");
             return;
         }
 
+        // todo 还没想好怎么起服、停服
         String cmd = args[0];
         if ("start".equals(cmd)) {
             new Bootstrap().start();
         } else if ("stop".equals(cmd)) {
             new Bootstrap().stop();
         } else {
-            System.err.println("Invalid command: " + cmd);
+            System.err.println("无效命令: " + cmd);
         }
+
+        SpringApplication.run(Bootstrap.class, args);
     }
 
     private int port = 8080;
