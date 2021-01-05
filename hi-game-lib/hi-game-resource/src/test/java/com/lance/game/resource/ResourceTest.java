@@ -3,7 +3,6 @@ package com.lance.game.resource;
 import com.lance.game.resource.annotation.EnableResource;
 import com.lance.game.resource.manager.ItemManager;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -12,8 +11,7 @@ import javax.annotation.Resource;
  * @author Lance
  * @since 2020/12/2
  */
-@SpringBootTest
-@SpringBootApplication
+@SpringBootTest(classes = ResourceTest.class)
 @EnableResource
 public class ResourceTest {
 
