@@ -1,11 +1,11 @@
 package com.lance.game.demo.module.world.config;
 
-import com.lance.game.demo.condition.ConditionUtils;
-import com.lance.game.demo.condition.ICondition;
-import com.lance.game.demo.consume.ConsumeUtils;
-import com.lance.game.demo.consume.IConsume;
-import com.lance.game.demo.condition.ConditionDef;
-import com.lance.game.demo.consume.ConsumeDef;
+import com.lance.game.demo.core.condition.ConditionUtils;
+import com.lance.game.demo.core.condition.ICondition;
+import com.lance.game.demo.core.consume.ConsumeUtils;
+import com.lance.game.demo.core.consume.IConsume;
+import com.lance.game.demo.core.condition.ConditionDef;
+import com.lance.game.demo.core.consume.ConsumeDef;
 import lombok.Getter;
 import lombok.Setter;
 

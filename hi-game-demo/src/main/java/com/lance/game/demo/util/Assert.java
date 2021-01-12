@@ -1,6 +1,6 @@
 package com.lance.game.demo.util;
 
-import com.lance.game.demo.exception.GameException;
+import com.lance.game.demo.core.exception.GameException;
 
 /**
  * 断言工具，用于校验与抛异常，提高代码可读性

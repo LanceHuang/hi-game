@@ -1,6 +1,6 @@
 package com.lance.game.demo.module.item.model;
 
-import com.lance.game.demo.exception.GameException;
+import com.lance.game.demo.core.exception.GameException;
 import com.lance.game.demo.module.player.model.Player;
 
 /**
