@@ -1,6 +1,6 @@
 package com.lance.game.demo.module.emulator;
 
-import com.lance.game.demo.module.attribute.AttributeType;
+import com.lance.game.demo.module.attribute.constant.AttributeType;
 import lombok.Getter;
 import lombok.Setter;
 

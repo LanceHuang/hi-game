@@ -1,17 +1,15 @@
 package com.lance.game.demo.module.attribute;
 
+import com.lance.game.demo.module.attribute.constant.AttributeType;
+import com.lance.game.demo.module.attribute.model.AttributeContainer;
+import com.lance.game.demo.module.attribute.model.AttributeId;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = AttributeContainerTest.class)
-@ComponentScan("com.lance.game.demo.module.attribute")
+@SpringBootTest(classes = AttributeContainerTest.class)
 public class AttributeContainerTest {
 
     @Test
@@ -28,12 +26,7 @@ public class AttributeContainerTest {
         equipAttributeMap.put(AttributeType.HP, 5000L);
 
         AttributeContainer attributeContainer = new AttributeContainer();
-        attributeContainer.putAttributes(ModuleAttributeId.TEST, testAttributeMap);
-        attributeContainer.putAttributes(ModuleAttributeId.EQUIP, equipAttributeMap);
-        attributeContainer.recompute();
-        attributeContainer.logAttributes();
-
-        attributeContainer.clear();
-        attributeContainer.logAttributes();
+        attributeContainer.putAndComputeAttributes(AttributeId.TEST, testAttributeMap);
+        attributeContainer.putAndComputeAttributes(AttributeId.EQUIP, equipAttributeMap);
     }
 }

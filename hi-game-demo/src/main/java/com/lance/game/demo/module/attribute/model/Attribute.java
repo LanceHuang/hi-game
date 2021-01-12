@@ -1,4 +1,6 @@
-package com.lance.game.demo.module.attribute;
+package com.lance.game.demo.module.attribute.model;
+
+import com.lance.game.demo.module.attribute.constant.AttributeType;
 
 /**
  * 属性：{"type":"ATK","value":300}

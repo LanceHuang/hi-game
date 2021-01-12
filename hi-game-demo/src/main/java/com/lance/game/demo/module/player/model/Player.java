@@ -1,6 +1,6 @@
 package com.lance.game.demo.module.player.model;
 
-import com.lance.game.demo.module.attribute.AttributeContainer;
+import com.lance.game.demo.module.attribute.model.AttributeContainer;
 import com.lance.game.demo.module.buff.model.BuffContainer;
 import com.lance.game.demo.module.skill.model.SkillContainer;
 import com.lance.game.demo.module.storage.model.ItemStorage;
