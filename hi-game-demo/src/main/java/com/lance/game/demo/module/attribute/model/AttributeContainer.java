@@ -25,9 +25,8 @@ public class AttributeContainer {
      * @param attributeMap 添加或更新的属性
      */
     public void putAndComputeAttributes(AttributeId attributeId, Map<AttributeType, Long> attributeMap) {
-        // todo
-
-        // todo 计算属性
+        putAttributes(attributeId, attributeMap);
+        compute(attributeId);
     }
 
     /**
@@ -37,6 +36,26 @@ public class AttributeContainer {
      * @param attributeMap 添加或更新的属性
      */
     public void putAttributes(AttributeId attributeId, Map<AttributeType, Long> attributeMap) {
+        if (attributeId == null) {
+            return;
+        }
+
+        Map<AttributeType, Long> oldAttributeMap = moduleAttributeMap.get(attributeId);
+        // todo 没有旧数据
+        // todo 有旧数据
+
+        // 统计RATIO和MODULE_RATIO
+    }
+
+    /**
+     * 计算属性
+     *
+     * @param attributeId 模块属性id
+     */
+    public void compute(AttributeId attributeId) {
+        if (attributeId == null) {
+            return;
+        }
         // todo
     }
 
@@ -44,7 +63,7 @@ public class AttributeContainer {
      * 计算属性
      */
     public void compute() {
-        // todo
+        moduleAttributeMap.keySet().forEach(this::compute);
     }
 
     public Map<AttributeId, Map<AttributeType, Long>> getModuleAttributeMap() {

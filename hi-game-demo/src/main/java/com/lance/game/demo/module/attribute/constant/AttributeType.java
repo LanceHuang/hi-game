@@ -42,6 +42,13 @@ public enum AttributeType {
     }
 
     /**
+     * 判断是否有更新操作
+     */
+    public boolean hasUpdate() {
+        return attributeUpdateType != null;
+    }
+
+    /**
      * 判断是否有属性效果
      */
     public boolean hasEffect() {
