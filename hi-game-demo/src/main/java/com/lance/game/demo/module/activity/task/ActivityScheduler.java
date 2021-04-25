@@ -1,7 +1,7 @@
 package com.lance.game.demo.module.activity.task;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.lance.game.demo.core.log.LoggerUtil;
-import com.lance.game.net.util.NamedThreadFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -30,7 +30,7 @@ public class ActivityScheduler {
     @PostConstruct
     public void init() {
         LoggerUtil.debug("初始化活动调度器");
-        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("Activity"));
+        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder().setNameFormat("activity").build());
     }
 
     /**

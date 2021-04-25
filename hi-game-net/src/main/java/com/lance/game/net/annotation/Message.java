@@ -6,16 +6,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 通讯协议
+ * 消息注解
  *
  * @author Lance
+ * @since 2021/4/9
  */
-@Target({ElementType.TYPE})
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Protocol {
+public @interface Message {
 
     /**
-     * 协议号
+     * 消息id
      */
     int value();
 }

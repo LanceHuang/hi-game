@@ -10,16 +10,12 @@
     </parent>
     <artifactId>hi-game-net</artifactId>
 
-    <properties>
-        <netty.version>4.1.42.Final</netty.version>
-    </properties>
-
     <dependencies>
         <!-- project -->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>${netty.version}</version>
+            <version>4.1.42.Final</version>
         </dependency>
     </dependencies>
 
