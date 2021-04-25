@@ -12,7 +12,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>hi-game-event</module>
         <module>hi-game-resource</module>
     </modules>
 </project>
