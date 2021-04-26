@@ -39,4 +39,8 @@ public class CodecRegistry {
         }
         return codec;
     }
+
+    public static Codec getDefaultCodec() {
+        return DEFAULT_CODEC;
+    }
 }

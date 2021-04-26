@@ -14,6 +14,10 @@ public abstract class Codec {
         return CodecRegistry.getCodec(clazz);
     }
 
+    public static Codec getDefaultCodec() {
+        return CodecRegistry.getDefaultCodec();
+    }
+
     /**
      * 编码
      *

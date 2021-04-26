@@ -14,13 +14,12 @@ import java.lang.reflect.Parameter;
  * @author Lance
  * @since 2021/4/25
  */
-public class MessageProcessor implements BeanPostProcessor {
+public class MessagePostProcessor implements BeanPostProcessor {
 
     @Autowired
     private MessageManager messageManager;
 
-    @Autowired
-    private MessageErrorHandler messageErrorHandler;
+    private MessageErrorHandler messageErrorHandler = new DefaultMessageErrorHandler(); // todo
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {

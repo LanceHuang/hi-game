@@ -1,5 +1,6 @@
 package com.lance.game.net.handler;
 
+import com.lance.game.net.codec.Codec;
 import com.lance.game.net.util.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -21,7 +22,8 @@ public class MessageEncoder extends MessageToByteEncoder<Object> {
 
         // 写入数据
         int startWriterIndex = out.writerIndex();
-        // todo
+        Codec codec = Codec.getDefaultCodec();
+        codec.encode(out, msg);
         int endWriterIndex = out.writerIndex();
 
         // 写入长度

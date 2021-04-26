@@ -1,6 +1,7 @@
 package com.lance.game.net.config;
 
-import com.lance.game.net.MessageProcessor;
+import com.lance.game.net.MessageManager;
+import com.lance.game.net.MessagePostProcessor;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -10,7 +11,12 @@ import org.springframework.context.annotation.Bean;
 public class MessageConfiguration {
 
     @Bean
-    public MessageProcessor messageProcessor() {
-        return new MessageProcessor();
+    private MessageManager messageManager() {
+        return new MessageManager();
+    }
+
+    @Bean
+    public MessagePostProcessor messagePostProcessor() {
+        return new MessagePostProcessor();
     }
 }
