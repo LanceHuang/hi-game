@@ -2,7 +2,7 @@ package com.lance.game.net.util;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ByteBufUtilsTest {
 

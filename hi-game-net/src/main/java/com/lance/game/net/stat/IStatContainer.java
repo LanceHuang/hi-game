@@ -1,4 +1,4 @@
-package com.lance.game.net.executor;
+package com.lance.game.net.stat;
 
 /**
  * 统计数据容器（便于以后开发优化）

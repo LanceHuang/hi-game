@@ -8,21 +8,21 @@ ClientB -----------> |   net      |         | dispatcher |
                      |            |         +------------+
 ClientC -----------> +------------+ <--------------------------- AnyWhere
 ```
-* net：只接收和响应协议，其中协议解析有专门的handler
+* net：只接收和响应消息，其中消息解析有专门的handler
 * dispatcher：按玩家账号取模，可以保证玩家操作的并发安全；按地图块id取模，可以保证地图块内并发安全
 * XXController：类似于SpringMVC的Controller
-* AnyWhere：提供一个工具类，可以从任何地方回传协议（活动Handler、广播Service、业务Service）
+* AnyWhere：提供一个工具类，可以从任何地方回传消息（活动Handler、广播Service、业务Service）
 
 ### 设计思路
 1. 连接时，用Session记录连接信息
 2. 玩家登录时，将玩家信息记录到Session上
 3. 响应时，获取Session，并响应请求
-4. 请求/响应都用“协议”，协议属于实体类，有协议号
+4. 请求/响应都用“消息”，消息属于实体类，有消息号
 
 **第一阶段**：用Session存储信息，并存储至Context，每次读写都从Session中获取Socket/SocketChannel  
 
 
 ### 需要解决的问题
-1. 怎么保证玩家在同一条线程？上面dispatcher能保证同一玩家的协议在同一线程，但不能保证响应也在同一线程
+1. 怎么保证玩家在同一条线程？上面dispatcher能保证同一玩家的消息在同一线程，但不能保证响应也在同一线程
 2. 如何关闭服务器？要保证能完成当前读写的内容，要能将缓存数据都回写到数据库
 3. 半包问题
