@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 消息注解
+ * 消息
  *
  * @author Lance
  * @since 2021/4/9

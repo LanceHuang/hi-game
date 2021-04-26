@@ -17,15 +17,15 @@ public class CodecRegistry {
 
     private static final Map<Class<?>, Codec> CODEC_MAP = new HashMap<>();
 
-    private static final Codec DEFAULT_CODEC = new com.lance.lim.net.codec.ObjectCodec();
+    private static final Codec DEFAULT_CODEC = new ObjectCodec();
 
     static {
         CODEC_MAP.put(int.class, new IntCodec());
         CODEC_MAP.put(Integer.class, new IntCodec());
 
-        CODEC_MAP.put(Collection.class, new com.lance.lim.net.codec.CollectionCodec());
-        CODEC_MAP.put(List.class, new com.lance.lim.net.codec.CollectionCodec());
-        CODEC_MAP.put(Set.class, new com.lance.lim.net.codec.CollectionCodec());
+        CODEC_MAP.put(Collection.class, new CollectionCodec());
+        CODEC_MAP.put(List.class, new CollectionCodec());
+        CODEC_MAP.put(Set.class, new CollectionCodec());
 
         CODEC_MAP.put(Map.class, new MapCodec());
         CODEC_MAP.put(HashMap.class, new MapCodec());

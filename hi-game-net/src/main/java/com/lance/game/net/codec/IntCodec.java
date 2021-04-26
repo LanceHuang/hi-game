@@ -1,6 +1,6 @@
 package com.lance.game.net.codec;
 
-import com.lance.lim.net.util.ByteBufUtils;
+import com.lance.game.net.util.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 
 /**

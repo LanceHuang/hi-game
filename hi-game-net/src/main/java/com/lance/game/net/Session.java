@@ -32,11 +32,30 @@ public class Session {
 
     // TODO Channel？
 
-    public Object getAttribute(String name) {
-        return this.attributes.get(name);
+    /**
+     * 获取属性
+     *
+     * @param key 键
+     * @return 值
+     */
+    public Object getAttribute(String key) {
+        return this.attributes.get(key);
     }
 
-    public void putAttribute(String name, String value) {
-        this.attributes.put(name, value);
+    /**
+     * 设置属性
+     *
+     * @param key   键
+     * @param value 值
+     */
+    public void setAttribute(String key, String value) {
+        this.attributes.put(key, value);
+    }
+
+    /**
+     * 发送消息
+     */
+    public void send(Object msg) {
+        // todo
     }
 }
