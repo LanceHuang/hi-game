@@ -5,21 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.lance.game</groupId>
-        <artifactId>hi-game</artifactId>
+        <artifactId>hi-game-orm</artifactId>
         <version>${revision}</version>
     </parent>
     <artifactId>hi-game-mongodb</artifactId>
-
-    <properties>
-        <mongo.version>3.12.3</mongo.version>
-    </properties>
 
     <dependencies>
         <!-- project -->
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
-            <version>${mongo.version}</version>
+            <version>3.12.3</version>
         </dependency>
 
         <dependency>

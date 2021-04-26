@@ -7,9 +7,11 @@
 hi-game
     hi-game-demo 演示项目
     hi-game-net 网络层
-    hi-game-mongodb 持久层
-    hi-game-lib
-        hi-game-event 事件框架
+        hi-game-net-base
+        hi-game-net-tcp tcp实现
+    hi-game-orm 持久层
+        hi-game-mongodb mongodb实现
+    hi-game-resource 配置读取
     hi-game-lab 实验性内容
 ```
 

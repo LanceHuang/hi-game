@@ -10,10 +10,10 @@
 
     <modules>
         <module>hi-game-net</module>
+        <module>hi-game-orm</module>
+        <module>hi-game-resource</module>
         <module>hi-game-demo</module>
-        <module>hi-game-mongodb</module>
         <module>hi-game-lab</module>
-        <module>hi-game-lib</module>
     </modules>
 
     <properties>

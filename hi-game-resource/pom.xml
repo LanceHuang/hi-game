@@ -8,12 +8,6 @@
         <artifactId>hi-game</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>hi-game-net</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>hi-game-net-base</module>
-        <module>hi-game-net-tcp</module>
-    </modules>
+    <artifactId>hi-game-resource</artifactId>
 
 </project>
