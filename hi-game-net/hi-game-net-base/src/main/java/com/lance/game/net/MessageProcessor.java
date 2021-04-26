@@ -22,7 +22,7 @@ public class MessageProcessor implements BeanPostProcessor {
     }
 
     private void process(Object bean, String beanName, Method method) {
-        if (method.isAnnotationPresent(MessageListener.class)) {
+        if (!method.isAnnotationPresent(MessageListener.class)) {
             return;
         }
 

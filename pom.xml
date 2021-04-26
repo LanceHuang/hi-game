@@ -14,6 +14,7 @@
         <module>hi-game-resource</module>
         <module>hi-game-demo</module>
         <module>hi-game-lab</module>
+        <module>hi-game-common</module>
     </modules>
 
     <properties>

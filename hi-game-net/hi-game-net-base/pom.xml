@@ -4,13 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>hi-game-net</artifactId>
         <groupId>com.lance.game</groupId>
+        <artifactId>hi-game-net</artifactId>
         <version>${revision}</version>
     </parent>
     <artifactId>hi-game-net-base</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>com.lance.game</groupId>
+            <artifactId>hi-game-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
         <!-- project -->
         <dependency>
             <groupId>io.netty</groupId>

@@ -10,8 +10,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Getter
 @Setter
-@ConfigurationProperties("game.message")
-public class MessageProperties {
+@ConfigurationProperties("game.message.tcp")
+public class TcpMessageProperties {
 
     /** 监听端口 */
     private int port;

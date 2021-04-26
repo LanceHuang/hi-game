@@ -1,7 +1,7 @@
 package com.lance.game.net;
 
-import com.lance.game.net.config.EnableMessage;
-import com.lance.game.net.config.MessageProperties;
+import com.lance.game.net.config.EnableTcpMessage;
+import com.lance.game.net.config.TcpMessageProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,13 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * @author Lance
- * @since 2021/4/25
+ * @since 2021/4/26
  */
-@SpringBootTest(classes = MessageTest.Config.class)
-public class MessageTest {
+@SpringBootTest(classes = TcpMessageTest.Config.class)
+public class TcpMessageTest {
 
     @Autowired
-    private MessageProperties properties;
+    private TcpMessageProperties properties;
 
     @Test
     public void test() {
@@ -23,7 +23,7 @@ public class MessageTest {
     }
 
     @SpringBootApplication
-    @EnableMessage
+    @EnableTcpMessage
     public static class Config {
     }
 }
