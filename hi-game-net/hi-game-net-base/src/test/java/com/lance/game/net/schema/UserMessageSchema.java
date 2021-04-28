@@ -12,6 +12,11 @@ import java.io.IOException;
 public class UserMessageSchema extends MessageSchema {
 
     @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
     public int getSerializedSize(Object obj) {
         User bean = (User) obj;
 

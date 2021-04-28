@@ -14,6 +14,13 @@ import java.io.IOException;
 public abstract class MessageSchema {
 
     /**
+     * 获取消息id
+     *
+     * @return 消息id
+     */
+    public abstract int getId();
+
+    /**
      * 计算消息序列化大小
      *
      * @param obj 消息对象

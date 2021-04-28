@@ -2,7 +2,6 @@ package com.lance.game.net.schema;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -12,7 +11,7 @@ import java.util.Arrays;
 public class MessageSchemaUtilsTest {
 
     @Test
-    public void test() throws IOException {
+    public void test() throws Exception {
         User user = new User();
         user.setUsername("Lance");
         user.setPassword("123456");

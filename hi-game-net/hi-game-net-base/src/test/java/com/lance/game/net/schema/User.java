@@ -1,5 +1,6 @@
 package com.lance.game.net.schema;
 
+import com.lance.game.net.annotation.Message;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,6 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Message(1025)
 public class User {
 
     private String username;

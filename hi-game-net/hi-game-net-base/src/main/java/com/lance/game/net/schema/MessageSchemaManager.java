@@ -35,6 +35,12 @@ public class MessageSchemaManager {
      * @return schema
      */
     public MessageSchema createSchema(Class<?> clazz) {
-        return MessageSchemaUtils.enhance(clazz);
+        try {
+            return MessageSchemaUtils.enhance(clazz);
+        } catch (Exception e) {
+            // todo
+            e.printStackTrace();
+        }
+        return null;
     }
 }
