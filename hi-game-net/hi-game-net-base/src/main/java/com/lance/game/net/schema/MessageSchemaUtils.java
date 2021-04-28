@@ -44,10 +44,19 @@ public class MessageSchemaUtils {
         CtMethod getIdMethod = new CtMethod(
                 classPool.get(int.class.getName()),
                 "getId",
-                classPool.get(new String[]{Object.class.getName()}),
+                new CtClass[0],
                 enhanceClass);
         getIdMethod.setBody("{ return " + messageId + "; }");
+        enhanceClass.addMethod(getIdMethod);
 
+        // getSerializedSize
+        CtMethod getSerializedSizeMethod = new CtMethod(
+                classPool.get(int.class.getName()),
+                "getSerializedSize",
+                classPool.get(new String[]{Object.class.getName()}),
+                enhanceClass);
+        getSerializedSizeMethod.setBody("{ return " + messageId + "; }");
+        enhanceClass.addMethod(getSerializedSizeMethod);
 
         // 创建schema对象
         Class<?> resultClass = enhanceClass.toClass();
