@@ -51,7 +51,7 @@ public class MessagePostProcessor implements BeanPostProcessor {
         if (messageDefinition == null) {
 
         }
-        if (  messageDefinition.getHandler() != null) {
+        if (messageDefinition.getHandler() != null) {
 
         }
 

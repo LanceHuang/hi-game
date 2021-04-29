@@ -2,6 +2,7 @@ package com.lance.game.net.config;
 
 import com.lance.game.net.message.MessageDefinition;
 import com.lance.game.net.message.MessageManager;
+import com.lance.game.net.message.EnableMessage;
 import com.lance.game.net.schema.MessageSchema;
 import com.lance.game.net.schema.User;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ public class MessageConfigurationTest {
     }
 
     @SpringBootApplication
-    @Import(MessageConfiguration.class)
+    @EnableMessage
     public static class Config {
     }
 }

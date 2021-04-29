@@ -2,6 +2,7 @@ package com.lance.game.net.config;
 
 import com.lance.game.net.annotation.Message;
 import com.lance.game.net.message.MessageManager;
+import com.lance.game.net.message.MessagePath;
 import com.lance.game.net.message.MessagePostProcessor;
 import com.lance.game.net.message.MessageScanner;
 import org.springframework.context.annotation.Bean;
@@ -20,10 +21,10 @@ import org.springframework.context.annotation.Bean;
 public class MessageConfiguration {
 
     @Bean
-    private MessageManager messageManager() {
+    private MessageManager messageManager(MessagePath messagePath) {
         MessageManager messageManager = new MessageManager();
         MessageScanner messageScanner = new MessageScanner(messageManager);
-        messageScanner.scan(Message.class);
+        messageScanner.scan(messagePath.getBasePackages(), Message.class);
         return messageManager;
     }
 

@@ -17,9 +17,10 @@ public class MessageScanner {
     /**
      * 扫描消息类
      *
-     * @param annotation 消息注解
+     * @param basePackages 扫描包
+     * @param annotation   消息注解
      */
-    public void scan(Class<?> annotation) {
+    public void scan(String[] basePackages, Class<?> annotation) {
         // todo
     }
 }
