@@ -21,6 +21,12 @@ ClientC -----------> +------------+ <--------------------------- AnyWhere
 
 **第一阶段**：用Session存储信息，并存储至Context，每次读写都从Session中获取Socket/SocketChannel  
 
+### 设计要求
+* 提前计算占用空间，减少ByteBuf扩容，减少拷贝
+* 通过getter/setter获取数据，减少反射调用
+* 支持运行时，根据消息id解析数据
+* int、long需要做压缩
+
 ### 消息定义
 * 服务端需要支持抽象成员变量，如：Map，AbstractItem
 * 客户端可以根据传输的消息id，运行时选择不同的类型读取

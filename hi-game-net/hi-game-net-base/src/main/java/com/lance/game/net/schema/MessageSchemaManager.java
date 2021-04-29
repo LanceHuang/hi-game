@@ -1,5 +1,7 @@
 package com.lance.game.net.schema;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -9,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Lance
  * @since 2021/4/28
  */
+@Slf4j
 public class MessageSchemaManager {
 
     /** 消息类 -> schema */
@@ -38,8 +41,7 @@ public class MessageSchemaManager {
         try {
             return MessageSchemaUtils.enhance(clazz);
         } catch (Exception e) {
-            // todo
-            e.printStackTrace();
+            log.error("Failed to create schema: {}", clazz.getName(), e);
         }
         return null;
     }
