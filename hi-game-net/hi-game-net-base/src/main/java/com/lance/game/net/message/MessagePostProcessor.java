@@ -3,10 +3,8 @@ package com.lance.game.net.message;
 import com.lance.game.net.DefaultMessageErrorHandler;
 import com.lance.game.net.MessageErrorHandler;
 import com.lance.game.net.Session;
-import com.lance.game.net.annotation.Message;
 import com.lance.game.net.annotation.MessageHandler;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.util.ReflectionUtils;
 
@@ -18,9 +16,6 @@ import java.lang.reflect.Parameter;
  * @since 2021/4/25
  */
 public class MessagePostProcessor implements BeanPostProcessor {
-
-    @Autowired
-    private MessageManager messageManager;
 
     private MessageErrorHandler messageErrorHandler = new DefaultMessageErrorHandler(); // todo
 
@@ -47,12 +42,12 @@ public class MessagePostProcessor implements BeanPostProcessor {
         }
 
         // 注册消息处理
-        MessageDefinition messageDefinition = messageManager.getMessageDefinition(messageClass);
+        MessageDefinition messageDefinition = MessageManager.getInstance().getMessageDefinition(messageClass);
         if (messageDefinition == null) {
-
+            throw new IllegalArgumentException("Unhandled argument type: " + bean.getClass().getSimpleName() + "#" + method.getName());
         }
         if (messageDefinition.getHandler() != null) {
-
+            throw new IllegalArgumentException("Repeat processing type: " + bean.getClass().getSimpleName() + "#" + method.getName());
         }
 
         messageDefinition.setHandler(new MessageMethodHandler(bean, method, messageErrorHandler));

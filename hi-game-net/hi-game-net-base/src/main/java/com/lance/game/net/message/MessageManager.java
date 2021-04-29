@@ -18,6 +18,16 @@ public class MessageManager {
     /** 消息类 -> 消息定义 */
     private final Map<Class<?>, MessageDefinition> classToDefinitions = new HashMap<>();
 
+    private static MessageManager instance;
+
+    public MessageManager() {
+        instance = this;
+    }
+
+    public static MessageManager getInstance() {
+        return instance;
+    }
+
     /**
      * 注册消息
      *

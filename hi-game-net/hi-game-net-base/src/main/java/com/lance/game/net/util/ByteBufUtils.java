@@ -27,6 +27,10 @@ public class ByteBufUtils {
         buffer.writeByte(value);
     }
 
+    public static void writeBytes(ByteBuf buffer, byte[] value) {
+        buffer.writeBytes(value);
+    }
+
     public static void writeShort(ByteBuf buffer, short value) {
         buffer.writeShort(value);
     }
