@@ -1,4 +1,7 @@
-package com.lance.game.net;
+package com.lance.game.net.message;
+
+import com.lance.game.net.annotation.Message;
+import com.lance.game.net.schema.MessageSchemaUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +21,23 @@ public class MessageManager {
     /**
      * 注册消息
      *
+     * @param messageClass 消息类
+     */
+    public void registerMessage(Class<?> messageClass) {
+        Message messageAnnotation = messageClass.getAnnotation(Message.class);
+        MessageDefinition messageDefinition = new MessageDefinition();
+        messageDefinition.setId(messageAnnotation.value());
+        messageDefinition.setClazz(messageClass);
+        messageDefinition.setSchema(MessageSchemaUtils.enhance(messageClass, messageAnnotation.value()));
+        registerMessage(messageDefinition);
+    }
+
+    /**
+     * 注册消息
+     *
      * @param definition 消息定义
      */
-    public void registerMessage(MessageDefinition definition) {
+    private void registerMessage(MessageDefinition definition) {
         if (this.id2Definitions.putIfAbsent(definition.getId(), definition) != null) {
             throw new IllegalArgumentException("Duplicate message id: " + definition.getId());
         }
@@ -49,4 +66,5 @@ public class MessageManager {
     public MessageDefinition getMessageDefinition(Class<?> clazz) {
         return this.classToDefinitions.get(clazz);
     }
+
 }

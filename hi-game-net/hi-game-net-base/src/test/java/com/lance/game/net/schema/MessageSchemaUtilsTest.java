@@ -1,5 +1,6 @@
 package com.lance.game.net.schema;
 
+import com.lance.game.net.annotation.Message;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -17,7 +18,8 @@ public class MessageSchemaUtilsTest {
         user.setPassword("123456");
         user.setLevel(128);
 
-        MessageSchema userSchema = MessageSchemaUtils.enhance(user.getClass());
+        Message messageAnnotation = User.class.getAnnotation(Message.class);
+        MessageSchema userSchema = MessageSchemaUtils.enhance(user.getClass(), messageAnnotation.value());
         byte[] data = userSchema.serialize(user);
         System.out.println(Arrays.toString(data));
 

@@ -2,10 +2,10 @@ package com.lance.game.net.schema;
 
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
-import com.lance.game.net.annotation.Message;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -17,6 +17,7 @@ import java.lang.reflect.Modifier;
  * @author Lance
  * @since 2021/4/28
  */
+@Slf4j
 public class MessageSchemaUtils {
 
     private static final ClassPool classPool = ClassPool.getDefault();
@@ -27,32 +28,29 @@ public class MessageSchemaUtils {
      * @param clazz 消息类
      * @return schema
      */
-    public static MessageSchema enhance(Class<?> clazz) throws Exception {
+    public static MessageSchema enhance(Class<?> clazz, int messageId) {
         if (clazz == null || clazz.isInterface() || Modifier.isAbstract(clazz.getModifiers())) {
             throw new IllegalArgumentException("Illegal message class: " + clazz);
         }
 
-        Message messageAnnotation = clazz.getAnnotation(Message.class);
-        if (messageAnnotation == null) {
-            throw new IllegalArgumentException("Class must annotated with annotation Message: " + clazz);
-        }
-
         // todo 如果有自定义类型，该怎么处理？
 
-        // 获取消息id
-        int messageId = messageAnnotation.value();
+        try {
+            // 生成方法体
+            CtClass schemaClass = classPool.getCtClass(MessageSchema.class.getName());
+            CtClass enhanceClass = classPool.makeClass(clazz.getName() + "$Schema", schemaClass);
+            generateGetIdMethod(enhanceClass, clazz, messageId);
+            generateGetSerializedSizeMethod(enhanceClass, clazz);
+            generateSerializeMethod(enhanceClass, clazz);
+            generateDeserializeMethod(enhanceClass, clazz);
 
-        // 生成方法体
-        CtClass schemaClass = classPool.getCtClass(MessageSchema.class.getName());
-        CtClass enhanceClass = classPool.makeClass(clazz.getName() + "$Schema", schemaClass);
-        generateGetIdMethod(enhanceClass, clazz, messageId);
-        generateGetSerializedSizeMethod(enhanceClass, clazz);
-        generateSerializeMethod(enhanceClass, clazz);
-        generateDeserializeMethod(enhanceClass, clazz);
-
-        // 创建schema对象
-        Class<?> resultClass = enhanceClass.toClass();
-        return (MessageSchema) resultClass.newInstance();
+            // 创建schema对象
+            Class<?> resultClass = enhanceClass.toClass();
+            return (MessageSchema) resultClass.newInstance();
+        } catch (Exception e) {
+            log.error("Failed to enhance message class: {}", clazz.getName(), e);
+        }
+        return null;
     }
 
     private static void generateGetIdMethod(CtClass enhanceClass, Class<?> clazz, int messageId) throws Exception {
@@ -78,7 +76,7 @@ public class MessageSchemaUtils {
         ReflectionUtils.doWithFields(clazz, field -> {
             Class<?> fieldType = field.getType();
             String capitalizeName = StringUtils.capitalize(field.getName());
-            if (!isSupportedType(fieldType)) {
+            if (isNotSupportedType(fieldType)) {
                 throw new IllegalArgumentException("Unsupported type: " + fieldType);
             } else if (fieldType == boolean.class || fieldType == Boolean.class) {
                 sb.append("size += 1;");
@@ -114,7 +112,7 @@ public class MessageSchemaUtils {
         ReflectionUtils.doWithFields(clazz, field -> {
             Class<?> fieldType = field.getType();
             String capitalizeName = StringUtils.capitalize(field.getName());
-            if (!isSupportedType(fieldType)) {
+            if (isNotSupportedType(fieldType)) {
                 throw new IllegalArgumentException("Unsupported type: " + fieldType);
             } else if (fieldType == boolean.class || fieldType == Boolean.class) {
                 sb.append(String.format("$1.writeBoolNoTag(bean.is%s());", capitalizeName));
@@ -150,7 +148,7 @@ public class MessageSchemaUtils {
         ReflectionUtils.doWithFields(clazz, field -> {
             Class<?> fieldType = field.getType();
             String capitalizeName = StringUtils.capitalize(field.getName());
-            if (!isSupportedType(fieldType)) {
+            if (isNotSupportedType(fieldType)) {
                 throw new IllegalArgumentException("Unsupported type: " + fieldType);
             } else if (fieldType == boolean.class || fieldType == Boolean.class) {
                 sb.append(String.format("bean.set%s($1.readBool());", capitalizeName));
@@ -174,9 +172,9 @@ public class MessageSchemaUtils {
         enhanceClass.addMethod(ctMethod);
     }
 
-    private static boolean isSupportedType(Class<?> clazz) {
-        return clazz != byte.class && clazz != Byte.class &&
-                clazz != char.class && clazz != Character.class &&
-                clazz != short.class && clazz != Short.class;
+    private static boolean isNotSupportedType(Class<?> clazz) {
+        return clazz == byte.class || clazz == Byte.class ||
+                clazz == char.class || clazz == Character.class ||
+                clazz == short.class || clazz == Short.class;
     }
 }

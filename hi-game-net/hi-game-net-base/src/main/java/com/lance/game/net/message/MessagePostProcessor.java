@@ -1,5 +1,8 @@
-package com.lance.game.net;
+package com.lance.game.net.message;
 
+import com.lance.game.net.DefaultMessageErrorHandler;
+import com.lance.game.net.MessageErrorHandler;
+import com.lance.game.net.Session;
 import com.lance.game.net.annotation.Message;
 import com.lance.game.net.annotation.MessageHandler;
 import org.springframework.beans.BeansException;
@@ -39,16 +42,19 @@ public class MessagePostProcessor implements BeanPostProcessor {
         }
         Class<?> sessionClass = parameters[0].getType();
         Class<?> messageClass = parameters[1].getType();
-        Message messageAnnotation = messageClass.getAnnotation(Message.class);
-        if (sessionClass != Session.class || messageAnnotation == null) {
+        if (sessionClass != Session.class) {
             throw new IllegalArgumentException("Illegal argument type: " + bean.getClass().getSimpleName() + "#" + method.getName());
         }
 
         // 注册消息处理
-        MessageDefinition messageDefinition = new MessageDefinition();
-        messageDefinition.setId(messageAnnotation.value());
-        messageDefinition.setClazz(messageClass);
+        MessageDefinition messageDefinition = messageManager.getMessageDefinition(messageClass);
+        if (messageDefinition == null) {
+
+        }
+        if (  messageDefinition.getHandler() != null) {
+
+        }
+
         messageDefinition.setHandler(new MessageMethodHandler(bean, method, messageErrorHandler));
-        messageManager.registerMessage(messageDefinition);
     }
 }

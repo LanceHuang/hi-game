@@ -1,23 +1,27 @@
-package com.lance.game.net.schema;
+package com.lance.game.net.config;
 
+import com.lance.game.net.message.MessageDefinition;
+import com.lance.game.net.message.MessageManager;
+import com.lance.game.net.schema.MessageSchema;
+import com.lance.game.net.schema.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 /**
  * @author Lance
- * @since 2021/4/28
+ * @since 2021/4/29
  */
-@SpringBootTest(classes = MessageSchemaManagerTest.Config.class)
-public class MessageSchemaManagerTest {
+@SpringBootTest(classes = MessageConfigurationTest.Config.class)
+public class MessageConfigurationTest {
 
     @Autowired
-    private MessageSchemaManager messageSchemaManager;
+    private MessageManager messageManager;
 
     @Test
     public void test() throws IOException {
@@ -26,7 +30,8 @@ public class MessageSchemaManagerTest {
         user.setPassword("123456");
         user.setLevel(128);
 
-        MessageSchema userSchema = messageSchemaManager.getSchema(user.getClass());
+        MessageDefinition messageDefinition = messageManager.getMessageDefinition(user.getClass());
+        MessageSchema userSchema = messageDefinition.getSchema();
         byte[] data = userSchema.serialize(user);
         System.out.println(Arrays.toString(data));
 
@@ -40,11 +45,7 @@ public class MessageSchemaManagerTest {
     }
 
     @SpringBootApplication
+    @Import(MessageConfiguration.class)
     public static class Config {
-
-        @Bean
-        public MessageSchemaManager messageSchemaManager() {
-            return new MessageSchemaManager();
-        }
     }
 }
