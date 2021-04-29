@@ -1,9 +1,9 @@
 package com.lance.game.mongodb;
 
+import com.lance.game.common.util.ClassUtils;
 import com.lance.game.mongodb.annotation.MongoDao;
 import com.lance.game.mongodb.exception.GenerateProxyFailureException;
 import com.lance.game.mongodb.generator.MongoDaoProxyGenerator;
-import com.lance.game.mongodb.util.ResourceUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -39,7 +39,7 @@ public class MongoDaoScanner implements InitializingBean, BeanDefinitionRegistry
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         // 1. 扫描符合条件的类
-        List<Class<?>> candidates = ResourceUtils.resolvePackage(this.basePackage, (clazz) -> clazz.isAnnotationPresent(MongoDao.class));
+        List<Class<?>> candidates = ClassUtils.resolvePackage(this.basePackage, (clazz) -> clazz.isAnnotationPresent(MongoDao.class));
 
         // 2. 生成代理类
         for (Class<?> candidate : candidates) {

@@ -1,6 +1,5 @@
-package com.lance.game.mongodb.util;
+package com.lance.game.common.util;
 
-import com.lance.game.mongodb.exception.ResolvePackageFailureException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -9,30 +8,24 @@ import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * @author Lance
  */
-public class ResourceUtils {
-
-    private static final ClassFilter DEFAULT_CLASS_FILTER = new DefaultClassFilter();
+public class ClassUtils {
 
     /**
-     * 扫描包下所有类
+     * 扫描包下的所有类
+     *
+     * @param basePackage 扫描路径
+     * @return 符合条件的类
      */
-    public static List<Class<?>> resolvePackage(String basePackage) {
-        return resolvePackage(basePackage, DEFAULT_CLASS_FILTER);
-    }
-
-    /**
-     * 扫描包下的类
-     */
-    public static List<Class<?>> resolvePackage(String basePackage, ClassFilter filter) {
-        if (basePackage == null || filter == null) {
+    public static List<Class<?>> resolvePackage(String basePackage, Predicate<Class<?>> predicate) {
+        if (basePackage == null || basePackage.isEmpty() || predicate == null) {
             return Collections.emptyList();
         }
 
@@ -50,12 +43,12 @@ public class ResourceUtils {
 
                 // 判断是否满足条件
                 Class<?> clazz = Class.forName(classMetadata.getClassName());
-                if (filter.accept(clazz)) {
+                if (predicate.test(clazz)) {
                     candidates.add(clazz);
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
-            throw new ResolvePackageFailureException("扫描类失败：" + basePackage, e);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Failed to resolve package: " + basePackage, e);
         }
         return candidates;
     }

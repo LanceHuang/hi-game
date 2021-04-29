@@ -11,6 +11,12 @@
     <artifactId>hi-game-mongodb</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>com.lance.game</groupId>
+            <artifactId>hi-game-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
         <!-- project -->
         <dependency>
             <groupId>org.mongodb</groupId>
