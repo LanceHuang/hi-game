@@ -82,7 +82,7 @@ public class ByteBufUtils {
                         && buffer.readByte() < 0
                         && buffer.readByte() < 0
                         && buffer.readByte() < 0
-                        && buffer.readByte() < 0) { // todo
+                        && buffer.readByte() < 0) {
                     buffer.readerIndex(readerIndex); // 重置readerIndex
                     break fastpath;
                 }
@@ -117,5 +117,38 @@ public class ByteBufUtils {
                 value >>>= 7; // 高位补0
             }
         }
+    }
+
+    public static int computeByte(byte value) {
+        return 1;
+    }
+
+    public static int computeShort(short value) {
+        return 2;
+    }
+
+    public static int computeInt(int value) {
+        return computeRawVarint32Size(intToZigZag(value));
+    }
+
+    public static int computeLong(long value) {
+        // todo
+        return 8;
+    }
+
+    private static int computeRawVarint32Size(int value) {
+        if ((value & (0xffffffff << 7)) == 0) {
+            return 1;
+        }
+        if ((value & (0xffffffff << 14)) == 0) {
+            return 2;
+        }
+        if ((value & (0xffffffff << 21)) == 0) {
+            return 3;
+        }
+        if ((value & (0xffffffff << 28)) == 0) {
+            return 4;
+        }
+        return 5;
     }
 }
