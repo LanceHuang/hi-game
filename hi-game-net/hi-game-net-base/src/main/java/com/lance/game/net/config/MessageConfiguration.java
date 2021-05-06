@@ -29,7 +29,7 @@ public class MessageConfiguration {
     }
 
     @Bean
-    public MessagePostProcessor messagePostProcessor() {
-        return new MessagePostProcessor();
+    public MessagePostProcessor messagePostProcessor(MessageManager messageManager) {
+        return new MessagePostProcessor(messageManager);
     }
 }

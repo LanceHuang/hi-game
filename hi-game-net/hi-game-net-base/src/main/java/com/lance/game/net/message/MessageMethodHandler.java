@@ -1,5 +1,6 @@
 package com.lance.game.net.message;
 
+import com.lance.game.net.DefaultMessageErrorHandler;
 import com.lance.game.net.MessageErrorHandler;
 import com.lance.game.net.Session;
 
@@ -17,12 +18,11 @@ public class MessageMethodHandler {
 
     private Method method;
 
-    private MessageErrorHandler messageErrorHandler;
+    private MessageErrorHandler messageErrorHandler = new DefaultMessageErrorHandler();
 
-    public MessageMethodHandler(Object bean, Method method, MessageErrorHandler messageErrorHandler) {
+    public MessageMethodHandler(Object bean, Method method) {
         this.bean = bean;
         this.method = method;
-        this.messageErrorHandler = messageErrorHandler;
     }
 
     /**

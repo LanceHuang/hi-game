@@ -3,6 +3,7 @@ package com.lance.game.net.message;
 import com.lance.game.net.annotation.Message;
 import com.lance.game.net.schema.MessageSchemaUtils;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,8 @@ public class MessageManager {
 
     private static MessageManager instance;
 
-    public MessageManager() {
+    @PostConstruct
+    public void init() {
         instance = this;
     }
 
