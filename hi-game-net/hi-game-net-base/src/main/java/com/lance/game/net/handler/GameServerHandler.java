@@ -1,7 +1,6 @@
 package com.lance.game.net.handler;
 
-import com.lance.game.net.message.MessageDefinition;
-import com.lance.game.net.message.MessageManager;
+import com.lance.game.net.executor.MessageDispatcher;
 import com.lance.game.net.session.Session;
 import com.lance.game.net.session.SessionUtils;
 import io.netty.channel.ChannelHandler;
@@ -19,16 +18,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GameServerHandler extends ChannelInboundHandlerAdapter {
 
+    private MessageDispatcher dispatcher;
+
+    public GameServerHandler(MessageDispatcher dispatcher) {
+        this.dispatcher = dispatcher;
+    }
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        Session session = SessionUtils.getSession(ctx.channel());
-
-        // 判断是否有相应的处理器
-        MessageDefinition messageDefinition = MessageManager.getInstance().getMessageDefinition(msg.getClass());
-        if (messageDefinition == null || messageDefinition.getHandler() == null) {
-            log.error("Unsupported message type: {}", msg.getClass().getName());
+        if (msg == null) {
             return;
         }
-        messageDefinition.getHandler().handle(session, msg);
+
+        Session session = SessionUtils.getSession(ctx.channel());
+        dispatcher.dispatch(session, msg);
     }
 }
