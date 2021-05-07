@@ -78,5 +78,4 @@ public class MessageManager {
     public MessageDefinition getMessageDefinition(Class<?> clazz) {
         return this.classToDefinitions.get(clazz);
     }
-
 }

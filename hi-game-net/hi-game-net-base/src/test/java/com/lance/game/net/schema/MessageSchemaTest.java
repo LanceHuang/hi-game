@@ -1,5 +1,8 @@
 package com.lance.game.net.schema;
 
+import com.lance.game.net.model.User;
+import com.lance.game.net.model.UserMessageSchema;
+import io.netty.buffer.ByteBuf;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -18,17 +21,16 @@ public class MessageSchemaTest {
         user.setPassword("123456");
         user.setLevel(128);
 
-//        MessageSchema userSchema = MessageSchema.getSchema(User.class);
         MessageSchema userSchema = new UserMessageSchema();
-        byte[] data = userSchema.serialize(user);
-        System.out.println(Arrays.toString(data));
-
-        for (byte b : data) {
+        ByteBuf buf = userSchema.serialize(user);
+        System.out.println(Arrays.toString(buf.array()));
+        for (byte b : buf.array()) {
             System.out.print((char) b);
             System.out.print(" ");
         }
+        System.out.println();
 
-        User newUser = (User) userSchema.deserialize(data);
+        User newUser = (User) userSchema.deserialize(buf);
         System.out.println(newUser);
     }
 

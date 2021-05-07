@@ -1,46 +1,91 @@
 package com.lance.game.net.util;
 
+import com.google.protobuf.CodedOutputStream;
 import io.netty.buffer.ByteBuf;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Lance
  */
 public class ByteBufUtils {
 
-    public static byte readByte(ByteBuf buffer) {
-        return buffer.readByte();
+    public static boolean readBoolean(ByteBuf buf) {
+        return readInt(buf) == 1;
     }
 
-    public static short readShort(ByteBuf buffer) {
-        return buffer.readShort();
+    public static byte readByte(ByteBuf buf) {
+        return buf.readByte();
     }
 
-    public static int readInt(ByteBuf buffer) {
-        return zigZagToInt(readRawVarInt32(buffer));
+    public static byte[] readBytes(ByteBuf buf, int dataLength) {
+        byte[] data = new byte[dataLength];
+        buf.readBytes(data);
+        return data;
     }
 
-    public static long readLong(ByteBuf buffer) {
-        return buffer.readLong(); // todo
+    public static short readShort(ByteBuf buf) {
+        return buf.readShort();
     }
 
-    public static void writeByte(ByteBuf buffer, byte value) {
-        buffer.writeByte(value);
+    public static int readInt(ByteBuf buf) {
+        return zigZagToInt(readRawVarInt32(buf));
     }
 
-    public static void writeBytes(ByteBuf buffer, byte[] value) {
-        buffer.writeBytes(value);
+    public static long readLong(ByteBuf buf) {
+        return buf.readLong(); // todo
     }
 
-    public static void writeShort(ByteBuf buffer, short value) {
-        buffer.writeShort(value);
+    public static float readFloat(ByteBuf buf) {
+        return buf.readFloat();
     }
 
-    public static void writeInt(ByteBuf buffer, int value) {
-        writeRawVarInt32(buffer, intToZigZag(value));
+    public static double readDouble(ByteBuf buf) {
+        return buf.readDouble();
     }
 
-    public static void writeLong(ByteBuf buffer, long value) {
-        buffer.writeLong(value); // todo
+    public static String readString(ByteBuf buf) {
+        int dataLength = readInt(buf);
+        byte[] data = readBytes(buf, dataLength);
+        return new String(data, StandardCharsets.UTF_8);
+    }
+
+    public static void writeBoolean(ByteBuf buf, boolean value) {
+        writeByte(buf, (byte) (value ? 1 : 0));
+    }
+
+    public static void writeByte(ByteBuf buf, byte value) {
+        buf.writeByte(value);
+    }
+
+    public static void writeBytes(ByteBuf buf, byte[] value) {
+        buf.writeBytes(value);
+    }
+
+    public static void writeShort(ByteBuf buf, short value) {
+        buf.writeShort(value);
+    }
+
+    public static void writeInt(ByteBuf buf, int value) {
+        writeRawVarInt32(buf, intToZigZag(value));
+    }
+
+    public static void writeLong(ByteBuf buf, long value) {
+        buf.writeLong(value); // todo
+    }
+
+    public static void writeFloat(ByteBuf buf, float value) {
+        buf.writeFloat(value);
+    }
+
+    public static void writeDouble(ByteBuf buf, double value) {
+        buf.writeDouble(value);
+    }
+
+    public static void writeString(ByteBuf buf, String value) {
+        byte[] data = value.getBytes(StandardCharsets.UTF_8);
+        writeInt(buf, data.length);
+        writeBytes(buf, data);
     }
 
     /**
@@ -58,44 +103,44 @@ public class ByteBufUtils {
     }
 
     /**
-     * 从buffer读取32位整数
+     * 从buf读取32位整数
      */
-    private static int readRawVarInt32(ByteBuf buffer) {
+    private static int readRawVarInt32(ByteBuf buf) {
         fastpath:
         {
-            int readerIndex = buffer.readerIndex();
+            int readerIndex = buf.readerIndex();
             int x;
-            if ((x = buffer.readByte()) >= 0) { // 第一个字节0开头
+            if ((x = buf.readByte()) >= 0) { // 第一个字节0开头
                 return x;
-            } else if ((x ^= (buffer.readByte() << 7)) < 0) { // 第2个字节0开头
+            } else if ((x ^= (buf.readByte() << 7)) < 0) { // 第2个字节0开头
                 x ^= (~0 << 7); // 异或还原数据
-            } else if ((x ^= (buffer.readByte() << 14)) >= 0) {
+            } else if ((x ^= (buf.readByte() << 14)) >= 0) {
                 x ^= (~0 << 7) ^ (~0 << 14);
-            } else if ((x ^= (buffer.readByte() << 21)) < 0) {
+            } else if ((x ^= (buf.readByte() << 21)) < 0) {
                 x ^= (~0 << 7) ^ (~0 << 14) ^ (~0 << 21);
             } else {
-                int y = buffer.readByte();
+                int y = buf.readByte();
                 x ^= y << 28;
                 x ^= (~0 << 7) ^ (~0 << 14) ^ (~0 << 21) ^ (~0 << 28);
                 if (y < 0
-                        && buffer.readByte() < 0
-                        && buffer.readByte() < 0
-                        && buffer.readByte() < 0
-                        && buffer.readByte() < 0
-                        && buffer.readByte() < 0) {
-                    buffer.readerIndex(readerIndex); // 重置readerIndex
+                        && buf.readByte() < 0
+                        && buf.readByte() < 0
+                        && buf.readByte() < 0
+                        && buf.readByte() < 0
+                        && buf.readByte() < 0) {
+                    buf.readerIndex(readerIndex); // 重置readerIndex
                     break fastpath;
                 }
             }
             return x;
         }
-        return (int) readRawVarInt64SlowPath(buffer);
+        return (int) readRawVarInt64SlowPath(buf);
     }
 
-    private static long readRawVarInt64SlowPath(ByteBuf buffer) { // todo
+    private static long readRawVarInt64SlowPath(ByteBuf buf) { // todo
         long result = 0;
         for (int shift = 0; shift < 64; shift += 7) {
-            final byte b = readByte(buffer);
+            final byte b = readByte(buf);
             result |= (long) (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
                 return result;
@@ -105,18 +150,22 @@ public class ByteBufUtils {
     }
 
     /**
-     * 将32位整数，每7位写入buffer
+     * 将32位整数，每7位写入buf
      */
-    private static void writeRawVarInt32(ByteBuf buffer, int value) {
+    private static void writeRawVarInt32(ByteBuf buf, int value) {
         while (true) {
             if ((value & ~0x7F) == 0) { // 判断8~32位还有没有数据
-                writeByte(buffer, (byte) value);
+                writeByte(buf, (byte) value);
                 return;
             } else {
-                writeByte(buffer, (byte) ((value & 0x7F) | 0x80)); // 取最低7位，并在高位补1
+                writeByte(buf, (byte) ((value & 0x7F) | 0x80)); // 取最低7位，并在高位补1
                 value >>>= 7; // 高位补0
             }
         }
+    }
+
+    public static int computeBoolean(boolean value) {
+        return 1;
     }
 
     public static int computeByte(byte value) {
@@ -150,5 +199,17 @@ public class ByteBufUtils {
             return 4;
         }
         return 5;
+    }
+
+    public static int computeFloat(float value) {
+        return 4;
+    }
+
+    public static int computeDouble(double value) {
+        return 8;
+    }
+
+    public static int computeString(String value) {
+        return CodedOutputStream.computeStringSizeNoTag(value);
     }
 }

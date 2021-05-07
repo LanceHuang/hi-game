@@ -1,6 +1,8 @@
 package com.lance.game.net.schema;
 
 import com.lance.game.net.annotation.Message;
+import com.lance.game.net.model.User;
+import io.netty.buffer.ByteBuf;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -20,15 +22,15 @@ public class MessageSchemaUtilsTest {
 
         Message messageAnnotation = User.class.getAnnotation(Message.class);
         MessageSchema userSchema = MessageSchemaUtils.enhance(user.getClass(), messageAnnotation.value());
-        byte[] data = userSchema.serialize(user);
-        System.out.println(Arrays.toString(data));
-
-        for (byte b : data) {
+        ByteBuf buf = userSchema.serialize(user);
+        System.out.println(Arrays.toString(buf.array()));
+        for (byte b : buf.array()) {
             System.out.print((char) b);
             System.out.print(" ");
         }
+        System.out.println();
 
-        User newUser = (User) userSchema.deserialize(data);
+        User newUser = (User) userSchema.deserialize(buf);
         System.out.println(newUser);
     }
 }

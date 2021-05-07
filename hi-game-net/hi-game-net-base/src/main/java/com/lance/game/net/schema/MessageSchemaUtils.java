@@ -1,7 +1,6 @@
 package com.lance.game.net.schema;
 
-import com.google.protobuf.CodedInputStream;
-import com.google.protobuf.CodedOutputStream;
+import io.netty.buffer.ByteBuf;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
@@ -73,25 +72,26 @@ public class MessageSchemaUtils {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("{ %s bean = (%s) $1;", clazz.getName(), clazz.getName()));
         sb.append("int size = 0;");
+        sb.append("size += com.lance.game.net.util.ByteBufUtils.computeInt(getId());");
         ReflectionUtils.doWithFields(clazz, field -> {
             Class<?> fieldType = field.getType();
             String capitalizeName = StringUtils.capitalize(field.getName());
             if (isNotSupportedType(fieldType)) {
                 throw new IllegalArgumentException("Unsupported type: " + fieldType);
             } else if (fieldType == boolean.class || fieldType == Boolean.class) {
-                sb.append("size += 1;");
+                sb.append(String.format("size += com.lance.game.net.util.ByteBufUtils.computeBoolean(bean.get%s());", capitalizeName));
             } else if (fieldType == int.class || fieldType == Integer.class) {
-                sb.append(String.format("size += com.google.protobuf.CodedOutputStream.computeInt32SizeNoTag(bean.get%s());", capitalizeName));
+                sb.append(String.format("size += com.lance.game.net.util.ByteBufUtils.computeInt(bean.get%s());", capitalizeName));
             } else if (fieldType == long.class || fieldType == Long.class) {
-                sb.append(String.format("size += com.google.protobuf.CodedOutputStream.computeInt64SizeNoTag(bean.get%s());", capitalizeName));
+                sb.append(String.format("size += com.lance.game.net.util.ByteBufUtils.computeLong(bean.get%s());", capitalizeName));
             } else if (fieldType == float.class || fieldType == Float.class) {
-                sb.append("size += 4;");
+                sb.append(String.format("size += com.lance.game.net.util.ByteBufUtils.computeFloat(bean.get%s());", capitalizeName));
             } else if (fieldType == double.class || fieldType == Double.class) {
-                sb.append("size += 8;");
+                sb.append(String.format("size += com.lance.game.net.util.ByteBufUtils.computeDouble(bean.get%s());", capitalizeName));
             } else if (fieldType == String.class) {
-                sb.append(String.format("size += com.google.protobuf.CodedOutputStream.computeStringSizeNoTag(bean.get%s());", capitalizeName));
+                sb.append(String.format("size += com.lance.game.net.util.ByteBufUtils.computeString(bean.get%s());", capitalizeName));
             } else {
-                // todo
+                // todo 自定义类型、集合、映射
             }
         });
         sb.append("return size; }");
@@ -104,28 +104,29 @@ public class MessageSchemaUtils {
         CtMethod ctMethod = new CtMethod(
                 classPool.get(void.class.getName()),
                 "serialize",
-                classPool.get(new String[]{CodedOutputStream.class.getName(), Object.class.getName()}),
+                classPool.get(new String[]{ByteBuf.class.getName(), Object.class.getName()}),
                 enhanceClass);
 
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("{ %s bean = (%s) $2;", clazz.getName(), clazz.getName()));
+        sb.append("com.lance.game.net.util.ByteBufUtils.writeInt($1, getId());");
         ReflectionUtils.doWithFields(clazz, field -> {
             Class<?> fieldType = field.getType();
             String capitalizeName = StringUtils.capitalize(field.getName());
             if (isNotSupportedType(fieldType)) {
                 throw new IllegalArgumentException("Unsupported type: " + fieldType);
             } else if (fieldType == boolean.class || fieldType == Boolean.class) {
-                sb.append(String.format("$1.writeBoolNoTag(bean.is%s());", capitalizeName));
+                sb.append(String.format("com.lance.game.net.util.ByteBufUtils.writeBoolean($1, bean.is%s());", capitalizeName));
             } else if (fieldType == int.class || fieldType == Integer.class) {
-                sb.append(String.format("$1.writeInt32NoTag(bean.get%s());", capitalizeName));
+                sb.append(String.format("com.lance.game.net.util.ByteBufUtils.writeInt($1, bean.get%s());", capitalizeName));
             } else if (fieldType == long.class || fieldType == Long.class) {
-                sb.append(String.format("$1.writeInt64NoTag(bean.get%s());", capitalizeName));
+                sb.append(String.format("com.lance.game.net.util.ByteBufUtils.writeLong($1, bean.get%s());", capitalizeName));
             } else if (fieldType == float.class || fieldType == Float.class) {
-                sb.append(String.format("$1.writeFloatNoTag(bean.get%s());", capitalizeName));
+                sb.append(String.format("com.lance.game.net.util.ByteBufUtils.writeFloat($1, bean.get%s());", capitalizeName));
             } else if (fieldType == double.class || fieldType == Double.class) {
-                sb.append(String.format("$1.writeDoubleNoTag(bean.get%s());", capitalizeName));
+                sb.append(String.format("com.lance.game.net.util.ByteBufUtils.writeDouble($1, bean.get%s());", capitalizeName));
             } else if (fieldType == String.class) {
-                sb.append(String.format("$1.writeStringNoTag(bean.get%s());", capitalizeName));
+                sb.append(String.format("com.lance.game.net.util.ByteBufUtils.writeString($1, bean.get%s());", capitalizeName));
             } else {
                 // todo
             }
@@ -140,28 +141,29 @@ public class MessageSchemaUtils {
         CtMethod ctMethod = new CtMethod(
                 classPool.get(Object.class.getName()),
                 "deserialize",
-                classPool.get(new String[]{CodedInputStream.class.getName()}),
+                classPool.get(new String[]{ByteBuf.class.getName()}),
                 enhanceClass);
 
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("{ %s bean = new %s();", clazz.getName(), clazz.getName()));
+        sb.append("com.lance.game.net.util.ByteBufUtils.readInt($1);");
         ReflectionUtils.doWithFields(clazz, field -> {
             Class<?> fieldType = field.getType();
             String capitalizeName = StringUtils.capitalize(field.getName());
             if (isNotSupportedType(fieldType)) {
                 throw new IllegalArgumentException("Unsupported type: " + fieldType);
             } else if (fieldType == boolean.class || fieldType == Boolean.class) {
-                sb.append(String.format("bean.set%s($1.readBool());", capitalizeName));
+                sb.append(String.format("bean.set%s(com.lance.game.net.util.ByteBufUtils.readBoolean($1));", capitalizeName));
             } else if (fieldType == int.class || fieldType == Integer.class) {
-                sb.append(String.format("bean.set%s($1.readInt32());", capitalizeName));
+                sb.append(String.format("bean.set%s(com.lance.game.net.util.ByteBufUtils.readInt($1));", capitalizeName));
             } else if (fieldType == long.class || fieldType == Long.class) {
-                sb.append(String.format("bean.set%s($1.readInt64());", capitalizeName));
+                sb.append(String.format("bean.set%s(com.lance.game.net.util.ByteBufUtils.readLong($1));", capitalizeName));
             } else if (fieldType == float.class || fieldType == Float.class) {
-                sb.append(String.format("bean.set%s($1.readFloat());", capitalizeName));
+                sb.append(String.format("bean.set%s(com.lance.game.net.util.ByteBufUtils.readFloat($1));", capitalizeName));
             } else if (fieldType == double.class || fieldType == Double.class) {
-                sb.append(String.format("bean.set%s($1.readDouble());", capitalizeName));
+                sb.append(String.format("bean.set%s(com.lance.game.net.util.ByteBufUtils.readDouble($1));", capitalizeName));
             } else if (fieldType == String.class) {
-                sb.append(String.format("bean.set%s($1.readStringRequireUtf8());", capitalizeName));
+                sb.append(String.format("bean.set%s(com.lance.game.net.util.ByteBufUtils.readString($1));", capitalizeName));
             } else {
                 // todo
             }

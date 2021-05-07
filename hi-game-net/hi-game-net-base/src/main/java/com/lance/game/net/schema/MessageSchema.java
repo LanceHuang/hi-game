@@ -1,7 +1,7 @@
 package com.lance.game.net.schema;
 
-import com.google.protobuf.CodedInputStream;
-import com.google.protobuf.CodedOutputStream;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import java.io.IOException;
 
@@ -35,40 +35,27 @@ public abstract class MessageSchema {
      * @return 序列化数据
      * @throws IOException 序列化异常
      */
-    public byte[] serialize(Object obj) throws IOException {
-        byte[] result = new byte[getSerializedSize(obj)];
-        CodedOutputStream output = CodedOutputStream.newInstance(result);
-        serialize(output, obj);
-        return result;
+    public ByteBuf serialize(Object obj) throws IOException {
+        ByteBuf buf = Unpooled.buffer(getSerializedSize(obj));
+        serialize(buf, obj);
+        return buf;
     }
 
     /**
      * 序列化消息
      *
-     * @param output 输出
-     * @param obj    消息对象
+     * @param buf 输出
+     * @param obj 消息对象
      * @throws IOException 序列化异常
      */
-    public abstract void serialize(CodedOutputStream output, Object obj) throws IOException;
+    public abstract void serialize(ByteBuf buf, Object obj) throws IOException;
 
     /**
      * 反序列化消息
      *
-     * @param data 序列化数据
+     * @param buf 输入
      * @return 消息对象
      * @throws IOException 反序列化异常
      */
-    public Object deserialize(byte[] data) throws IOException {
-        CodedInputStream input = CodedInputStream.newInstance(data);
-        return deserialize(input);
-    }
-
-    /**
-     * 反序列化消息
-     *
-     * @param input 输入
-     * @return 消息对象
-     * @throws IOException 反序列化异常
-     */
-    public abstract Object deserialize(CodedInputStream input) throws IOException;
+    public abstract Object deserialize(ByteBuf buf) throws IOException;
 }

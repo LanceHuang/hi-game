@@ -1,7 +1,9 @@
-package com.lance.game.net.schema;
+package com.lance.game.net.model;
 
-import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
+import com.lance.game.net.schema.MessageSchema;
+import com.lance.game.net.util.ByteBufUtils;
+import io.netty.buffer.ByteBuf;
 
 import java.io.IOException;
 
@@ -13,7 +15,7 @@ public class UserMessageSchema extends MessageSchema {
 
     @Override
     public int getId() {
-        return 0;
+        return 889;
     }
 
     @Override
@@ -28,19 +30,19 @@ public class UserMessageSchema extends MessageSchema {
     }
 
     @Override
-    public void serialize(CodedOutputStream output, Object obj) throws IOException {
+    public void serialize(ByteBuf buf, Object obj) throws IOException {
         User bean = (User) obj;
-        output.writeStringNoTag(bean.getUsername());
-        output.writeStringNoTag(bean.getPassword());
-        output.writeInt32NoTag(bean.getLevel());
+        ByteBufUtils.writeString(buf, bean.getUsername());
+        ByteBufUtils.writeString(buf, bean.getPassword());
+        ByteBufUtils.writeInt(buf, bean.getLevel());
     }
 
     @Override
-    public Object deserialize(CodedInputStream input) throws IOException {
+    public Object deserialize(ByteBuf buf) throws IOException {
         User bean = new User();
-        bean.setUsername(input.readStringRequireUtf8());
-        bean.setPassword(input.readStringRequireUtf8());
-        bean.setLevel(input.readInt32());
+        bean.setUsername(ByteBufUtils.readString(buf));
+        bean.setPassword(ByteBufUtils.readString(buf));
+        bean.setLevel(ByteBufUtils.readInt(buf));
         return bean;
     }
 }

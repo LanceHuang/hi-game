@@ -1,4 +1,4 @@
-package com.lance.game.net.schema;
+package com.lance.game.net.model;
 
 import com.lance.game.net.annotation.Message;
 import lombok.Getter;

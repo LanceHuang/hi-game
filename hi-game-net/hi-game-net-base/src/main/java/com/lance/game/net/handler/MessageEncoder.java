@@ -29,12 +29,11 @@ public class MessageEncoder extends MessageToByteEncoder<Object> {
             return;
         }
 
-        // 长度 数据
-        byte[] body = messageDefinition.getSchema().serialize(msg);
-        int bodyLen = body.length;
+        ByteBuf body = messageDefinition.getSchema().serialize(msg);
+        int bodyLen = body.readableBytes();
         int headerLen = ByteBufUtils.computeInt(bodyLen);
         out.ensureWritable(headerLen + bodyLen);
         ByteBufUtils.writeInt(out, bodyLen);
-        ByteBufUtils.writeBytes(out, body);
+        out.writeBytes(body);
     }
 }

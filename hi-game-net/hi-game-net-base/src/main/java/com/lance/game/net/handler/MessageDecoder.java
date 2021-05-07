@@ -35,24 +35,29 @@ public class MessageDecoder extends ByteToMessageDecoder {
         if (in.readableBytes() < length) {
             in.resetReaderIndex();
         } else {
-            ByteBuf body = in.readRetainedSlice(length);
-            Object msg = decodeMessage(body);
+            ByteBuf data = in.readRetainedSlice(length);
+            Object msg = decodeMessage(data);
             if (msg != null) {
                 out.add(msg);
             }
         }
     }
 
-    private Object decodeMessage(ByteBuf msg) throws Exception {
-        int messageId = ByteBufUtils.readInt(msg);
+    /**
+     * 消息解码
+     */
+    private Object decodeMessage(ByteBuf data) throws Exception {
+        // 解析消息id
+        data.markReaderIndex();
+        int messageId = ByteBufUtils.readInt(data);
+        data.resetReaderIndex();
         MessageDefinition messageDefinition = MessageManager.getInstance().getMessageDefinition(messageId);
         if (messageDefinition == null) {
             log.error("Unsupported message id: {}", messageId);
             return null;
         }
 
-        int length = msg.readableBytes();
-        byte[] data = ByteBufUtil.getBytes(msg, msg.readerIndex(), length, false);
+        // 解析消息
         return messageDefinition.getSchema().deserialize(data);
     }
 }
