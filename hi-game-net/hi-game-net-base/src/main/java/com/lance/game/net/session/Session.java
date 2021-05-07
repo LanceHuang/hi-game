@@ -1,5 +1,6 @@
-package com.lance.game.net;
+package com.lance.game.net.session;
 
+import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,10 +28,14 @@ public class Session {
     /** 创建时间 */
     private long createTime;
 
+    private Channel channel;
+
     /** 会话数据 */
     private Map<String, Object> attributes = new HashMap<>();
 
-    // TODO Channel？
+    public Session(Channel channel) {
+        this.channel = channel;
+    }
 
     /**
      * 获取属性

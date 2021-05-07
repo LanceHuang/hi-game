@@ -1,4 +1,4 @@
-package com.lance.game.net.dispatch;
+package com.lance.game.net.handler;
 
 /**
  * 消息分发器

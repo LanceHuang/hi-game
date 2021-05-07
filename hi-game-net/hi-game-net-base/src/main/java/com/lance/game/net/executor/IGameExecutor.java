@@ -1,6 +1,6 @@
 package com.lance.game.net.executor;
 
-import com.lance.game.net.Session;
+import com.lance.game.net.session.Session;
 
 /**
  * 游戏任务执行器

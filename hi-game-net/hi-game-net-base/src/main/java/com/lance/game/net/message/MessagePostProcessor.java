@@ -1,6 +1,6 @@
 package com.lance.game.net.message;
 
-import com.lance.game.net.Session;
+import com.lance.game.net.session.Session;
 import com.lance.game.net.annotation.Message;
 import com.lance.game.net.annotation.MessageHandler;
 import org.springframework.beans.BeansException;

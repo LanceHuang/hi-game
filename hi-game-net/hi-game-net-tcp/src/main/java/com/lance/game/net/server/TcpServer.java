@@ -4,7 +4,7 @@ import com.lance.game.common.util.ComponentLifecycle;
 import com.lance.game.net.config.TcpMessageProperties;
 import com.lance.game.net.handler.MessageDecoder;
 import com.lance.game.net.handler.MessageEncoder;
-import com.lance.game.net.handler.ServerHandler;
+import com.lance.game.net.handler.GameServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
@@ -53,7 +53,7 @@ public class TcpServer extends ComponentLifecycle {
                         ch.pipeline().addLast(new MessageEncoder());
                         ch.pipeline().addLast(new MessageDecoder());
                         // todo ?
-                        ch.pipeline().addLast(new ServerHandler());
+                        ch.pipeline().addLast(new GameServerHandler());
                     }
                 });
 

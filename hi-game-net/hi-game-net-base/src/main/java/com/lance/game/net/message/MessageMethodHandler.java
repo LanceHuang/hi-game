@@ -1,8 +1,6 @@
 package com.lance.game.net.message;
 
-import com.lance.game.net.DefaultMessageErrorHandler;
-import com.lance.game.net.MessageErrorHandler;
-import com.lance.game.net.Session;
+import com.lance.game.net.session.Session;
 
 import java.lang.reflect.Method;
 

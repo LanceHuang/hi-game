@@ -1,4 +1,6 @@
-package com.lance.game.net;
+package com.lance.game.net.message;
+
+import com.lance.game.net.session.Session;
 
 import java.lang.reflect.Method;
 
