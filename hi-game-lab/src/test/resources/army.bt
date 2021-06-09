@@ -1,0 +1,14 @@
+SELECTOR # 军队行为树
+    SEQUENCE # 有目标序列
+        HAS_TARGET # 判断是否有目标
+        SEQUENCE # 攻击序列
+            CAN_ATTACK # 判断是否可以攻击
+            ATTACK # 攻击
+        SEQUENCE # 撤退序列
+            RETREAT # 撤退
+    SEQUENCE # 无目标序列
+        SEQUENCE # 已死亡序列
+            IS_DEAD # 判断是否已死亡
+            DEAD # 死亡处理
+        SEQUENCE # 未死亡序列
+            PATROL # 巡逻
