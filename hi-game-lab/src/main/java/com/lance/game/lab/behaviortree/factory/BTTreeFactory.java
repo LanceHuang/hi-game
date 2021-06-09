@@ -33,7 +33,7 @@ public class BTTreeFactory {
     @SuppressWarnings("unchecked")
     public static BehaviorTree createTree(String btFile) {
         List<BTNodeDefinition> definitions = parseDefinitions(btFile);
-        BTNode root = createNode(definitions, 0).get(0);
+        BTNode root = createNode(definitions, 0);
         return new BehaviorTree(root);
     }
 
@@ -99,14 +99,14 @@ public class BTTreeFactory {
      * @param index       当前下标
      * @return 节点
      */
-    private static List<BTNode> createNode(List<BTNodeDefinition> definitions, int index) {
+    private static BTNode createNode(List<BTNodeDefinition> definitions, int index) {
         BTNodeDefinition definition = definitions.get(index);
         int currLevel = definition.getLevel();
         BTNode node = BTNodeFactory.createNode(definition.getType());
 
         BTNodeDefinition nextDefinition = definitions.get(index + 1);
         if (currLevel >= nextDefinition.getLevel()) {
-            return Collections.singletonList(node);
+            return node;
         } else {
             if (node instanceof ControlNode) {
                 ControlNode controlNode = (ControlNode) node;
@@ -114,8 +114,8 @@ public class BTTreeFactory {
                 for (int i = index + 1; i < definitions.size(); i++) {
                     BTNodeDefinition nextDefinitionT = definitions.get(i);
                     if (nextDefinitionT.getLevel() == tempLevel) {
-                        List<BTNode> childList = createNode(definitions, i);
-                        childList.forEach(controlNode::addChild);
+                        BTNode child = createNode(definitions, i);
+                        controlNode.addChild(child);
                     } else {
                         break;
                     }
@@ -126,7 +126,7 @@ public class BTTreeFactory {
                 return null;
             }
         }
-        return Collections.singletonList(node);
+        return node;
     }
 
     @Getter
