@@ -1,5 +1,8 @@
 package com.lance.game.lab.event;
 
+import com.lance.game.lab.event.invoker.EventListenerInvoker;
+import com.lance.game.lab.event.invoker.EventListenerInvokerComparator;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,16 +20,34 @@ public class EventBus {
 
     private final Set<EventListenerInvoker> invokers = new HashSet<>();
 
-    private final Map<Class<?>, List<EventListenerInvoker>> invokeCache = new ConcurrentHashMap<>(64);
+    private final Map<Class<?>, List<EventListenerInvoker>> invokeCache = new ConcurrentHashMap<>();
 
-    public void addListenerInvoker(EventListenerInvoker eventListenerInvoker) {
+    /**
+     * 添加事件监听器
+     *
+     * @param eventListenerInvoker 事件监听器
+     */
+    public void addEventListenerInvoker(EventListenerInvoker eventListenerInvoker) {
+        if (eventListenerInvoker == null) {
+            return;
+        }
+
         synchronized (this) {
             invokers.add(eventListenerInvoker);
             invokeCache.clear();
         }
     }
 
-    public void removeListenerInvoker(EventListenerInvoker eventListenerInvoker) {
+    /**
+     * 删除事件监听器
+     *
+     * @param eventListenerInvoker 事件监听器
+     */
+    public void removeEventListenerInvoker(EventListenerInvoker eventListenerInvoker) {
+        if (eventListenerInvoker == null) {
+            return;
+        }
+
         synchronized (this) {
             invokers.remove(eventListenerInvoker);
             invokeCache.clear();
@@ -38,7 +59,7 @@ public class EventBus {
      *
      * @param event 事件
      */
-    public void submit(Event event) {
+    public void publishEvent(Event event) {
         if (event == null) {
             return;
         }

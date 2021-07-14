@@ -1,13 +1,17 @@
 package com.lance.game.lab.event;
 
 /**
+ * 基础事件
+ *
  * @author Lance
  * @since 2021/7/14
  */
 public abstract class BaseEvent implements Event {
 
+    /** 事件源 */
     private Object source;
 
+    /** 创建时间 */
     private long createTime;
 
     public BaseEvent(Object source) {
@@ -16,7 +20,7 @@ public abstract class BaseEvent implements Event {
     }
 
     @Override
-    public int getId() {
+    public int modValue() {
         return (int) createTime;
     }
 

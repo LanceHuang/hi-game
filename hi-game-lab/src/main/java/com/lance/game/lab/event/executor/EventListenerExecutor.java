@@ -1,7 +1,7 @@
 package com.lance.game.lab.event.executor;
 
 import com.lance.game.lab.event.Event;
-import com.lance.game.lab.event.EventListenerInvoker;
+import com.lance.game.lab.event.invoker.EventListenerInvoker;
 
 /**
  * 事件执行器

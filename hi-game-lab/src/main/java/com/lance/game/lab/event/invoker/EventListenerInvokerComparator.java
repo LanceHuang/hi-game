@@ -1,4 +1,4 @@
-package com.lance.game.lab.event;
+package com.lance.game.lab.event.invoker;
 
 import java.util.Comparator;
 import java.util.List;
@@ -11,8 +11,10 @@ public class EventListenerInvokerComparator implements Comparator<EventListenerI
 
     @Override
     public int compare(EventListenerInvoker o1, EventListenerInvoker o2) {
-        AbstractEventListenerInvoker ao1 = (AbstractEventListenerInvoker) o1;
-        AbstractEventListenerInvoker ao2 = (AbstractEventListenerInvoker) o2;
+        EventListenerInvokerProxy proxy1 = (EventListenerInvokerProxy) o1;
+        EventListenerInvokerProxy proxy2 = (EventListenerInvokerProxy) o2;
+        AbstractEventListenerInvoker ao1 = (AbstractEventListenerInvoker) proxy1.getInvoker();
+        AbstractEventListenerInvoker ao2 = (AbstractEventListenerInvoker) proxy2.getInvoker();
 
         // 异步任务优先
         if (ao1.isAsync() && !ao2.isAsync()) {
@@ -28,6 +30,10 @@ public class EventListenerInvokerComparator implements Comparator<EventListenerI
      * 排序
      */
     public static void sort(List<EventListenerInvoker> list) {
+        if (list == null) {
+            return;
+        }
+
         if (list.size() > 1) {
             list.sort(getInstance());
         }

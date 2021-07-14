@@ -1,4 +1,4 @@
-package com.lance.game.lab.event;
+package com.lance.game.lab.event.invoker;
 
 import java.lang.reflect.Method;
 
@@ -16,9 +16,9 @@ public abstract class AbstractEventListenerInvoker implements EventListenerInvok
 
     private boolean async;
 
-    public AbstractEventListenerInvoker(Object bean, Method method) {
-        this.bean = bean;
-        this.method = method;
+    @Override
+    public boolean supportEvents(Class<?> eventClass) {
+        return true;
     }
 
     public Object getBean() {

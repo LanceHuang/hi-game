@@ -1,6 +1,8 @@
 package com.lance.game.lab.event;
 
 import com.lance.game.lab.event.annotation.EventListener;
+import com.lance.game.lab.event.invoker.EventListenerInvoker;
+import com.lance.game.lab.event.invoker.EventListenerInvokerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
 import org.springframework.util.ReflectionUtils;
@@ -59,7 +61,7 @@ public class EventListenerProcessor extends InstantiationAwareBeanPostProcessorA
             }
         }
 
-        EventListenerInvoker eventListenerInvoker = factory.createEventListenerInvoker(bean, method);
-        eventBus.addListenerInvoker(eventListenerInvoker);
+        EventListenerInvoker eventListenerInvoker = factory.createEventListenerInvoker(bean, method, parameterClass);
+        eventBus.addEventListenerInvoker(eventListenerInvoker);
     }
 }

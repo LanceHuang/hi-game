@@ -6,19 +6,21 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 事件监听
+ * 事件过滤器
  *
  * @author Lance
- * @since 2021/7/14
+ * @since 2021/7/15
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EventListener {
+public @interface Filter {
 
     /**
-     * 监听事件类型
+     * 过滤器类型
      */
-    Class<?>[] value() default {};
+    FilterType type();
 
-//    Filter filter();
+    Class<?>[] classes() default {};
+
+    String[] patten() default {};
 }

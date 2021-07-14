@@ -1,7 +1,7 @@
 package com.lance.game.lab.event.config;
 
 import com.lance.game.lab.event.EventBus;
-import com.lance.game.lab.event.EventListenerInvokerFactory;
+import com.lance.game.lab.event.invoker.EventListenerInvokerFactory;
 import com.lance.game.lab.event.EventListenerProcessor;
 import com.lance.game.lab.event.executor.AsyncEventListenerExecutor;
 import com.lance.game.lab.event.executor.SyncEventListenerExecutor;

@@ -13,7 +13,7 @@ public interface Event {
      *
      * @return 事件标识
      */
-    default int getId() {
+    default int modValue() {
         return 0;
     }
 

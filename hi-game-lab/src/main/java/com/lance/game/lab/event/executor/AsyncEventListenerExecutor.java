@@ -2,7 +2,7 @@ package com.lance.game.lab.event.executor;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.lance.game.lab.event.Event;
-import com.lance.game.lab.event.EventListenerInvoker;
+import com.lance.game.lab.event.invoker.EventListenerInvoker;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -39,7 +39,7 @@ public class AsyncEventListenerExecutor extends AbstractEventListenerExecutor {
 
     @Override
     public void invokeListener(EventListenerInvoker invoker, Event event) {
-        Callable<Void> callable = () -> {
+        Callable<Object> callable = () -> {
             try {
                 invoker.invokeListener(event);
             } catch (Exception e) {
@@ -48,7 +48,7 @@ public class AsyncEventListenerExecutor extends AbstractEventListenerExecutor {
             return null;
         };
 
-        executorServices[modValue(event.getId())].submit(callable);
+        executorServices[modValue(event.modValue())].submit(callable);
     }
 
     private int modValue(int id) {

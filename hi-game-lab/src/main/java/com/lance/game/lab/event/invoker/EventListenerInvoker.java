@@ -1,4 +1,6 @@
-package com.lance.game.lab.event;
+package com.lance.game.lab.event.invoker;
+
+import com.lance.game.lab.event.Event;
 
 /**
  * 事件监听器
