@@ -5,6 +5,7 @@ import com.lance.game.lab.event.annotation.Async;
 import com.lance.game.lab.event.annotation.EventListener;
 import com.lance.game.lab.event.annotation.Order;
 import com.lance.game.lab.event.executor.EventListenerExecutor;
+import com.lance.game.lab.event.filter.AbstractEventFilter;
 import com.lance.game.lab.event.filter.AnnotationEventFilter;
 import com.lance.game.lab.event.filter.AssignableEventFilter;
 import com.lance.game.lab.event.filter.EventFilter;
@@ -100,22 +101,33 @@ public class EventListenerInvokerFactory {
             case CUSTOM:
                 return createCustomEventFilter(bean, method);
             default:
-                throw new IllegalArgumentException("Failed to create event filter: " + eventListener.type());
+                throw new IllegalArgumentException("Failed to create event filter: " + bean.getClass().getName() + "#" + method.getName());
         }
     }
 
     private EventFilter createCustomEventFilter(Object bean, Method method) {
+        EventListener eventListener = method.getAnnotation(EventListener.class);
+        Class<?>[] eventListenerValue = eventListener.value();
+        if (eventListenerValue.length == 0) {
+            throw new IllegalArgumentException("EventListener.value cannot be empty: " + bean.getClass().getName() + "#" + method.getName());
+        }
+        Class<?> customFilterClass = eventListenerValue[0];
+        if (!EventFilter.class.isAssignableFrom(customFilterClass)) {
+            throw new IllegalArgumentException("Unexpected custom event filter: " + bean.getClass().getName() + "#" + method.getName()
+                    + " " + customFilterClass.getName());
+        }
+
         try {
-            EventListener eventListener = method.getAnnotation(EventListener.class);
-            Class<?> customFilterClass = eventListener.value()[0];
-            Constructor<?> c = customFilterClass.getConstructor();
-            // todo
-            return (EventFilter) c.newInstance(bean, method);
+            if (AbstractEventFilter.class.isAssignableFrom(customFilterClass)) {
+                Constructor<?> c = customFilterClass.getConstructor(Object.class, Method.class);
+                return (EventFilter) c.newInstance(bean, method);
+            } else {
+                return (EventFilter) customFilterClass.newInstance();
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new IllegalArgumentException("Failed to create custom event filter: " + bean.getClass().getName() + "#" + method.getName());
         }
-        // todo
-        throw new IllegalArgumentException("Failed to create custom event filter");
     }
 
     private AbstractEventListenerInvoker enhanceInvoker(Object bean, Method method, Class<?> parameterClass) {
@@ -138,8 +150,8 @@ public class EventListenerInvokerFactory {
             return (AbstractEventListenerInvoker) enhanceClass.toClass().newInstance();
         } catch (Exception e) {
             e.printStackTrace();
+            throw new IllegalStateException("Failed to enhance invoker: " + bean.getClass().getName());
         }
-        throw new IllegalStateException("Failed to enhance invoker: " + bean.getClass().getName());
     }
 
     private CtClass buildInvoker() throws Exception {
