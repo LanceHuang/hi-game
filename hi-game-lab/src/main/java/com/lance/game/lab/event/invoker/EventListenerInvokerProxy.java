@@ -19,8 +19,8 @@ public class EventListenerInvokerProxy implements EventListenerInvoker {
     }
 
     @Override
-    public boolean supportEvents(Class<?> eventClass) {
-        return invoker.supportEvents(eventClass);
+    public boolean supportEvents(Class<?> eventType) {
+        return invoker.supportEvents(eventType);
     }
 
     @Override

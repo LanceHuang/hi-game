@@ -2,13 +2,19 @@ package com.lance.game.lab.event.invoker;
 
 import com.lance.game.lab.event.Event;
 import com.lance.game.lab.event.annotation.Async;
+import com.lance.game.lab.event.annotation.EventListener;
 import com.lance.game.lab.event.annotation.Order;
 import com.lance.game.lab.event.executor.EventListenerExecutor;
+import com.lance.game.lab.event.filter.AnnotationEventFilter;
+import com.lance.game.lab.event.filter.AssignableEventFilter;
+import com.lance.game.lab.event.filter.EventFilter;
+import com.lance.game.lab.event.filter.RegexEventFilter;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,12 +30,12 @@ public class EventListenerInvokerFactory {
 
     public static final String ASYNC_EXECUTOR = "asyncEventListenerExecutor";
 
-    private ClassPool classPool = ClassPool.getDefault();
+    private final ClassPool classPool = ClassPool.getDefault();
 
-    private AtomicInteger index = new AtomicInteger(0);
+    private final AtomicInteger index = new AtomicInteger(0);
 
     @Autowired
-    private Map<String, EventListenerExecutor> executorMap = new HashMap<>();
+    private final Map<String, EventListenerExecutor> executorMap = new HashMap<>();
 
     /**
      * 创建事件监听器
@@ -45,19 +51,23 @@ public class EventListenerInvokerFactory {
         int order = orderAnnotation == null ? 0 : orderAnnotation.value();
         boolean async = asyncAnnotation != null;
 
+        // 获取执行器
         String executorName = getExecutorName(asyncAnnotation);
         EventListenerExecutor executor = executorMap.get(executorName);
         if (executor == null) {
             throw new IllegalArgumentException("No executor specified: " + executorName);
         }
 
-        // TODO: 2021/7/14 filter?
+        // 创建过滤器
+        EventFilter eventFilter = createEventFilter(bean, method);
 
+        // 创建代理类
         AbstractEventListenerInvoker invoker = enhanceInvoker(bean, method, parameterClass);
         invoker.setBean(bean);
         invoker.setMethod(method);
         invoker.setOrder(order);
         invoker.setAsync(async);
+        invoker.setFilter(eventFilter);
         return new EventListenerInvokerProxy(executor, invoker);
     }
 
@@ -69,6 +79,43 @@ public class EventListenerInvokerFactory {
             return ASYNC_EXECUTOR;
         }
         return asyncAnnotation.value();
+    }
+
+    /**
+     * 创建事件过滤器
+     *
+     * @param bean   监听bean
+     * @param method 监听方法
+     * @return 事件过滤器
+     */
+    private EventFilter createEventFilter(Object bean, Method method) {
+        EventListener eventListener = method.getAnnotation(EventListener.class);
+        switch (eventListener.type()) {
+            case ASSIGNABLE:
+                return new AssignableEventFilter(bean, method);
+            case ANNOTATION:
+                return new AnnotationEventFilter(bean, method);
+            case REGEX:
+                return new RegexEventFilter(bean, method);
+            case CUSTOM:
+                return createCustomEventFilter(bean, method);
+            default:
+                throw new IllegalArgumentException("Failed to create event filter: " + eventListener.type());
+        }
+    }
+
+    private EventFilter createCustomEventFilter(Object bean, Method method) {
+        try {
+            EventListener eventListener = method.getAnnotation(EventListener.class);
+            Class<?> customFilterClass = eventListener.value()[0];
+            Constructor<?> c = customFilterClass.getConstructor();
+            // todo
+            return (EventFilter) c.newInstance(bean, method);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // todo
+        throw new IllegalArgumentException("Failed to create custom event filter");
     }
 
     private AbstractEventListenerInvoker enhanceInvoker(Object bean, Method method, Class<?> parameterClass) {

@@ -16,9 +16,17 @@ import java.lang.annotation.Target;
 public @interface EventListener {
 
     /**
-     * 监听事件类型
+     * 过滤器类型
+     */
+    FilterType type() default FilterType.ASSIGNABLE;
+
+    /**
+     * 事件类型
      */
     Class<?>[] value() default {};
 
-//    Filter filter();
+    /**
+     * 事件正则
+     */
+    String[] pattern() default {};
 }

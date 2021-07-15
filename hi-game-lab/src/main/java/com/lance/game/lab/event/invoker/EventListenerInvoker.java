@@ -13,10 +13,10 @@ public interface EventListenerInvoker {
     /**
      * 校验是否支持事件类型
      *
-     * @param eventClass 事件类型
-     * @return true 支持
+     * @param eventType 事件类型
+     * @return true 支持的类型
      */
-    boolean supportEvents(Class<?> eventClass);
+    boolean supportEvents(Class<?> eventType);
 
     /**
      * 调用监听器

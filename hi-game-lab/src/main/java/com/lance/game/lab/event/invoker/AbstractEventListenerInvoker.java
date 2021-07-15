@@ -1,5 +1,7 @@
 package com.lance.game.lab.event.invoker;
 
+import com.lance.game.lab.event.filter.EventFilter;
+
 import java.lang.reflect.Method;
 
 /**
@@ -16,9 +18,11 @@ public abstract class AbstractEventListenerInvoker implements EventListenerInvok
 
     private boolean async;
 
+    private EventFilter filter;
+
     @Override
-    public boolean supportEvents(Class<?> eventClass) {
-        return true;
+    public boolean supportEvents(Class<?> eventType) {
+        return filter.match(eventType);
     }
 
     public Object getBean() {
@@ -51,5 +55,13 @@ public abstract class AbstractEventListenerInvoker implements EventListenerInvok
 
     public void setAsync(boolean async) {
         this.async = async;
+    }
+
+    public EventFilter getFilter() {
+        return filter;
+    }
+
+    public void setFilter(EventFilter filter) {
+        this.filter = filter;
     }
 }

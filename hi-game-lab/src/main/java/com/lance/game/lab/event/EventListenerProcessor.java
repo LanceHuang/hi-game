@@ -40,28 +40,18 @@ public class EventListenerProcessor extends InstantiationAwareBeanPostProcessorA
         // 参数长度
         Parameter[] parameters = method.getParameters();
         if (parameters.length != 1) {
-            throw new IllegalArgumentException("Illegal argument size: " + bean.getClass().getName() + "#" + method.getName());
+            throw new IllegalArgumentException("Unexpected argument length: " + bean.getClass().getName() + "#" + method.getName());
         }
 
         // 参数类型
         Class<?> parameterClass = parameters[0].getType();
         if (!Event.class.isAssignableFrom(parameterClass)) {
-            throw new IllegalArgumentException("Illegal argument type: " + bean.getClass().getName() + "#" + method.getName()
+            throw new IllegalArgumentException("Unexpected argument type: " + bean.getClass().getName() + "#" + method.getName()
                     + " " + parameterClass.getName());
         }
 
-        // 参数值
-        EventListener eventListener = method.getAnnotation(EventListener.class);
-        if (eventListener.value().length != 0) {
-            for (Class<?> eventClass : eventListener.value()) {
-                if (!parameterClass.isAssignableFrom(eventClass)) {
-                    throw new IllegalArgumentException("Illegal event type: " + bean.getClass().getName() + "#" + method.getName()
-                            + " " + eventClass.getName());
-                }
-            }
-        }
-
+        // 注册
         EventListenerInvoker eventListenerInvoker = factory.createEventListenerInvoker(bean, method, parameterClass);
-        eventBus.addEventListenerInvoker(eventListenerInvoker);
+        eventBus.registerEventListenerInvoker(eventListenerInvoker);
     }
 }

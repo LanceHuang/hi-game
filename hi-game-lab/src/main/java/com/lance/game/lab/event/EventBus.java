@@ -3,6 +3,7 @@ package com.lance.game.lab.event;
 import com.lance.game.lab.event.invoker.EventListenerInvoker;
 import com.lance.game.lab.event.invoker.EventListenerInvokerComparator;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,12 +23,17 @@ public class EventBus {
 
     private final Map<Class<?>, List<EventListenerInvoker>> invokeCache = new ConcurrentHashMap<>();
 
+    // todo 运行时注册
+    public void registerEventListenerInvoker(Object bean, Method method) {
+
+    }
+
     /**
-     * 添加事件监听器
+     * 注册事件监听器
      *
      * @param eventListenerInvoker 事件监听器
      */
-    public void addEventListenerInvoker(EventListenerInvoker eventListenerInvoker) {
+    public void registerEventListenerInvoker(EventListenerInvoker eventListenerInvoker) {
         if (eventListenerInvoker == null) {
             return;
         }

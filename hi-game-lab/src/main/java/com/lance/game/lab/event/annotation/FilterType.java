@@ -8,12 +8,16 @@ package com.lance.game.lab.event.annotation;
  */
 public enum FilterType {
 
+    /** 指定类型 */
+    ASSIGNABLE,
+
+    /** 指定注解 */
     ANNOTATION,
 
-    ASSIGNABLE_TYPE,
-
+    /** 包名正则 */
     REGEX,
 
+    /** 自定义 */
     CUSTOM,
 
     ;

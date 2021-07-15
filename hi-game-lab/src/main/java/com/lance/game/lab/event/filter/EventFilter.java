@@ -1,12 +1,18 @@
 package com.lance.game.lab.event.filter;
 
-import com.lance.game.lab.event.Event;
-
 /**
+ * 事件过滤器
+ *
  * @author Lance
  * @since 2021/7/15
  */
 public interface EventFilter {
 
-    boolean match(Event event);
+    /**
+     * 判断事件是否满足条件
+     *
+     * @param eventType 事件类型
+     * @return true 满足条件
+     */
+    boolean match(Class<?> eventType);
 }
