@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -31,10 +32,6 @@ public class EventListenerInvokerFactory {
 
     public static final String ASYNC_EXECUTOR = "asyncEventListenerExecutor";
 
-    private final ClassPool classPool = ClassPool.getDefault();
-
-    private final AtomicInteger index = new AtomicInteger(0);
-
     @Autowired
     private final Map<String, EventListenerExecutor> executorMap = new HashMap<>();
 
@@ -45,7 +42,7 @@ public class EventListenerInvokerFactory {
      * @param method 监听方法
      * @return 事件监听器
      */
-    public EventListenerInvoker createEventListenerInvoker(Object bean, Method method, Class<?> parameterClass) {
+    public EventListenerInvoker createEventListenerInvoker(Object bean, Method method) {
         Order orderAnnotation = method.getAnnotation(Order.class);
         Async asyncAnnotation = method.getAnnotation(Async.class);
 
@@ -54,16 +51,44 @@ public class EventListenerInvokerFactory {
 
         // 获取执行器
         String executorName = getExecutorName(asyncAnnotation);
+
+        // 创建过滤器
+        EventFilter eventFilter = createEventFilter(bean, method);
+
+        // 创建代理对象
+        return doCreateEventListenerInvoker(bean, method, order, async, executorName, eventFilter);
+    }
+
+    public EventListenerInvoker createEventListenerInvoker(Object bean, Method method, Class<?>[] eventTypes) {
+        return doCreateEventListenerInvoker(bean, method, 0, false, SYNC_EXECUTOR, new AssignableEventFilter(eventTypes));
+    }
+
+    public EventListenerInvoker createEventListenerInvoker(Object bean, Method method, Class<?>[] eventTypes, int order) {
+        return doCreateEventListenerInvoker(bean, method, order, false, SYNC_EXECUTOR, new AssignableEventFilter(eventTypes));
+    }
+
+    public EventListenerInvoker createEventListenerInvoker(Object bean, Method method, Class<?>[] eventTypes, boolean async) {
+        String executorName = async ? ASYNC_EXECUTOR : SYNC_EXECUTOR;
+        return doCreateEventListenerInvoker(bean, method, 0, async, executorName, new AssignableEventFilter(eventTypes));
+    }
+
+    public EventListenerInvoker createEventListenerInvoker(Object bean, Method method, Class<?>[] eventTypes, int order, boolean async) {
+        String executorName = async ? ASYNC_EXECUTOR : SYNC_EXECUTOR;
+        return doCreateEventListenerInvoker(bean, method, order, async, executorName, new AssignableEventFilter(eventTypes));
+    }
+
+    public EventListenerInvoker createEventListenerInvoker(Object bean, Method method, Class<?>[] eventTypes, int order, boolean async, String executorName) {
+        return doCreateEventListenerInvoker(bean, method, order, async, executorName, new AssignableEventFilter(eventTypes));
+    }
+
+    private EventListenerInvoker doCreateEventListenerInvoker(Object bean, Method method, int order, boolean async, String executorName, EventFilter eventFilter) {
         EventListenerExecutor executor = executorMap.get(executorName);
         if (executor == null) {
             throw new IllegalArgumentException("No executor specified: " + executorName);
         }
 
-        // 创建过滤器
-        EventFilter eventFilter = createEventFilter(bean, method);
-
         // 创建代理类
-        AbstractEventListenerInvoker invoker = enhanceInvoker(bean, method, parameterClass);
+        AbstractEventListenerInvoker invoker = enhanceInvoker(bean, method);
         invoker.setBean(bean);
         invoker.setMethod(method);
         invoker.setOrder(order);
@@ -130,7 +155,22 @@ public class EventListenerInvokerFactory {
         }
     }
 
-    private AbstractEventListenerInvoker enhanceInvoker(Object bean, Method method, Class<?> parameterClass) {
+
+    private static final ClassPool CLASS_POOL = ClassPool.getDefault();
+
+    private static final AtomicInteger INDEX = new AtomicInteger(0);
+
+    /**
+     * 创建代理对象
+     *
+     * @param bean   被代理对象
+     * @param method 被代理方法
+     * @return 代理对象
+     */
+    public static AbstractEventListenerInvoker enhanceInvoker(Object bean, Method method) {
+        Parameter[] parameters = method.getParameters();
+        Class<?> parameterClass = parameters[0].getType();
+
         try {
             Class<?> clazz = bean.getClass();
             String methodName = method.getName();
@@ -140,7 +180,7 @@ public class EventListenerInvokerFactory {
             CtMethod invokerMethod = new CtMethod(
                     CtClass.voidType,
                     "invokeListener",
-                    classPool.get(new String[]{Event.class.getCanonicalName()}),
+                    CLASS_POOL.get(new String[]{Event.class.getCanonicalName()}),
                     enhanceClass
             );
             invokerMethod.setBody("{ ((" + clazz.getCanonicalName() + ") getBean())." + methodName + "((" + parameterClass.getCanonicalName() + ")$1);}");
@@ -154,10 +194,11 @@ public class EventListenerInvokerFactory {
         }
     }
 
-    private CtClass buildInvoker() throws Exception {
+    private static CtClass buildInvoker() throws Exception {
         Class<?> superClass = AbstractEventListenerInvoker.class;
-        CtClass enhanceClass = classPool.makeClass("EventListenerInvokerEnhance" + index.getAndIncrement());
-        enhanceClass.setSuperclass(classPool.get(superClass.getCanonicalName()));
+        CtClass enhanceClass = CLASS_POOL.makeClass("EventListenerInvokerEnhance" + INDEX.getAndIncrement());
+        enhanceClass.setSuperclass(CLASS_POOL.get(superClass.getCanonicalName()));
         return enhanceClass;
     }
+
 }

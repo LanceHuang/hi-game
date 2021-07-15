@@ -32,6 +32,13 @@ public class AssignableEventFilter implements EventFilter {
         }
     }
 
+    public AssignableEventFilter(Class<?>[] resolveTypes) {
+        if (resolveTypes == null || resolveTypes.length == 0) {
+            throw new IllegalArgumentException("resolveTypes cannot be empty");
+        }
+        this.resolveTypes = resolveTypes;
+    }
+
     @Override
     public boolean match(Class<?> eventType) {
         for (Class<?> resolveType : resolveTypes) {

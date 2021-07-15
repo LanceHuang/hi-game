@@ -2,6 +2,7 @@ package com.lance.game.lab.event;
 
 import com.lance.game.lab.event.invoker.EventListenerInvoker;
 import com.lance.game.lab.event.invoker.EventListenerInvokerComparator;
+import com.lance.game.lab.event.invoker.EventListenerInvokerFactory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -23,17 +24,17 @@ public class EventBus {
 
     private final Map<Class<?>, List<EventListenerInvoker>> invokeCache = new ConcurrentHashMap<>();
 
-    // todo 运行时注册
-    public void registerEventListenerInvoker(Object bean, Method method) {
+    private final EventListenerInvokerFactory factory;
 
+    public EventBus(EventListenerInvokerFactory factory) {
+        this.factory = factory;
     }
 
     /**
      * 注册事件监听器
-     *
-     * @param eventListenerInvoker 事件监听器
      */
-    public void registerEventListenerInvoker(EventListenerInvoker eventListenerInvoker) {
+    public void registerEventListenerInvoker(Object bean, Method method, Class<?>[] eventTypes, boolean async) {
+        EventListenerInvoker eventListenerInvoker = factory.createEventListenerInvoker(bean, method, eventTypes, async);
         if (eventListenerInvoker == null) {
             return;
         }
@@ -43,6 +44,24 @@ public class EventBus {
             invokeCache.clear();
         }
     }
+
+    /**
+     * 注册事件监听器
+     */
+    public void registerEventListenerInvoker(Object bean, Method method) {
+        EventListenerInvoker eventListenerInvoker = factory.createEventListenerInvoker(bean, method);
+        if (eventListenerInvoker == null) {
+            return;
+        }
+
+        synchronized (this) {
+            // todo 怎么去重？
+            invokers.add(eventListenerInvoker);
+            invokeCache.clear();
+        }
+    }
+
+    // todo 运行时怎么删除？
 
     /**
      * 删除事件监听器

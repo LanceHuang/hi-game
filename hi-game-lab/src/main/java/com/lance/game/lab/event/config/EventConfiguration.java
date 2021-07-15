@@ -32,12 +32,12 @@ public class EventConfiguration {
     }
 
     @Bean
-    public EventBus eventBus() {
-        return new EventBus();
+    public EventBus eventBus(EventListenerInvokerFactory factory) {
+        return new EventBus(factory);
     }
 
     @Bean
-    public EventListenerProcessor eventListenerProcessor(EventListenerInvokerFactory factory, EventBus eventBus) {
-        return new EventListenerProcessor(factory, eventBus);
+    public EventListenerProcessor eventListenerProcessor(EventBus eventBus) {
+        return new EventListenerProcessor(eventBus);
     }
 }
