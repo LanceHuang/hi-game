@@ -9,9 +9,9 @@ import com.lance.game.lab.event.executor.EventListenerExecutor;
  */
 public class EventListenerInvokerProxy implements EventListenerInvoker {
 
-    private EventListenerExecutor executor;
+    private final EventListenerExecutor executor;
 
-    private EventListenerInvoker invoker;
+    private final EventListenerInvoker invoker;
 
     public EventListenerInvokerProxy(EventListenerExecutor executor, EventListenerInvoker invoker) {
         this.executor = executor;

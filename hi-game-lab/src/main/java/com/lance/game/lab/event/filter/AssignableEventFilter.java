@@ -42,7 +42,7 @@ public class AssignableEventFilter implements EventFilter {
     @Override
     public boolean match(Class<?> eventType) {
         for (Class<?> resolveType : resolveTypes) {
-            if (resolveType == eventType) {
+            if (resolveType.isAssignableFrom(eventType)) {
                 return true;
             }
         }
