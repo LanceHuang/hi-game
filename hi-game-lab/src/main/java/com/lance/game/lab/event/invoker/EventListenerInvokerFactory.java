@@ -196,7 +196,7 @@ public class EventListenerInvokerFactory {
 
     private static CtClass buildInvoker() throws Exception {
         Class<?> superClass = AbstractEventListenerInvoker.class;
-        CtClass enhanceClass = CLASS_POOL.makeClass("EventListenerInvokerEnhance" + INDEX.getAndIncrement());
+        CtClass enhanceClass = CLASS_POOL.makeClass(superClass.getPackage().getName() + ".EventListenerInvokerEnhance" + INDEX.getAndIncrement());
         enhanceClass.setSuperclass(CLASS_POOL.get(superClass.getCanonicalName()));
         return enhanceClass;
     }
