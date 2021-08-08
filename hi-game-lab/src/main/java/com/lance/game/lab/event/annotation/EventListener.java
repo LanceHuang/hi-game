@@ -29,4 +29,14 @@ public @interface EventListener {
      * 事件正则
      */
     String[] pattern() default {};
+
+    /**
+     * 执行条件类型
+     */
+    EventConditionType conditionType() default EventConditionType.MVEL;
+
+    /**
+     * 条件值
+     */
+    String condition() default "";
 }

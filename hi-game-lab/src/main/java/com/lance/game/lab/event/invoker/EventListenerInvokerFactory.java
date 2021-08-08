@@ -4,6 +4,8 @@ import com.lance.game.lab.event.Event;
 import com.lance.game.lab.event.annotation.Async;
 import com.lance.game.lab.event.annotation.EventListener;
 import com.lance.game.lab.event.annotation.Order;
+import com.lance.game.lab.event.condition.EventCondition;
+import com.lance.game.lab.event.condition.MVELEventCondition;
 import com.lance.game.lab.event.executor.EventListenerExecutor;
 import com.lance.game.lab.event.filter.AbstractEventFilter;
 import com.lance.game.lab.event.filter.AnnotationEventFilter;
@@ -55,33 +57,36 @@ public class EventListenerInvokerFactory {
         // 创建过滤器
         EventFilter eventFilter = createEventFilter(bean, method);
 
+        // 创建条件
+        EventCondition eventCondition = createEventCondition(bean, method);
+
         // 创建代理对象
-        return doCreateEventListenerInvoker(bean, method, order, async, executorName, eventFilter);
+        return doCreateEventListenerInvoker(bean, method, order, async, executorName, eventFilter, eventCondition);
     }
 
     public EventListenerInvoker createEventListenerInvoker(Object bean, Method method, Class<?>[] eventTypes) {
-        return doCreateEventListenerInvoker(bean, method, 0, false, SYNC_EXECUTOR, new AssignableEventFilter(eventTypes));
+        return doCreateEventListenerInvoker(bean, method, 0, false, SYNC_EXECUTOR, new AssignableEventFilter(eventTypes), null);
     }
 
     public EventListenerInvoker createEventListenerInvoker(Object bean, Method method, Class<?>[] eventTypes, int order) {
-        return doCreateEventListenerInvoker(bean, method, order, false, SYNC_EXECUTOR, new AssignableEventFilter(eventTypes));
+        return doCreateEventListenerInvoker(bean, method, order, false, SYNC_EXECUTOR, new AssignableEventFilter(eventTypes), null);
     }
 
     public EventListenerInvoker createEventListenerInvoker(Object bean, Method method, Class<?>[] eventTypes, boolean async) {
         String executorName = async ? ASYNC_EXECUTOR : SYNC_EXECUTOR;
-        return doCreateEventListenerInvoker(bean, method, 0, async, executorName, new AssignableEventFilter(eventTypes));
+        return doCreateEventListenerInvoker(bean, method, 0, async, executorName, new AssignableEventFilter(eventTypes), null);
     }
 
     public EventListenerInvoker createEventListenerInvoker(Object bean, Method method, Class<?>[] eventTypes, int order, boolean async) {
         String executorName = async ? ASYNC_EXECUTOR : SYNC_EXECUTOR;
-        return doCreateEventListenerInvoker(bean, method, order, async, executorName, new AssignableEventFilter(eventTypes));
+        return doCreateEventListenerInvoker(bean, method, order, async, executorName, new AssignableEventFilter(eventTypes), null);
     }
 
     public EventListenerInvoker createEventListenerInvoker(Object bean, Method method, Class<?>[] eventTypes, int order, boolean async, String executorName) {
-        return doCreateEventListenerInvoker(bean, method, order, async, executorName, new AssignableEventFilter(eventTypes));
+        return doCreateEventListenerInvoker(bean, method, order, async, executorName, new AssignableEventFilter(eventTypes), null);
     }
 
-    private EventListenerInvoker doCreateEventListenerInvoker(Object bean, Method method, int order, boolean async, String executorName, EventFilter eventFilter) {
+    private EventListenerInvoker doCreateEventListenerInvoker(Object bean, Method method, int order, boolean async, String executorName, EventFilter eventFilter, EventCondition eventCondition) {
         EventListenerExecutor executor = executorMap.get(executorName);
         if (executor == null) {
             throw new IllegalArgumentException("No executor specified: " + executorName);
@@ -94,6 +99,7 @@ public class EventListenerInvokerFactory {
         invoker.setOrder(order);
         invoker.setAsync(async);
         invoker.setFilter(eventFilter);
+        invoker.setCondition(eventCondition);
         return new EventListenerInvokerProxy(executor, invoker);
     }
 
@@ -155,6 +161,49 @@ public class EventListenerInvokerFactory {
         }
     }
 
+    /**
+     * 创建事件执行条件
+     *
+     * @param bean   监听bean
+     * @param method 监听方法
+     * @return 执行条件
+     */
+    private EventCondition createEventCondition(Object bean, Method method) {
+        EventListener eventListener = method.getAnnotation(EventListener.class);
+        switch (eventListener.conditionType()) {
+            case MVEL:
+                return new MVELEventCondition(eventListener.condition());
+//            case CUSTOM:
+//                return createCustomEventCondition(bean, method);
+            default:
+                throw new IllegalArgumentException("Failed to create event condition: " + bean.getClass().getName() + "#" + method.getName());
+        }
+    }
+
+//    private EventCondition createCustomEventCondition(Object bean, Method method) {
+//        EventListener eventListener = method.getAnnotation(EventListener.class);
+//        Class<?>[] eventListenerValue = eventListener.value();
+//        if (eventListenerValue.length == 0) {
+//            throw new IllegalArgumentException("EventListener.value cannot be empty: " + bean.getClass().getName() + "#" + method.getName());
+//        }
+//        Class<?> customFilterClass = eventListenerValue[0];
+//        if (!EventFilter.class.isAssignableFrom(customFilterClass)) {
+//            throw new IllegalArgumentException("Unexpected custom event filter: " + bean.getClass().getName() + "#" + method.getName()
+//                    + " " + customFilterClass.getName());
+//        }
+//
+//        try {
+//            if (AbstractEventFilter.class.isAssignableFrom(customFilterClass)) {
+//                Constructor<?> c = customFilterClass.getConstructor(Object.class, Method.class);
+//                return (EventFilter) c.newInstance(bean, method);
+//            } else {
+//                return (EventFilter) customFilterClass.newInstance();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new IllegalArgumentException("Failed to create custom event filter: " + bean.getClass().getName() + "#" + method.getName());
+//        }
+//    }
 
     private static final ClassPool CLASS_POOL = ClassPool.getDefault();
 
@@ -179,7 +228,7 @@ public class EventListenerInvokerFactory {
             // 监听方法
             CtMethod invokerMethod = new CtMethod(
                     CtClass.voidType,
-                    "invokeListener",
+                    "doInvokeListener",
                     CLASS_POOL.get(new String[]{Event.class.getCanonicalName()}),
                     enhanceClass
             );
