@@ -16,6 +16,7 @@
         <module>hi-game-lab</module>
         <module>hi-game-common</module>
         <module>hi-game-loadbalancer</module>
+        <module>hi-game-event</module>
     </modules>
 
     <properties>
