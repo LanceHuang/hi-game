@@ -29,9 +29,9 @@ public class EventTest {
         System.out.println("Start at " + System.currentTimeMillis());
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-//        for (int i = 0; i < 10000000; i++) {
-//            eventBus.publishEvent(new TestEvent(this));
-//        }
+        for (int i = 0; i < 10000000; i++) {
+            eventBus.publishEvent(new TestEvent(this));
+        }
         stopWatch.stop();
         System.out.println("Cost in " + stopWatch.getLastTaskTimeMillis() + " ms");
     }
