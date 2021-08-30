@@ -13,7 +13,7 @@ import java.util.Map;
 public class AttributeContainer {
 
     /** 模块属性 */
-    private final Map<AttributeId, Map<AttributeType, Long>> moduleAttributeMap = new HashMap<>();
+    private final Map<ModuleAttributeId, Map<AttributeType, Long>> moduleAttributeMap = new HashMap<>();
 
     /** 最终属性 */
     private final Map<AttributeType, Long> finalAttributeMap = new HashMap<>();
@@ -21,26 +21,26 @@ public class AttributeContainer {
     /**
      * 添加或更新属性，并重算
      *
-     * @param attributeId  模块属性id
+     * @param moduleAttributeId  模块属性id
      * @param attributeMap 添加或更新的属性
      */
-    public void putAndComputeAttributes(AttributeId attributeId, Map<AttributeType, Long> attributeMap) {
-        putAttributes(attributeId, attributeMap);
-        compute(attributeId);
+    public void putAndComputeAttributes(ModuleAttributeId moduleAttributeId, Map<AttributeType, Long> attributeMap) {
+        putAttributes(moduleAttributeId, attributeMap);
+        compute(moduleAttributeId);
     }
 
     /**
      * 添加或更新属性
      *
-     * @param attributeId  模块属性id
+     * @param moduleAttributeId  模块属性id
      * @param attributeMap 添加或更新的属性
      */
-    public void putAttributes(AttributeId attributeId, Map<AttributeType, Long> attributeMap) {
-        if (attributeId == null) {
+    public void putAttributes(ModuleAttributeId moduleAttributeId, Map<AttributeType, Long> attributeMap) {
+        if (moduleAttributeId == null) {
             return;
         }
 
-        Map<AttributeType, Long> oldAttributeMap = moduleAttributeMap.get(attributeId);
+        Map<AttributeType, Long> oldAttributeMap = moduleAttributeMap.get(moduleAttributeId);
         // todo 没有旧数据
         // todo 有旧数据
 
@@ -50,10 +50,10 @@ public class AttributeContainer {
     /**
      * 计算属性
      *
-     * @param attributeId 模块属性id
+     * @param moduleAttributeId 模块属性id
      */
-    public void compute(AttributeId attributeId) {
-        if (attributeId == null) {
+    public void compute(ModuleAttributeId moduleAttributeId) {
+        if (moduleAttributeId == null) {
             return;
         }
         // todo
@@ -66,7 +66,7 @@ public class AttributeContainer {
         moduleAttributeMap.keySet().forEach(this::compute);
     }
 
-    public Map<AttributeId, Map<AttributeType, Long>> getModuleAttributeMap() {
+    public Map<ModuleAttributeId, Map<AttributeType, Long>> getModuleAttributeMap() {
         return moduleAttributeMap;
     }
 

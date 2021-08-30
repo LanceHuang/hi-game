@@ -26,7 +26,7 @@ public enum AttributeType {
     ;
 
     /** 属性id */
-    private int id;
+    private final int id;
 
     /** 属性更新类型 */
     private AttributeUpdateType attributeUpdateType;

@@ -5,12 +5,11 @@ package com.lance.game.demo.module.attribute.model;
  *
  * @author Lance
  */
-public enum AttributeId {
+public enum ModuleAttributeId {
 
     /** 测试 */
     TEST,
     /** 装备 */
     EQUIP,
     ;
-
 }

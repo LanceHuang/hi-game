@@ -2,7 +2,7 @@ package com.lance.game.demo.module.attribute;
 
 import com.lance.game.demo.module.attribute.constant.AttributeType;
 import com.lance.game.demo.module.attribute.model.AttributeContainer;
-import com.lance.game.demo.module.attribute.model.AttributeId;
+import com.lance.game.demo.module.attribute.model.ModuleAttributeId;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -26,7 +26,7 @@ public class AttributeContainerTest {
         equipAttributeMap.put(AttributeType.HP, 5000L);
 
         AttributeContainer attributeContainer = new AttributeContainer();
-        attributeContainer.putAndComputeAttributes(AttributeId.TEST, testAttributeMap);
-        attributeContainer.putAndComputeAttributes(AttributeId.EQUIP, equipAttributeMap);
+        attributeContainer.putAndComputeAttributes(ModuleAttributeId.TEST, testAttributeMap);
+        attributeContainer.putAndComputeAttributes(ModuleAttributeId.EQUIP, equipAttributeMap);
     }
 }
