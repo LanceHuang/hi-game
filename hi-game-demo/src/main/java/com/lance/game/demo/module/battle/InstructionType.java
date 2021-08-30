@@ -1,8 +1,8 @@
-package com.lance.game.demo.module.emulator;
+package com.lance.game.demo.module.battle;
 
-import com.lance.game.demo.module.emulator.handler.HitInstructionHandler;
-import com.lance.game.demo.module.emulator.handler.IInstructionHandler;
-import com.lance.game.demo.module.emulator.handler.ReadyInstructionHandler;
+import com.lance.game.demo.module.battle.handler.HitInstructionHandler;
+import com.lance.game.demo.module.battle.handler.IInstructionHandler;
+import com.lance.game.demo.module.battle.handler.ReadyInstructionHandler;
 
 /**
  * 指令类型

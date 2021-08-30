@@ -1,6 +1,5 @@
 package com.lance.game.demo;
 
-import com.lance.game.demo.executor.ICommandExecutor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +17,6 @@ public class GameContext {
     @Resource
     private ApplicationContext applicationContext;
 
-    @Resource
-    private ICommandExecutor commandExecutor;
-
     private static GameContext instance;
 
     @PostConstruct
@@ -30,9 +26,5 @@ public class GameContext {
 
     public static <T> T getBean(Class<T> clazz) {
         return instance.applicationContext.getBean(clazz);
-    }
-
-    public static ICommandExecutor getCommandExecutor() {
-        return instance.commandExecutor;
     }
 }

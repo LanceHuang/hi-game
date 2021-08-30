@@ -1,7 +1,7 @@
-package com.lance.game.demo.module.emulator.handler;
+package com.lance.game.demo.module.battle.handler;
 
-import com.lance.game.demo.module.emulator.BattleUnit;
-import com.lance.game.demo.module.emulator.CreatureUnit;
+import com.lance.game.demo.module.battle.BattleUnit;
+import com.lance.game.demo.module.battle.CreatureUnit;
 
 /**
  * @author Lance

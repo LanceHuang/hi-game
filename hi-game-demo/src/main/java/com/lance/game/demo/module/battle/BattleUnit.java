@@ -1,4 +1,4 @@
-package com.lance.game.demo.module.emulator;
+package com.lance.game.demo.module.battle;
 
 import lombok.Getter;
 import lombok.Setter;

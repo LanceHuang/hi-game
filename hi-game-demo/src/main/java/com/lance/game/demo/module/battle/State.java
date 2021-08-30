@@ -1,7 +1,7 @@
-package com.lance.game.demo.module.emulator;
+package com.lance.game.demo.module.battle;
 
-import com.lance.game.demo.module.emulator.handler.IStateHandler;
-import com.lance.game.demo.module.emulator.handler.NormalStateHandler;
+import com.lance.game.demo.module.battle.handler.IStateHandler;
+import com.lance.game.demo.module.battle.handler.NormalStateHandler;
 
 /**
  * 状态
