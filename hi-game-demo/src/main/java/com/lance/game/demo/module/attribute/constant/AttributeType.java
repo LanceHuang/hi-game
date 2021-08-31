@@ -1,6 +1,7 @@
 package com.lance.game.demo.module.attribute.constant;
 
 import com.lance.game.demo.module.attribute.model.Attribute;
+import com.lance.game.demo.module.attribute.operate.AttributeOperate;
 
 /**
  * 属性类型
@@ -17,42 +18,33 @@ public enum AttributeType {
     DEFENSE(3),
     /** 防御加成 */
     DEFENSE_RATE(4),
-    /** 生命 */
-    HP(5),
-    /** 生命加成 */
-    HP_RATE(6),
-    /** 武器攻击加成 */
-    WEAPON_ATK_RATE(7),
+    /** 最大生命 */
+    MAX_HP(5),
+    /** 最大生命加成 */
+    MAX_HP_RATE(6),
     ;
 
     /** 属性id */
     private final int id;
 
-    /** 属性更新类型 */
-    private AttributeUpdateType attributeUpdateType;
+    /** 属性运算类型 */
+    private final AttributeOperateType attributeOperateType;
 
     /** 属性效果类型 */
-    private AttributeEffectType attributeEffectType;
+    private final AttributeEffectType attributeEffectType;
 
     /** 受影响属性 */
-    private Attribute[] effectiveAttributes;
+    private final Attribute[] effectiveAttributes;
 
     AttributeType(int id) {
         this.id = id;
+        this.attributeOperateType = AttributeOperateType.BASIC;
+        this.attributeEffectType = null;
+        this.effectiveAttributes = null;
     }
 
-    /**
-     * 判断是否有更新操作
-     */
-    public boolean hasUpdate() {
-        return attributeUpdateType != null;
-    }
-
-    /**
-     * 判断是否有属性效果
-     */
-    public boolean hasEffect() {
-        return attributeEffectType != null;
+    public AttributeOperate getAttributeOperate() {
+        return attributeOperateType.getAttributeOperate();
     }
 
     //=================== Getter ===========================
@@ -61,11 +53,11 @@ public enum AttributeType {
         return id;
     }
 
-    public AttributeUpdateType getAttributeUpdateType() {
-        return attributeUpdateType;
+    public AttributeOperateType getAttributeOperateType() {
+        return attributeOperateType;
     }
 
-    public AttributeEffectType getAttributeComputerType() {
+    public AttributeEffectType getAttributeEffectType() {
         return attributeEffectType;
     }
 

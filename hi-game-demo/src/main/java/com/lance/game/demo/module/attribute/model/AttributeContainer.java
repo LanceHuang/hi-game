@@ -42,8 +42,9 @@ public class AttributeContainer {
         Map<AttributeType, Long> tempAttributeMap = CollectionUtils.hashMap(this.finalAttributeMap.size());
         for (Map<AttributeType, Long> attrMap : this.moduleAttributeMap.values()) {
             for (Map.Entry<AttributeType, Long> entry : attrMap.entrySet()) {
-                long longValue = MapUtils.getLongValue(tempAttributeMap, entry.getKey(), 0L);
-                tempAttributeMap.put(entry.getKey(), longValue + entry.getValue());
+                long oldValue = MapUtils.getLongValue(tempAttributeMap, entry.getKey(), 0L);
+                long newValue = entry.getKey().getAttributeOperate().operate(oldValue, entry.getValue());
+                tempAttributeMap.put(entry.getKey(), newValue);
             }
         }
         this.finalAttributeMap = tempAttributeMap;
