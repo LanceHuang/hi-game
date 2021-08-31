@@ -7,20 +7,14 @@ package com.lance.game.demo.module.skill.model;
  */
 public enum SkillType {
 
-    /** 主动技能 */
+    /** 普通技能 */
     COMMON(1) {
         @Override
-        public AbstractSkill create() {
+        public Skill create() {
             return new CommonSkill();
         }
     },
-    /** 被动技能 */
-    PASSIVITY(2) {
-        @Override
-        public AbstractSkill create() {
-            return new PassivitySkill();
-        }
-    };
+    ;
 
     private int type;
 
@@ -28,9 +22,7 @@ public enum SkillType {
         this.type = type;
     }
 
-    public abstract AbstractSkill create();
-
-    // todo 主动技能直接使用，被动技能相当于buff，施加debuff相当于隔一段时间后激活持有者的buff
+    public abstract Skill create();
 
     public static SkillType typeOf(int t) {
         for (SkillType skillType : values()) {

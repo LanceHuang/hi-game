@@ -5,5 +5,5 @@ package com.lance.game.demo.module.skill.model;
  *
  * @author Lance
  */
-public class CommonSkill extends AbstractSkill {
+public class CommonSkill extends Skill {
 }
