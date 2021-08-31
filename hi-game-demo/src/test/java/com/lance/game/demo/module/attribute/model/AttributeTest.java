@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 public class AttributeTest {
 
     @Test
-    public void test() throws Exception {
+    public void test() {
         Attribute attribute = Attribute.valueOf(AttributeType.ATK, 100);
         System.out.println(attribute);
 

@@ -45,7 +45,7 @@ public class IItemConfigDaoTest {
     }
 
     @Test
-    public void addItemConfig() throws Exception {
+    public void addItemConfig() {
         String[] data = {
                 "{\"id\": 1, \"name\": \"石头\", \"type\": 1}",
                 "{\"id\": 2, \"name\": \"树叶\", \"type\": 1}",
@@ -89,7 +89,7 @@ public class IItemConfigDaoTest {
     }
 
     @Test
-    public void findOneAndReplace() throws Exception {
+    public void findOneAndReplace() {
         getItemConfigs();
         System.out.println("=================================");
         itemConfigDao.replaceItemConfig("{type:2}",
