@@ -44,3 +44,15 @@ module-logs
 
 * logs：通用日志
 * module-logs：模块日志
+
+### 开发规范
+* controller：视图层
+* service：服务层
+    * serviceImpl：服务层实现
+* manager：管理层
+* dao：持久层
+* model：业务实体
+* message：网络协议
+* config：业务配置
+* entity：持久层实体
+* constant：常量及类型
