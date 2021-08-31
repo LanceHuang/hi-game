@@ -32,6 +32,7 @@
 
         <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
         <mysql.version>8.0.16</mysql.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
     </properties>
 
     <dependencyManagement>
@@ -69,6 +70,12 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -104,6 +111,11 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
         </dependency>
     </dependencies>
 

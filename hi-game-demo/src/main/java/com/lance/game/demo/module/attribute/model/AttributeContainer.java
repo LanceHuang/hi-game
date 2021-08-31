@@ -1,69 +1,52 @@
 package com.lance.game.demo.module.attribute.model;
 
+import com.lance.game.common.util.CollectionUtils;
 import com.lance.game.demo.module.attribute.constant.AttributeType;
+import org.apache.commons.collections4.MapUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * 属性容器
  *
  * @author Lance
+ * @since 2021/8/31
  */
 public class AttributeContainer {
 
     /** 模块属性 */
-    private final Map<ModuleAttributeId, Map<AttributeType, Long>> moduleAttributeMap = new HashMap<>();
+    private final Map<ModuleAttributeId, Map<AttributeType, Long>> moduleAttributeMap = CollectionUtils.hashMap();
 
     /** 最终属性 */
-    private final Map<AttributeType, Long> finalAttributeMap = new HashMap<>();
+    private Map<AttributeType, Long> finalAttributeMap = CollectionUtils.hashMap(0);
 
     /**
-     * 添加或更新属性，并重算
-     *
-     * @param moduleAttributeId  模块属性id
-     * @param attributeMap 添加或更新的属性
+     * 更新并计算属性
      */
-    public void putAndComputeAttributes(ModuleAttributeId moduleAttributeId, Map<AttributeType, Long> attributeMap) {
-        putAttributes(moduleAttributeId, attributeMap);
-        compute(moduleAttributeId);
+    public void updateAndComputeAttributes(ModuleAttributeId mai, Map<AttributeType, Long> newAttrMap) {
+        updateAttributes(mai, newAttrMap);
+        compute();
     }
 
     /**
-     * 添加或更新属性
-     *
-     * @param moduleAttributeId  模块属性id
-     * @param attributeMap 添加或更新的属性
+     * 更新属性
      */
-    public void putAttributes(ModuleAttributeId moduleAttributeId, Map<AttributeType, Long> attributeMap) {
-        if (moduleAttributeId == null) {
-            return;
-        }
-
-        Map<AttributeType, Long> oldAttributeMap = moduleAttributeMap.get(moduleAttributeId);
-        // todo 没有旧数据
-        // todo 有旧数据
-
-        // 统计RATIO和MODULE_RATIO
-    }
-
-    /**
-     * 计算属性
-     *
-     * @param moduleAttributeId 模块属性id
-     */
-    public void compute(ModuleAttributeId moduleAttributeId) {
-        if (moduleAttributeId == null) {
-            return;
-        }
-        // todo
+    public void updateAttributes(ModuleAttributeId mai, Map<AttributeType, Long> newAttrMap) {
+        this.moduleAttributeMap.put(mai, newAttrMap);
     }
 
     /**
      * 计算属性
      */
     public void compute() {
-        moduleAttributeMap.keySet().forEach(this::compute);
+        Map<AttributeType, Long> tempAttributeMap = CollectionUtils.hashMap(this.finalAttributeMap.size());
+        for (Map<AttributeType, Long> attrMap : this.moduleAttributeMap.values()) {
+            for (Map.Entry<AttributeType, Long> entry : attrMap.entrySet()) {
+                long longValue = MapUtils.getLongValue(tempAttributeMap, entry.getKey(), 0L);
+                tempAttributeMap.put(entry.getKey(), longValue + entry.getValue());
+            }
+        }
+        this.finalAttributeMap = tempAttributeMap;
     }
 
     public Map<ModuleAttributeId, Map<AttributeType, Long>> getModuleAttributeMap() {
