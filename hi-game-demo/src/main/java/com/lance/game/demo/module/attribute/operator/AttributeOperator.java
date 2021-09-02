@@ -1,12 +1,12 @@
-package com.lance.game.demo.module.attribute.operate;
+package com.lance.game.demo.module.attribute.operator;
 
 /**
- * 属性运算
+ * 属性运算器
  *
  * @author Lance
  * @since 2021/1/12
  */
-public abstract class AttributeOperate {
+public abstract class AttributeOperator {
 
     /**
      * 更新属性

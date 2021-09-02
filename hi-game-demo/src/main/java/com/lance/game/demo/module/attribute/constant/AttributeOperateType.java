@@ -1,7 +1,7 @@
 package com.lance.game.demo.module.attribute.constant;
 
-import com.lance.game.demo.module.attribute.operate.AttributeOperate;
-import com.lance.game.demo.module.attribute.operate.BasicAttributeOperate;
+import com.lance.game.demo.module.attribute.operator.AttributeOperator;
+import com.lance.game.demo.module.attribute.operator.DefaultAttributeOperator;
 
 /**
  * 属性运算类型
@@ -12,15 +12,15 @@ import com.lance.game.demo.module.attribute.operate.BasicAttributeOperate;
 public enum AttributeOperateType {
 
     /** 基本运算 */
-    BASIC(new BasicAttributeOperate());
+    BASIC(new DefaultAttributeOperator());
 
-    private final AttributeOperate attributeOperate;
+    private final AttributeOperator attributeOperator;
 
-    AttributeOperateType(AttributeOperate attributeOperate) {
-        this.attributeOperate = attributeOperate;
+    AttributeOperateType(AttributeOperator attributeOperator) {
+        this.attributeOperator = attributeOperator;
     }
 
-    public AttributeOperate getAttributeOperate() {
-        return attributeOperate;
+    public AttributeOperator getAttributeOperate() {
+        return attributeOperator;
     }
 }

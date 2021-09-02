@@ -1,7 +1,7 @@
 package com.lance.game.demo.module.attribute.computer;
 
 import com.lance.game.demo.module.attribute.constant.AttributeType;
-import com.lance.game.demo.module.attribute.model.ModuleAttributeId;
+import com.lance.game.demo.module.attribute.model.ModuleId;
 
 import java.util.Map;
 
@@ -14,18 +14,16 @@ import java.util.Map;
 public abstract class AttributeComputer {
 
     /**
-     * 获取计算类型
-     *
-     * @return 计算类型
-     */
-    public abstract AttributeType getAttributeType();
-
-    /**
      * 计算属性值
      *
-     * @param moduleAttributeMap 模块属性
-     * @param attributeMap       中间属性
-     * @return 属性值
+     * @param moduleAttrs 模块属性
+     * @param originAttrs 白值属性
+     * @param type        属性类型
+     * @param value       属性值
+     * @return 新属性值
      */
-    public abstract long compute(Map<ModuleAttributeId, Map<AttributeType, Long>> moduleAttributeMap, Map<AttributeType, Long> attributeMap);
+    public abstract long compute(Map<ModuleId, Map<AttributeType, Long>> moduleAttrs,
+                                 Map<AttributeType, Long> originAttrs,
+                                 AttributeType type,
+                                 long value);
 }
