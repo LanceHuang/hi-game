@@ -36,9 +36,9 @@ public class GameContext {
     }
 
     @Autowired
-    private GameService gameService;
+    private IGameService gameService;
 
-    public static GameService getGameService() {
+    public static IGameService getGameService() {
         return instance.gameService;
     }
 }

@@ -48,7 +48,6 @@ module-logs
 ### 开发规范
 * controller：视图层
 * service：服务层
-    * serviceImpl：服务层实现
 * manager：管理层
 * dao：持久层
 * model：业务实体

@@ -1,20 +1,27 @@
 package com.lance.game.demo;
 
+import com.lance.game.demo.core.log.LoggerUtil;
+import org.springframework.stereotype.Service;
+
 /**
- * 游戏生命周期管理类
- *
  * @author Lance
  * @since 2021/8/31
  */
-public interface GameService {
+@Service
+public class GameService implements IGameService {
 
-    /**
-     * 启动游戏，同时管理模块初始化顺序（先加载玩家数据，再加载其他数据）
-     */
-    void start();
+    @Override
+    public void start() {
+        LoggerUtil.info("初始化游戏");
 
-    /**
-     * 关闭游戏，关闭调用各模块的停服接口，关闭定时器
-     */
-    void stop();
+        LoggerUtil.info("初始化活动");
+
+        LoggerUtil.info("初始化游戏完成");
+    }
+
+    @Override
+    public void stop() {
+        LoggerUtil.info("关闭游戏");
+        LoggerUtil.info("关闭游戏完成");
+    }
 }
