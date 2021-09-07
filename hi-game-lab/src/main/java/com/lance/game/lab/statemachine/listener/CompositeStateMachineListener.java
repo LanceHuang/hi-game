@@ -14,13 +14,13 @@ public class CompositeStateMachineListener<S> implements StateMachineListener<S>
     private final List<StateMachineListener<S>> listeners = new ArrayList<>(0);
 
     @Override
-    public void stateEnter(S state) {
-        listeners.forEach(listener -> listener.stateEnter(state));
+    public void onEnter(S state) {
+        listeners.forEach(listener -> listener.onEnter(state));
     }
 
     @Override
-    public void stateExit(S state) {
-        listeners.forEach(listener -> listener.stateExit(state));
+    public void onExit(S state) {
+        listeners.forEach(listener -> listener.onExit(state));
     }
 
     /**

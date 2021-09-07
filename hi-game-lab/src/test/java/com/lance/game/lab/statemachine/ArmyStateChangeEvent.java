@@ -8,8 +8,17 @@ package com.lance.game.lab.statemachine;
  */
 public enum ArmyStateChangeEvent {
 
-    /** 移动 */
-    MOVE,
-    /** 停止移动 */
-    STOP_MOVE;
+    /** 巡逻 */
+    PATROL,
+    /** 停止巡逻 */
+    STOP_PATROL,
+    /** 采集 */
+    GATHER,
+    /** 停止采集 */
+    STOP_GATHER,
+    /** 完成采集 */
+    COMPLETE_GATHER,
+    /** 清空采集物 */
+    CLEAR_GATHER,
+    ;
 }

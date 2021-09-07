@@ -13,12 +13,19 @@ public interface StateMachineListener<S> {
      *
      * @param state 状态
      */
-    void stateEnter(S state);
+    void onEnter(S state);
+
+//    /**
+//     * 进入状态
+//     *
+//     * @param state 状态
+//     */
+//    void onUpdate(S state);
 
     /**
      * 退出状态
      *
      * @param state 状态
      */
-    void stateExit(S state);
+    void onExit(S state);
 }

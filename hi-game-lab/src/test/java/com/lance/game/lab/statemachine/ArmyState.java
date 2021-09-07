@@ -1,8 +1,10 @@
 package com.lance.game.lab.statemachine;
 
-import com.lance.game.lab.statemachine.handler.ArmyNoneStateHandler;
-import com.lance.game.lab.statemachine.handler.ArmyPatrolStateHandler;
-import com.lance.game.lab.statemachine.handler.ArmyStateHandler;
+import com.lance.game.lab.statemachine.handler.BackToTheCityStateHandler;
+import com.lance.game.lab.statemachine.handler.GatherStateHandler;
+import com.lance.game.lab.statemachine.handler.NoneStateHandler;
+import com.lance.game.lab.statemachine.handler.PatrolStateHandler;
+import com.lance.game.lab.statemachine.handler.StateHandler;
 
 /**
  * 军队状态
@@ -13,17 +15,22 @@ import com.lance.game.lab.statemachine.handler.ArmyStateHandler;
 public enum ArmyState {
 
     /** 发呆 */
-    NONE(new ArmyNoneStateHandler()),
+    NONE(new NoneStateHandler()),
     /** 巡逻 */
-    PATROL(new ArmyPatrolStateHandler());
+    PATROL(new PatrolStateHandler()),
+    /** 采集 */
+    GATHER(new GatherStateHandler()),
+    /** 回城 */
+    BACK_TO_THE_CITY((new BackToTheCityStateHandler())),
+    ;
 
-    private ArmyStateHandler armyStateHandler;
+    private final StateHandler stateHandler;
 
-    ArmyState(ArmyStateHandler armyStateHandler) {
-        this.armyStateHandler = armyStateHandler;
+    ArmyState(StateHandler stateHandler) {
+        this.stateHandler = stateHandler;
     }
 
-    public ArmyStateHandler getArmyStateHandler() {
-        return armyStateHandler;
+    public StateHandler getArmyStateHandler() {
+        return stateHandler;
     }
 }

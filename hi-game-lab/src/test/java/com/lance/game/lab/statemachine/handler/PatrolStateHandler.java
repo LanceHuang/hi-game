@@ -3,24 +3,25 @@ package com.lance.game.lab.statemachine.handler;
 import com.lance.game.lab.statemachine.ArmyObject;
 
 /**
+ * 巡逻
+ *
  * @author Lance
  * @since 2021/9/6
  */
-public class ArmyNoneStateHandler extends ArmyStateHandler {
+public class PatrolStateHandler extends StateHandler {
 
     @Override
-    public void entry(ArmyObject armyObject) {
+    public void onEntry(ArmyObject armyObject) {
 
     }
 
     @Override
     public void onState(ArmyObject armyObject) {
-        System.out.println("Army stand by: " + armyObject.getName());
-        armyObject.move();
+        System.out.println(armyObject.getName() + "正在巡逻");
     }
 
     @Override
-    public void exit(ArmyObject armyObject) {
+    public void onExit(ArmyObject armyObject) {
 
     }
 }

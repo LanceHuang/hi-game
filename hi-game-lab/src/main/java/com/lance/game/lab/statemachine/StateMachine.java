@@ -66,8 +66,8 @@ public class StateMachine<S, E> {
     }
 
     private void notifyChange(S from, S to) {
-        compositeListener.stateExit(to);
-        compositeListener.stateEnter(from);
+        compositeListener.onExit(to);
+        compositeListener.onEnter(from);
     }
 
     /**

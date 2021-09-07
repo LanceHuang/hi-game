@@ -8,17 +8,17 @@ import com.lance.game.lab.statemachine.ArmyObject;
  * @author Lance
  * @since 2021/9/6
  */
-public abstract class ArmyStateHandler {
+public abstract class StateHandler {
 
     /**
      * 进入状态
      *
      * @param armyObject 军队
      */
-    public abstract void entry(ArmyObject armyObject);
+    public abstract void onEntry(ArmyObject armyObject);
 
     /**
-     * 当前状态时
+     * 当前状态
      *
      * @param armyObject 军队
      */
@@ -29,5 +29,5 @@ public abstract class ArmyStateHandler {
      *
      * @param armyObject 军队
      */
-    public abstract void exit(ArmyObject armyObject);
+    public abstract void onExit(ArmyObject armyObject);
 }
