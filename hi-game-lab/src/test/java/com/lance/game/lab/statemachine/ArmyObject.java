@@ -59,7 +59,7 @@ public class ArmyObject {
             this.aiMode = false;
             this.lastTime = System.currentTimeMillis();
 
-            stateMachine.publishEvent(event);
+            stateMachine.sendEvent(event);
         }
     }
 }

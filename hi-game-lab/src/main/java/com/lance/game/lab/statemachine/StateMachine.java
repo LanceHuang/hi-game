@@ -33,11 +33,11 @@ public class StateMachine<S, E> {
     }
 
     /**
-     * 发布事件
+     * 发送事件
      *
      * @param event 事件
      */
-    public void publishEvent(E event) {
+    public void sendEvent(E event) {
         Map<E, S> transitionMap = transitions.get(state);
         if (transitionMap == null) {
             return;
