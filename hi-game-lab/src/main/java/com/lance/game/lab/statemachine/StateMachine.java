@@ -15,12 +15,16 @@ public class StateMachine<S, E> {
     /** 转换规则 */
     private final Map<S, Map<E, S>> transitions;
 
+    /** 初始状态 */
+    private final S initialState;
+
     /** 状态 */
     private S state;
 
-    public StateMachine(Map<S, Map<E, S>> transitions, S state) {
+    public StateMachine(Map<S, Map<E, S>> transitions, S initialState) {
         this.transitions = transitions;
-        this.state = state;
+        this.initialState = initialState;
+        this.state = initialState;
     }
 
     /**
@@ -48,5 +52,21 @@ public class StateMachine<S, E> {
             return;
         }
         state = newState;
+    }
+
+    /**
+     * 判断是否已经完成。若没有下一个转换状态，则视为已完成
+     *
+     * @return true 已完成
+     */
+    public boolean isComplete() {
+        return transitions.containsKey(state);
+    }
+
+    /**
+     * 重置为初始状态
+     */
+    public void restore() {
+        state = initialState;
     }
 }
