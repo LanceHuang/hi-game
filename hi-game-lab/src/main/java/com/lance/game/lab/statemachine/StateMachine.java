@@ -1,5 +1,8 @@
 package com.lance.game.lab.statemachine;
 
+import com.lance.game.lab.statemachine.listener.CompositeStateMachineListener;
+import com.lance.game.lab.statemachine.listener.StateMachineListener;
+
 import java.util.Map;
 
 /**
@@ -11,6 +14,9 @@ import java.util.Map;
  * @since 2021/9/6
  */
 public class StateMachine<S, E> {
+
+    /** 监听器 */
+    private final CompositeStateMachineListener<S> compositeListener = new CompositeStateMachineListener<>();
 
     /** 转换规则 */
     private final Map<S, Map<E, S>> transitions;
@@ -51,7 +57,17 @@ public class StateMachine<S, E> {
         if (newState == null) {
             return;
         }
-        state = newState;
+
+        if (state != newState) {
+            S oldState = state;
+            state = newState;
+            notifyChange(oldState, newState);
+        }
+    }
+
+    private void notifyChange(S from, S to) {
+        compositeListener.stateExit(to);
+        compositeListener.stateEnter(from);
     }
 
     /**
@@ -68,5 +84,17 @@ public class StateMachine<S, E> {
      */
     public void restore() {
         state = initialState;
+    }
+
+    /**
+     * 添加监听器
+     *
+     * @param listener 监听器
+     */
+    public void addListener(StateMachineListener<S> listener) {
+        if (listener == null) {
+            return;
+        }
+        compositeListener.addListener(listener);
     }
 }
