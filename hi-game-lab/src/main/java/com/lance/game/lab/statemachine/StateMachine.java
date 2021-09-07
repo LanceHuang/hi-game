@@ -55,12 +55,12 @@ public class StateMachine<S, E> {
     }
 
     /**
-     * 判断是否已经完成。若没有下一个转换状态，则视为已完成
+     * 判断是否已达终态。若没有下一个转换状态，则视为已达终态
      *
-     * @return true 已完成
+     * @return true 已达终态
      */
     public boolean isComplete() {
-        return transitions.containsKey(state);
+        return !transitions.containsKey(state);
     }
 
     /**
