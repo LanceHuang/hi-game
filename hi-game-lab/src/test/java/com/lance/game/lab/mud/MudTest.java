@@ -1,7 +1,8 @@
 package com.lance.game.lab.mud;
 
-import com.lance.game.lab.mud.gameaction.GameActionType;
-import com.lance.game.lab.mud.service.IMudService;
+import com.lance.game.lab.mud.action.GameActionType;
+import com.lance.game.lab.mud.cmd.GameCommand;
+import com.lance.game.lab.mud.cmd.GameCommandType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,6 +29,8 @@ public class MudTest {
             （6）农民制造建筑：
          */
 
+        // todo 玩家执行操作，修改单位的上下文；每轮tick都会检查单位的上下文，执行新的内容
+
         // 创建战役
         long battleId = mudService.createBattleContext();
 
@@ -38,7 +41,7 @@ public class MudTest {
         long treeId = mudService.makeGameObject(battleId, 2, 10, 10);
 
         // 生产农民
-        mudService.executeGameObject(battleId, mainCityId, GameActionType.MAKE_GAME_OBJECT, Collections.emptyMap());
-        mudService.executeGameObject(battleId, mainCityId, GameActionType.MAKE_GAME_OBJECT, Collections.emptyMap());
+        mudService.executeGameObject(battleId, mainCityId, GameCommandType.MAKE, Collections.emptyMap());
+        mudService.executeGameObject(battleId, mainCityId, GameCommandType.MAKE, Collections.emptyMap());
     }
 }

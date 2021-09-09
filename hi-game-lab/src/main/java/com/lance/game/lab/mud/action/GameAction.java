@@ -1,6 +1,6 @@
-package com.lance.game.lab.mud.gameaction;
+package com.lance.game.lab.mud.action;
 
-import com.lance.game.lab.mud.battle.BattleContext;
+import com.lance.game.lab.mud.gameobject.BattleContext;
 import com.lance.game.lab.mud.gameobject.GameObject;
 
 import java.util.Map;

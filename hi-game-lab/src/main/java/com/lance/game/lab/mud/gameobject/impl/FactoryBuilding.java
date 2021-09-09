@@ -6,7 +6,7 @@ package com.lance.game.lab.mud.gameobject.impl;
  * @author Lance
  * @since 2021/9/7
  */
-public class FactoryBuilding extends Building {
+public abstract class FactoryBuilding extends Building {
 
     // todo 状态 制造中
 

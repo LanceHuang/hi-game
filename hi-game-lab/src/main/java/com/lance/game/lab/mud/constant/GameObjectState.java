@@ -1,11 +1,5 @@
 package com.lance.game.lab.mud.constant;
 
-import com.lance.game.lab.mud.statehandler.impl.BackToTheCityStateHandler;
-import com.lance.game.lab.mud.statehandler.impl.GatherStateHandler;
-import com.lance.game.lab.mud.statehandler.impl.NoneStateHandler;
-import com.lance.game.lab.mud.statehandler.impl.PatrolStateHandler;
-import com.lance.game.lab.mud.statehandler.StateHandler;
-
 /**
  * 游戏单位状态
  *
@@ -15,22 +9,12 @@ import com.lance.game.lab.mud.statehandler.StateHandler;
 public enum GameObjectState {
 
     /** 发呆 */
-    NONE(new NoneStateHandler()),
+    NONE,
     /** 巡逻 */
-    PATROL(new PatrolStateHandler()),
+    PATROL,
     /** 采集 */
-    GATHER(new GatherStateHandler()),
+    GATHER,
     /** 回城 */
-    BACK_TO_THE_CITY((new BackToTheCityStateHandler())),
+    BACK_TO_THE_CITY,
     ;
-
-    private final StateHandler stateHandler;
-
-    GameObjectState(StateHandler stateHandler) {
-        this.stateHandler = stateHandler;
-    }
-
-    public StateHandler getArmyStateHandler() {
-        return stateHandler;
-    }
 }

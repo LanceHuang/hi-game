@@ -1,6 +1,5 @@
 package com.lance.game.lab.mud;
 
-import com.lance.game.lab.mud.manager.MudManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;

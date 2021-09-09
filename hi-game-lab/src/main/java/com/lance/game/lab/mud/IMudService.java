@@ -1,6 +1,6 @@
-package com.lance.game.lab.mud.service;
+package com.lance.game.lab.mud;
 
-import com.lance.game.lab.mud.gameaction.GameActionType;
+import com.lance.game.lab.mud.cmd.GameCommandType;
 
 import java.util.Map;
 
@@ -31,10 +31,10 @@ public interface IMudService {
     /**
      * 操作游戏单位
      *
-     * @param battleId   战役id
-     * @param id         对象id
-     * @param actionType 行为类型
-     * @param params     拓展参数
+     * @param battleId        战役id
+     * @param id              对象id
+     * @param gameCommandType 游戏指令
+     * @param params          拓展参数
      */
-    void executeGameObject(long battleId, long id, GameActionType actionType, Map<String, String> params);
+    void executeGameObject(long battleId, long id, GameCommandType gameCommandType, Map<String, String> params);
 }

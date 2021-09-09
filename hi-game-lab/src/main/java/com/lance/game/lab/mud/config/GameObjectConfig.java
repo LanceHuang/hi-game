@@ -16,6 +16,14 @@ public class GameObjectConfig {
 
     private GameObjectType objectType;
 
+    public static GameObjectConfig valueOf(int id, String name, GameObjectType objectType) {
+        GameObjectConfig gameObjectConfig = new GameObjectConfig();
+        gameObjectConfig.id = id;
+        gameObjectConfig.name = name;
+        gameObjectConfig.objectType = objectType;
+        return gameObjectConfig;
+    }
+
     public int getId() {
         return id;
     }

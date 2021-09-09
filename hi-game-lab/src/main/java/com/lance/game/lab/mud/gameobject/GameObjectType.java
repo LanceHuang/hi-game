@@ -1,8 +1,8 @@
 package com.lance.game.lab.mud.gameobject;
 
 import com.lance.game.lab.mud.gameobjectbuilder.GameObjectBuilder;
-import com.lance.game.lab.mud.gameobjectbuilder.impl.FactoryBuildingBuilder;
-import com.lance.game.lab.mud.gameobjectbuilder.impl.HeroBuilder;
+import com.lance.game.lab.mud.gameobjectbuilder.impl.FarmerBuilder;
+import com.lance.game.lab.mud.gameobjectbuilder.impl.MainCityBuilder;
 import com.lance.game.lab.mud.gameobjectbuilder.impl.TreeBuilder;
 
 /**
@@ -13,12 +13,13 @@ import com.lance.game.lab.mud.gameobjectbuilder.impl.TreeBuilder;
  */
 public enum GameObjectType {
 
-    /** 工厂建筑 */
-    FACTORY_BUILDING(new FactoryBuildingBuilder()),
-    /** 英雄 */
-    HERO(new HeroBuilder()),
     /** 树木 */
     TREE(new TreeBuilder()),
+    /** 主城 */
+    MAIN_CITY(new MainCityBuilder()),
+    /** 农民 */
+    FARMER(new FarmerBuilder()),
+
     ;
 
     private final GameObjectBuilder gameObjectBuilder;

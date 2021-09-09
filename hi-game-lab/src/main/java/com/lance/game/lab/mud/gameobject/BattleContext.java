@@ -1,8 +1,9 @@
-package com.lance.game.lab.mud.battle;
+package com.lance.game.lab.mud.gameobject;
 
-import com.lance.game.lab.mud.gameaction.GameActionType;
+import com.lance.game.lab.mud.cmd.GameCommandType;
 import com.lance.game.lab.mud.gameobject.GameObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,7 +22,7 @@ public class BattleContext {
 
     private int maxY;
 
-    private Map<Long, GameObject> gameObjectMap;
+    private Map<Long, GameObject> gameObjectMap = new HashMap<>();
 
     public BattleContext(long id) {
         this.id = id;
@@ -71,17 +72,21 @@ public class BattleContext {
 
     /**
      * 执行指令
-     *
-     * @param id             单位id
-     * @param gameActionType 行为类型
      */
-    public void execute(long id, GameActionType gameActionType, Map<String, String> params) {
+    public void execute(long id, GameCommandType gameCommandType, Map<String, String> params) {
         GameObject gameObject = gameObjectMap.get(id);
         if (gameObject == null) {
             return;
         }
 
-        gameActionType.execute(this, gameObject, params);
+        // todo params
+        gameCommandType.getGameCommand().executeCmd(this, gameObject);
+    }
+
+    public void tick() {
+        for (GameObject gameObject : gameObjectMap.values()) {
+            gameObject.tick(this);
+        }
     }
 
     public long getId() {

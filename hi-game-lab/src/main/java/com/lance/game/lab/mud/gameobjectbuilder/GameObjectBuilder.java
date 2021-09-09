@@ -3,7 +3,7 @@ package com.lance.game.lab.mud.gameobjectbuilder;
 import com.lance.game.lab.mud.gameobject.GameObject;
 
 /**
- * 游戏单位构造器
+ * 游戏单位建造器
  *
  * @author Lance
  * @since 2021/9/7

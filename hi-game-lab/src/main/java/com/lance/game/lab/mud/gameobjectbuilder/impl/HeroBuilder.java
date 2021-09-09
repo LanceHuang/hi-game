@@ -4,7 +4,7 @@ import com.lance.game.lab.mud.gameobjectbuilder.GameObjectBuilder;
 import com.lance.game.lab.mud.gameobject.impl.Hero;
 
 /**
- * 英雄构造器
+ * 英雄建造器
  *
  * @author Lance
  * @since 2021/9/7

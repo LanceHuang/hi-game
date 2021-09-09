@@ -1,11 +1,9 @@
-package com.lance.game.lab.mud.service;
+package com.lance.game.lab.mud;
 
-import com.lance.game.lab.mud.battle.BattleContext;
-import com.lance.game.lab.mud.gameaction.GameActionType;
+import com.lance.game.lab.mud.gameobject.BattleContext;
+import com.lance.game.lab.mud.cmd.GameCommandType;
 import com.lance.game.lab.mud.config.GameObjectConfig;
 import com.lance.game.lab.mud.gameobject.GameObject;
-import com.lance.game.lab.mud.identify.IIdentifyService;
-import com.lance.game.lab.mud.manager.MudManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,34 +18,35 @@ import java.util.Map;
 public class MudService implements IMudService {
 
     @Autowired
-    private IIdentifyService identifyService;
-
-    @Autowired
     private MudManager mudManager;
 
     private final Map<Long, BattleContext> battleContextMap = new HashMap<>();
 
     @Override
     public long createBattleContext() {
-        BattleContext battleContext = new BattleContext(identifyService.nextId());
+        BattleContext battleContext = new BattleContext(nextId());
         battleContextMap.put(battleContext.getId(), battleContext);
         return battleContext.getId();
     }
 
     @Override
     public long makeGameObject(long battleId, int configId, int x, int y) {
-        long id = identifyService.nextId();
         GameObjectConfig gameObjectConfig = mudManager.getGameObjectConfig(configId);
-        GameObject gameObject = gameObjectConfig.getObjectType().getGameObjectBuilder().build(configId, id);
+        GameObject gameObject = gameObjectConfig.getObjectType().getGameObjectBuilder().build(configId, nextId());
 
         BattleContext battleContext = battleContextMap.get(battleId);
         battleContext.addGameObject(gameObject, x, y);
-        return id;
+        return gameObject.getId();
     }
 
     @Override
-    public void executeGameObject(long battleId, long id, GameActionType actionType, Map<String, String> params) {
+    public void executeGameObject(long battleId, long id, GameCommandType gameCommandType, Map<String, String> params) {
         BattleContext battleContext = battleContextMap.get(battleId);
-        battleContext.execute(id, actionType, params);
+        battleContext.execute(id, gameCommandType, params);
+    }
+
+    private long nextId() {
+        // todo
+        return 0L;
     }
 }

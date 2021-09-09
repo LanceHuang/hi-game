@@ -4,7 +4,7 @@ import com.lance.game.lab.mud.gameobjectbuilder.GameObjectBuilder;
 import com.lance.game.lab.mud.gameobject.impl.Tree;
 
 /**
- * 树木构造器
+ * 树木建造器
  *
  * @author Lance
  * @since 2021/9/7

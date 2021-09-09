@@ -1,8 +1,8 @@
-package com.lance.game.lab.mud.gameaction;
+package com.lance.game.lab.mud.action;
 
-import com.lance.game.lab.mud.gameaction.impl.GatherAction;
-import com.lance.game.lab.mud.gameaction.impl.MakeGameObjectAction;
-import com.lance.game.lab.mud.battle.BattleContext;
+import com.lance.game.lab.mud.action.impl.GatherAction;
+import com.lance.game.lab.mud.action.impl.MakeGameObjectAction;
+import com.lance.game.lab.mud.gameobject.BattleContext;
 import com.lance.game.lab.mud.gameobject.GameObject;
 
 import java.util.Map;

@@ -6,7 +6,7 @@ package com.lance.game.lab.mud.constant;
  * @author Lance
  * @since 2021/9/6
  */
-public enum GameObjectStateChangeEvent {
+public enum GameObjectStateChange {
 
     /** 巡逻 */
     PATROL,
