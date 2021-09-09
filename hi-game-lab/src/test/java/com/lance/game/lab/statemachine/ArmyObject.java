@@ -1,5 +1,7 @@
 package com.lance.game.lab.statemachine;
 
+import com.lance.game.lab.mud.constant.GameObjectStateChangeEvent;
+import com.lance.game.lab.mud.constant.GameObjectState;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +26,7 @@ public class ArmyObject {
     private String name;
 
     /** 状态机 */
-    private StateMachine<ArmyState, ArmyStateChangeEvent> stateMachine;
+    private StateMachine<GameObjectState, GameObjectStateChangeEvent> stateMachine;
 
     /** 采集进度 */
     private int gatherProgress;
@@ -41,11 +43,11 @@ public class ArmyObject {
     public void tick() {
         synchronized (this) {
             if (aiMode) {
-                stateMachine.getState().getArmyStateHandler().onState(this);
+//                stateMachine.getState().getArmyStateHandler().onState(this);
             } else if (System.currentTimeMillis() > lastTime + DELAY) {
                 System.out.printf("超过%dms未接管，%s进入AI模式\n", DELAY, getName());
                 aiMode = true;
-                stateMachine.getState().getArmyStateHandler().onState(this);
+//                stateMachine.getState().getArmyStateHandler().onState(this);
             }
         }
     }
@@ -53,19 +55,19 @@ public class ArmyObject {
     //============================================ 玩家指令 =======================================
 
     public void patrol() {
-        sendInstruction(ArmyStateChangeEvent.PATROL);
+        sendInstruction(GameObjectStateChangeEvent.PATROL);
     }
 
     public void stopPatrol() {
-        sendInstruction(ArmyStateChangeEvent.STOP_PATROL);
+        sendInstruction(GameObjectStateChangeEvent.STOP_PATROL);
     }
 
     public void gather() {
-        sendInstruction(ArmyStateChangeEvent.GATHER);
+        sendInstruction(GameObjectStateChangeEvent.GATHER);
     }
 
     public void stopGather() {
-        sendInstruction(ArmyStateChangeEvent.STOP_GATHER);
+        sendInstruction(GameObjectStateChangeEvent.STOP_GATHER);
     }
 
     /**
@@ -73,7 +75,7 @@ public class ArmyObject {
      *
      * @param event 事件
      */
-    public void sendInstruction(ArmyStateChangeEvent event) {
+    public void sendInstruction(GameObjectStateChangeEvent event) {
         synchronized (this) {
             this.aiMode = false;
             this.lastTime = System.currentTimeMillis();
@@ -92,7 +94,7 @@ public class ArmyObject {
             gatherProgress++;
         }
         if (gatherProgress >= MAX_GATHER_PROGRESS) {
-            sendEvent(ArmyStateChangeEvent.COMPLETE_GATHER);
+            sendEvent(GameObjectStateChangeEvent.COMPLETE_GATHER);
         }
     }
 
@@ -101,14 +103,14 @@ public class ArmyObject {
      */
     public void clearGather() {
         gatherProgress = 0;
-        sendEvent(ArmyStateChangeEvent.CLEAR_GATHER);
+        sendEvent(GameObjectStateChangeEvent.CLEAR_GATHER);
     }
 
-    public void sendEvent(ArmyStateChangeEvent event) {
+    public void sendEvent(GameObjectStateChangeEvent event) {
         synchronized (this) {
-            ArmyState oldState = stateMachine.getState();
+            GameObjectState oldState = stateMachine.getState();
             stateMachine.sendEvent(event);
-            ArmyState newState = stateMachine.getState();
+            GameObjectState newState = stateMachine.getState();
             if (newState != oldState) {
                 System.out.printf("接收到%s事件，%s由%s状态改为%s状态\n",
                         event.name(), getName(), oldState.name(), newState.name());

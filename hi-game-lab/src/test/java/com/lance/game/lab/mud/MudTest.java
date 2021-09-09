@@ -1,6 +1,6 @@
 package com.lance.game.lab.mud;
 
-import com.lance.game.lab.mud.battle.action.GameActionType;
+import com.lance.game.lab.mud.gameaction.GameActionType;
 import com.lance.game.lab.mud.service.IMudService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +38,7 @@ public class MudTest {
         long treeId = mudService.makeGameObject(battleId, 2, 10, 10);
 
         // 生产农民
-        mudService.executeGameObject(mainCityId, GameActionType.MAKE_GAME_OBJECT, Collections.emptyMap());
-        mudService.executeGameObject(mainCityId, GameActionType.MAKE_GAME_OBJECT, Collections.emptyMap());
-
-
+        mudService.executeGameObject(battleId, mainCityId, GameActionType.MAKE_GAME_OBJECT, Collections.emptyMap());
+        mudService.executeGameObject(battleId, mainCityId, GameActionType.MAKE_GAME_OBJECT, Collections.emptyMap());
     }
 }

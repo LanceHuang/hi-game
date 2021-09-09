@@ -1,4 +1,4 @@
-package com.lance.game.lab.mud.battle.action;
+package com.lance.game.lab.mud.gameaction;
 
 import com.lance.game.lab.mud.battle.BattleContext;
 import com.lance.game.lab.mud.gameobject.GameObject;
@@ -17,7 +17,7 @@ public abstract class GameAction {
      * 游戏执行行为
      *
      * @param battleContext 战役
-     * @param gameObject    游戏对象
+     * @param gameObject    游戏单位
      * @param params        参数
      */
     public abstract void execute(BattleContext battleContext, GameObject gameObject, Map<String, String> params);

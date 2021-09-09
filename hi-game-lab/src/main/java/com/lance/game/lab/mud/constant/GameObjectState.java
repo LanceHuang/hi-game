@@ -1,18 +1,18 @@
-package com.lance.game.lab.statemachine;
+package com.lance.game.lab.mud.constant;
 
-import com.lance.game.lab.statemachine.handler.BackToTheCityStateHandler;
-import com.lance.game.lab.statemachine.handler.GatherStateHandler;
-import com.lance.game.lab.statemachine.handler.NoneStateHandler;
-import com.lance.game.lab.statemachine.handler.PatrolStateHandler;
-import com.lance.game.lab.statemachine.handler.StateHandler;
+import com.lance.game.lab.mud.statehandler.impl.BackToTheCityStateHandler;
+import com.lance.game.lab.mud.statehandler.impl.GatherStateHandler;
+import com.lance.game.lab.mud.statehandler.impl.NoneStateHandler;
+import com.lance.game.lab.mud.statehandler.impl.PatrolStateHandler;
+import com.lance.game.lab.mud.statehandler.StateHandler;
 
 /**
- * 军队状态
+ * 游戏单位状态
  *
  * @author Lance
  * @since 2021/9/6
  */
-public enum ArmyState {
+public enum GameObjectState {
 
     /** 发呆 */
     NONE(new NoneStateHandler()),
@@ -26,7 +26,7 @@ public enum ArmyState {
 
     private final StateHandler stateHandler;
 
-    ArmyState(StateHandler stateHandler) {
+    GameObjectState(StateHandler stateHandler) {
         this.stateHandler = stateHandler;
     }
 

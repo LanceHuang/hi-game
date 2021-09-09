@@ -1,14 +1,14 @@
 package com.lance.game.lab.mud.gameobject;
 
 /**
- * 游戏对象
+ * 游戏单位
  *
  * @author Lance
  * @since 2021/9/7
  */
 public abstract class GameObject {
 
-    /** 对象标识 */
+    /** 单位id */
     private final long id;
 
     public GameObject(long id) {

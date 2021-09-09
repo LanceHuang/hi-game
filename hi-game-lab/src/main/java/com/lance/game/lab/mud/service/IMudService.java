@@ -1,6 +1,6 @@
 package com.lance.game.lab.mud.service;
 
-import com.lance.game.lab.mud.battle.action.GameActionType;
+import com.lance.game.lab.mud.gameaction.GameActionType;
 
 import java.util.Map;
 
@@ -18,7 +18,7 @@ public interface IMudService {
     long createBattleContext();
 
     /**
-     * 创建游戏对象，并放置到 (x,y)
+     * 创建游戏单位，并放置到 (x,y)
      *
      * @param battleId 战役id
      * @param configId 配置id
@@ -29,11 +29,12 @@ public interface IMudService {
     long makeGameObject(long battleId, int configId, int x, int y);
 
     /**
-     * 操作游戏对象
+     * 操作游戏单位
      *
+     * @param battleId   战役id
      * @param id         对象id
      * @param actionType 行为类型
      * @param params     拓展参数
      */
-    void executeGameObject(long id, GameActionType actionType, Map<String, String> params);
+    void executeGameObject(long battleId, long id, GameActionType actionType, Map<String, String> params);
 }

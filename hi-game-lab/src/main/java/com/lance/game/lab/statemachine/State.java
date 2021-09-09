@@ -36,21 +36,21 @@ public class State<S, E> {
     /**
      * 进入状态
      */
-    public void enter() {
+    public void enter(StateMachineContext context) {
 
     }
 
     /**
      * 更新状态
      */
-    public void update() {
+    public void update(StateMachineContext context) {
 
     }
 
     /**
      * 退出状态
      */
-    public void exit() {
+    public void exit(StateMachineContext context) {
 
     }
 

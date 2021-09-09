@@ -1,7 +1,7 @@
-package com.lance.game.lab.mud.battle.action;
+package com.lance.game.lab.mud.gameaction;
 
-import com.lance.game.lab.mud.battle.action.impl.GatherAction;
-import com.lance.game.lab.mud.battle.action.impl.MakeGameObjectAction;
+import com.lance.game.lab.mud.gameaction.impl.GatherAction;
+import com.lance.game.lab.mud.gameaction.impl.MakeGameObjectAction;
 import com.lance.game.lab.mud.battle.BattleContext;
 import com.lance.game.lab.mud.gameobject.GameObject;
 
@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public enum GameActionType {
 
-    /** 制造游戏对象 */
+    /** 制造游戏单位 */
     MAKE_GAME_OBJECT(new MakeGameObjectAction()),
     /** 采集 */
     GATHER(new GatherAction()),
@@ -33,7 +33,7 @@ public enum GameActionType {
      * 执行行为
      *
      * @param battleContext 战役
-     * @param gameObject    游戏对象
+     * @param gameObject    游戏单位
      * @param params        参数
      */
     public void execute(BattleContext battleContext, GameObject gameObject, Map<String, String> params) {

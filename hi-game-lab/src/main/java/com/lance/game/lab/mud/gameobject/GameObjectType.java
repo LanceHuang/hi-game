@@ -1,12 +1,12 @@
 package com.lance.game.lab.mud.gameobject;
 
-import com.lance.game.lab.mud.gameobject.builder.GameObjectBuilder;
-import com.lance.game.lab.mud.gameobject.builder.impl.FactoryBuildingBuilder;
-import com.lance.game.lab.mud.gameobject.builder.impl.HeroBuilder;
-import com.lance.game.lab.mud.gameobject.builder.impl.TreeBuilder;
+import com.lance.game.lab.mud.gameobjectbuilder.GameObjectBuilder;
+import com.lance.game.lab.mud.gameobjectbuilder.impl.FactoryBuildingBuilder;
+import com.lance.game.lab.mud.gameobjectbuilder.impl.HeroBuilder;
+import com.lance.game.lab.mud.gameobjectbuilder.impl.TreeBuilder;
 
 /**
- * 游戏对象类型
+ * 游戏单位类型
  *
  * @author Lance
  * @since 2021/9/7

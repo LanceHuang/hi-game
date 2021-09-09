@@ -1,8 +1,5 @@
 package com.lance.game.lab.statemachine;
 
-import com.lance.game.lab.statemachine.listener.CompositeStateMachineListener;
-import com.lance.game.lab.statemachine.listener.StateMachineListener;
-
 import java.util.Map;
 
 /**
@@ -15,9 +12,6 @@ import java.util.Map;
  */
 public class StateMachine<S, E> {
 
-    /** 监听器 */
-    private final CompositeStateMachineListener<S> compositeListener = new CompositeStateMachineListener<>();
-
     /** 转换规则 */
     private final Map<S, Map<E, S>> transitions;
 
@@ -27,19 +21,14 @@ public class StateMachine<S, E> {
     /** 状态 */
     private S state;
 
+    /** 上下文 */
+    private StateMachineContext context;
+
     public StateMachine(Map<S, Map<E, S>> transitions, S initialState) {
         this.transitions = transitions;
         this.initialState = initialState;
         this.state = initialState;
-    }
-
-    /**
-     * 获取当前状态
-     *
-     * @return 状态
-     */
-    public S getState() {
-        return state;
+        this.context = new StateMachineContext();
     }
 
     /**
@@ -48,6 +37,11 @@ public class StateMachine<S, E> {
      * @param event 事件
      */
     public void sendEvent(E event) {
+        if (isComplete()) {
+            // todo log complete
+            return;
+        }
+
         Map<E, S> transitionMap = transitions.get(state);
         if (transitionMap == null) {
             return;
@@ -65,9 +59,9 @@ public class StateMachine<S, E> {
         }
     }
 
-    private void notifyChange(S from, S to) {
-        compositeListener.onExit(to);
-        compositeListener.onEnter(from);
+    private void notifyChange(S source, S target) {
+//        source.exit(context);
+//        target.enter(context);
     }
 
     /**
@@ -86,15 +80,19 @@ public class StateMachine<S, E> {
         state = initialState;
     }
 
-    /**
-     * 添加监听器
-     *
-     * @param listener 监听器
-     */
-    public void addListener(StateMachineListener<S> listener) {
-        if (listener == null) {
-            return;
-        }
-        compositeListener.addListener(listener);
+    public Map<S, Map<E, S>> getTransitions() {
+        return transitions;
+    }
+
+    public S getInitialState() {
+        return initialState;
+    }
+
+    public S getState() {
+        return state;
+    }
+
+    public StateMachineContext getContext() {
+        return context;
     }
 }

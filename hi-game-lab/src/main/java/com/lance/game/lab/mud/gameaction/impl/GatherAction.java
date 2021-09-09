@@ -1,6 +1,6 @@
-package com.lance.game.lab.mud.battle.action.impl;
+package com.lance.game.lab.mud.gameaction.impl;
 
-import com.lance.game.lab.mud.battle.action.GameAction;
+import com.lance.game.lab.mud.gameaction.GameAction;
 import com.lance.game.lab.mud.battle.BattleContext;
 import com.lance.game.lab.mud.constant.MudConstant;
 import com.lance.game.lab.mud.gameobject.GameObject;
@@ -10,12 +10,12 @@ import org.apache.commons.collections4.MapUtils;
 import java.util.Map;
 
 /**
- * 制造游戏对象
+ * 采集
  *
  * @author Lance
  * @since 2021/9/7
  */
-public class MakeGameObjectAction extends GameAction {
+public class GatherAction extends GameAction {
 
     @Override
     public void execute(BattleContext battleContext, GameObject gameObject, Map<String, String> params) {

@@ -1,12 +1,12 @@
-package com.lance.game.lab.statemachine;
+package com.lance.game.lab.mud.constant;
 
 /**
- * 军队状态改变事件
+ * 游戏单位状态改变事件
  *
  * @author Lance
  * @since 2021/9/6
  */
-public enum ArmyStateChangeEvent {
+public enum GameObjectStateChangeEvent {
 
     /** 巡逻 */
     PATROL,

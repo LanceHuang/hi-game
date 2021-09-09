@@ -1,5 +1,8 @@
 package com.lance.game.lab.statemachine;
 
+import com.lance.game.lab.mud.constant.GameObjectStateChangeEvent;
+import com.lance.game.lab.mud.constant.GameObjectState;
+
 /**
  * AI构造器
  *
@@ -8,9 +11,9 @@ package com.lance.game.lab.statemachine;
  */
 public class ArmyCreator {
 
-    private StateMachineFactory<ArmyState, ArmyStateChangeEvent> stateMachineFactory;
+    private StateMachineFactory<GameObjectState, GameObjectStateChangeEvent> stateMachineFactory;
 
-    public ArmyCreator(StateMachineFactory<ArmyState, ArmyStateChangeEvent> stateMachineFactory) {
+    public ArmyCreator(StateMachineFactory<GameObjectState, GameObjectStateChangeEvent> stateMachineFactory) {
         this.stateMachineFactory = stateMachineFactory;
     }
 
@@ -19,6 +22,11 @@ public class ArmyCreator {
         armyObject.setId(System.currentTimeMillis());
         armyObject.setName(name);
         armyObject.setStateMachine(stateMachineFactory.create());
+
+//        StateMachine<GameObjectState, GameObjectStateChangeEvent> stateMachine = stateMachineFactory.create();
+//        stateMachine.setAttribute("owner", armyObject);
+//        armyObject.setStateMachine(stateMachine);
+//
         return armyObject;
     }
 }

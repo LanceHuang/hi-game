@@ -1,6 +1,6 @@
 package com.lance.game.lab.mud.battle;
 
-import com.lance.game.lab.mud.battle.action.GameActionType;
+import com.lance.game.lab.mud.gameaction.GameActionType;
 import com.lance.game.lab.mud.gameobject.GameObject;
 
 import java.util.Map;
@@ -36,9 +36,9 @@ public class BattleContext {
     }
 
     /**
-     * 添加游戏对象
+     * 添加游戏单位
      *
-     * @param gameObject 游戏对象
+     * @param gameObject 游戏单位
      * @param x          x
      * @param y          y
      */
@@ -48,9 +48,9 @@ public class BattleContext {
     }
 
     /**
-     * 校验游戏对象
+     * 校验游戏单位
      *
-     * @param gameObject 游戏对象
+     * @param gameObject 游戏单位
      * @param x          x
      * @param y          y
      */
@@ -59,9 +59,9 @@ public class BattleContext {
     }
 
     /**
-     * 放置游戏对象
+     * 放置游戏单位
      *
-     * @param gameObject 游戏对象
+     * @param gameObject 游戏单位
      * @param x          x
      * @param y          y
      */
@@ -72,7 +72,7 @@ public class BattleContext {
     /**
      * 执行指令
      *
-     * @param id             对象标识
+     * @param id             单位id
      * @param gameActionType 行为类型
      */
     public void execute(long id, GameActionType gameActionType, Map<String, String> params) {
@@ -82,5 +82,9 @@ public class BattleContext {
         }
 
         gameActionType.execute(this, gameObject, params);
+    }
+
+    public long getId() {
+        return id;
     }
 }

@@ -1,9 +1,9 @@
-package com.lance.game.lab.mud.gameobject.builder;
+package com.lance.game.lab.mud.gameobjectbuilder;
 
 import com.lance.game.lab.mud.gameobject.GameObject;
 
 /**
- * 游戏对象构造器
+ * 游戏单位构造器
  *
  * @author Lance
  * @since 2021/9/7
@@ -11,11 +11,11 @@ import com.lance.game.lab.mud.gameobject.GameObject;
 public abstract class GameObjectBuilder<T extends GameObject> {
 
     /**
-     * 构造游戏对象
+     * 构造游戏单位
      *
      * @param configId 配置id
-     * @param id       对象标识
-     * @return 游戏对象
+     * @param id       单位id
+     * @return 游戏单位
      */
     public abstract T build(int configId, long id);
 }

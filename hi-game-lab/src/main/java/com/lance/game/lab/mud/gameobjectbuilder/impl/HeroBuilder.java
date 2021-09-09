@@ -1,6 +1,6 @@
-package com.lance.game.lab.mud.gameobject.builder.impl;
+package com.lance.game.lab.mud.gameobjectbuilder.impl;
 
-import com.lance.game.lab.mud.gameobject.builder.GameObjectBuilder;
+import com.lance.game.lab.mud.gameobjectbuilder.GameObjectBuilder;
 import com.lance.game.lab.mud.gameobject.impl.Hero;
 
 /**

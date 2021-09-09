@@ -1,5 +1,7 @@
 package com.lance.game.lab.statemachine;
 
+import com.lance.game.lab.mud.constant.GameObjectStateChangeEvent;
+import com.lance.game.lab.mud.constant.GameObjectState;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -20,14 +22,14 @@ public class StateMachineTest {
 
     @Test
     public void test() throws IOException {
-        StateMachineFactory<ArmyState, ArmyStateChangeEvent> stateMachineFactory = new StateMachineFactory<>();
-        stateMachineFactory.initState(ArmyState.NONE)
-                .trans(ArmyState.NONE, ArmyState.PATROL, ArmyStateChangeEvent.PATROL)
-                .trans(ArmyState.PATROL, ArmyState.NONE, ArmyStateChangeEvent.STOP_PATROL)
-                .trans(ArmyState.NONE, ArmyState.GATHER, ArmyStateChangeEvent.GATHER)
-                .trans(ArmyState.GATHER, ArmyState.NONE, ArmyStateChangeEvent.STOP_GATHER)
-                .trans(ArmyState.GATHER, ArmyState.BACK_TO_THE_CITY, ArmyStateChangeEvent.COMPLETE_GATHER)
-                .trans(ArmyState.BACK_TO_THE_CITY, ArmyState.GATHER, ArmyStateChangeEvent.CLEAR_GATHER);
+        StateMachineFactory<GameObjectState, GameObjectStateChangeEvent> stateMachineFactory = new StateMachineFactory<>();
+        stateMachineFactory.initState(GameObjectState.NONE)
+                .trans(GameObjectState.NONE, GameObjectState.PATROL, GameObjectStateChangeEvent.PATROL)
+                .trans(GameObjectState.PATROL, GameObjectState.NONE, GameObjectStateChangeEvent.STOP_PATROL)
+                .trans(GameObjectState.NONE, GameObjectState.GATHER, GameObjectStateChangeEvent.GATHER)
+                .trans(GameObjectState.GATHER, GameObjectState.NONE, GameObjectStateChangeEvent.STOP_GATHER)
+                .trans(GameObjectState.GATHER, GameObjectState.BACK_TO_THE_CITY, GameObjectStateChangeEvent.COMPLETE_GATHER)
+                .trans(GameObjectState.BACK_TO_THE_CITY, GameObjectState.GATHER, GameObjectStateChangeEvent.CLEAR_GATHER);
 
         ArmyCreator armyCreator = new ArmyCreator(stateMachineFactory);
         String name = "Lance";
