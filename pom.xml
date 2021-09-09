@@ -17,6 +17,7 @@
         <module>hi-game-common</module>
         <module>hi-game-loadbalancer</module>
         <module>hi-game-event</module>
+        <module>hi-game-mud</module>
     </modules>
 
     <properties>
