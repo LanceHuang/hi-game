@@ -8,7 +8,7 @@ package com.lance.game.lab.behaviortree;
  */
 public class BehaviorTree {
 
-    /** 根结点 */
+    /** 根节点 */
     protected BTNode root;
 
     public BehaviorTree(BTNode root) {

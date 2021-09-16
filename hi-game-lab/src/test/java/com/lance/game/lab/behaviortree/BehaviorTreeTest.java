@@ -67,7 +67,7 @@ public class BehaviorTreeTest {
         noTargetSequence.addChild(deadSequence);
         noTargetSequence.addChild(patrolSequence);
 
-        // 根结点
+        // 根节点
         Selector selector = BTNodeFactory.createNode(SELECTOR);
         selector.addChild(hasTargetSequence);
         selector.addChild(noTargetSequence);
